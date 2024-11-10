@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 <?php
 session_start();
 require_once '../commons/function.php';
@@ -154,5 +153,4 @@ switch ($act) {
         $DashboardController->showDashboard();
         break;
 }
-?>
->>>>>>> main
+

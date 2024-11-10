@@ -22,8 +22,8 @@ switch ($act) {
     case 'home':
         // Hiển thị trang chủ và các sản phẩm giảm giá
         $clientController->showHome();
-        // $clientController->getMaxDiscountProduct();
-        // $clientController->showHomeParent($ids);
+        $clientController->getMaxDiscountProduct();
+        $clientController->showHomeParent($ids);
         break;
 
     case 'search':

@@ -1,8 +1,9 @@
 <?php
-    function connectDB(){
-        $host ='localhost';
-        $dbname = 'duan1';
-        $username = 'root';
+function connectDB()
+{
+    $host = 'localhost';
+    $dbname = 'duanmau1';
+    $username = 'root';
     $password = '';
 
     try {
@@ -12,5 +13,5 @@
     } catch (PDOException $e) {
         error_log("Connection failed: " . $e->getMessage());
     }
-    }
+}
 ?>

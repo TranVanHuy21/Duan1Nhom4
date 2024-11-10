@@ -11,10 +11,10 @@
     <div class="forgot-password-container">
         <h2>Quên mật khẩu</h2>
         <?php if (isset($error)): ?>
-            <p class="error"><?= htmlspecialchars($error) ?></p>
+        <p class="error"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
         <?php if (isset($message)): ?>
-            <p class="message"><?= htmlspecialchars($message) ?></p>
+        <p class="message"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
         <form action="index.php?action=forgotPassword" method="post">
             <label for="username">SỐ ĐIỆN THOẠI:</label>

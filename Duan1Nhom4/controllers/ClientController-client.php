@@ -9,6 +9,7 @@ class ClientController
         $this->clientModel = new ClientModel($pdo);
     }
 
+
     public function search()
     {
         if (isset($_REQUEST['query'])) {

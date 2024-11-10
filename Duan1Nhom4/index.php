@@ -5,6 +5,7 @@ require_once 'commons/function.php';
 require_once 'controllers/ClientController-client.php';
 require_once 'controllers/ProductCateController.php';
 require_once 'models/ClientModel-client.php';
+require_once 'models/ProductCateModel.php';
 
 // Khởi tạo các controller
 $ClientProductCateController = new ClientProductCateController();

@@ -20,63 +20,42 @@
 </head>
 
 <body>
-
-
-</body>
-
-<header>
-    <div class="box-header-top">
-        <div class="header-top-swiper">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 py-1 img-fluid">
-                        <img src="assets/image/top-banner-chinh-sach-bao-hanh-doi-tra.webp" alt="">
-                    </div>
-                    <div class="col-md-4 py-1 img-fluid">
-                        <img src="assets/image/top-banner-chinh-hang-xuat-vat-day-du.webp" alt="">
-                    </div>
-                    <div class="col-md-4 py-1 img-fluid">
-                        <img src="assets/image/top-banner-giao-nhanh-mien-phi.webp" alt="">
-
-
-</html>
-
-<header>
-    <div class="box-header-top">
-        <div class="header-top-swiper">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 py-1 img-fluid">
-                        <img src="assets/image/top-banner-chinh-sach-bao-hanh-doi-tra.webp" alt="">
-                    </div>
-                    <div class="col-md-4 py-1 img-fluid">
-                        <img src="assets/image/top-banner-chinh-hang-xuat-vat-day-du.webp" alt="">
-                    </div>
-                    <div class="col-md-4 py-1 img-fluid">
-                        <img src="assets/image/top-banner-giao-nhanh-mien-phi.webp" alt="">
+    <header>
+        <div class="box-header-top">
+            <div class="header-top-swiper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 py-1 img-fluid">
+                            <img src="assets/image/top-banner-chinh-sach-bao-hanh-doi-tra.webp" alt="">
+                        </div>
+                        <div class="col-md-4 py-1 img-fluid">
+                            <img src="assets/image/top-banner-chinh-hang-xuat-vat-day-du.webp" alt="">
+                        </div>
+                        <div class="col-md-4 py-1 img-fluid">
+                            <img src="assets/image/top-banner-giao-nhanh-mien-phi.webp" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
+        </div>
 
-    <div id="cps-container-navbar">
+        <div id="cps-container-navbar">
 
-        <div class="container">
-            <div class="cps-container-navbar-sticky">
-
-
-                <div>
-                    <a href="index.php">
-                        <div class="box-logo">
-                            <img src="assets/image/logo.png" alt="">
-                        </div>
-                    </a>
-                </div>
+            <div class="container">
+                <div class="cps-container-navbar-sticky">
 
 
-                <!-- <a href="#" class="header-item-button-menu">
+                    <div>
+                        <a href="index.php">
+                            <div class="box-logo">
+                                <img src="assets/image/logo.png" alt="">
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <!-- <a href="#" class="header-item-button-menu">
                             <div class="about_box-icon">
 
                             </div>
@@ -85,115 +64,119 @@
                             </div>
 
                         </a> -->
-                <div class="dropdown-region" role="menu" class="dropdown">
-                    <div class="dropdown-trigger">
-                        <div class="box_local-store">
-                            <img class="img-local" src="assets/image/local.png" alt="">
-                            <nav>
-                                <p class="local-content-box-top">
-                                    Xem giá tại
-                                </p>
-                                <p class="local-content-box-bot">
-                                    Hà Nội
-                                </p>
-                            </nav>
+                    <div class="dropdown-region" role="menu" class="dropdown">
+                        <div class="dropdown-trigger">
+                            <div class="box_local-store">
+                                <img class="img-local" src="assets/image/local.png" alt="">
+                                <nav>
+                                    <p class="local-content-box-top">
+                                        Xem giá tại
+                                    </p>
+                                    <p class="local-content-box-bot">
+                                        Hà Nội
+                                    </p>
+                                </nav>
 
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="box-search">
-                    <form action="?act=search" method="POST">
-                        <div class="input-group-button">
-                            <input class="input" type="text" name="query" placeholder="Bạn cần tìm gì?....." required>
-                            <button type="submit"><i class="fa fa-search"></i></button>
+                    <div class="box-search">
+                        <form action="?act=search" method="POST">
+                            <div class="input-group-button">
+                                <input class="input" type="text" name="query" placeholder="Bạn cần tìm gì?....."
+                                    required>
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <a href="tel:18002044" class="contact-hotline">
+                        <div class="about-box-icon">
+                            <i class="fa-solid fa-phone"></i>
                         </div>
-                    </form>
-                </div>
-
-                <a href="tel:18002044" class="contact-hotline">
-                    <div class="about-box-icon">
-                        <i class="fa-solid fa-phone"></i>
-                    </div>
-                    <div class="about-box-content">
-                        <p>Mua hàng</p>
-                        <p>18002097</p>
-                    </div>
-                </a>
-
-                <a href="assets/contact.html" class="header-box-about-store">
-                    <div class="about-box-icon">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </div>
-                    <div class="header-box-about-content">
-                        <p>Liên hệ</p>
-                        <p>với chúng tôi</p>
-                    </div>
-                </a>
-
-                <a href="assets/Gio_hang.html" class="header-box-search-item-product">
-                    <div class="about-box-icon">
-                        <i class="fa-solid fa-truck-fast"></i>
-                    </div>
-                    <div class="header-box-about-content">
-                        <p>Tra cứu</p>
-                        <p>Đơn hàng</p>
-                    </div>
-                </a>
-
-                <a href="#" class="header-box-cart">
-                    <div class="about-box-icon">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </div>
-                    <div class="header-box-about-content">
-                        Giỏ hàng
-                    </div>
-                </a>
-
-                <div class="box-login">
-                    <?php
-                    // session_start();
-                    if (isset($_SESSION['user'])) { ?>
-                    <div class="box-user">
-                        <!-- <div class="about-icon">
-                                <i class="fa-regular fa-circle-user"></i>
-                            </div> -->
-                        <div class="about-contact">
-                            <i class="fa-regular fa-circle-user"></i>
-                            <p style="color: white;">Xin chào,
-                                <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!
-                            </p>
-                            <a href="?act=logout-client">
-                                <div class="about-icon">
-                                    <i class="fa-solid fa-sign-out-alt"></i>
-                                </div>
-
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <?php } else { ?>
-                    <a href="?act=login-client">
-                        <div class="about-icon">
-                            <i class="fa-regular fa-circle-user"></i>
-                        </div>
-                        <div class="about-contact">
-                            <p style="color: white;">Đăng nhập</p>
+                        <div class="about-box-content">
+                            <p>Mua hàng</p>
+                            <p>18002097</p>
                         </div>
                     </a>
-                    <?php } ?>
+
+                    <a href="assets/contact.html" class="header-box-about-store">
+                        <div class="about-box-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="header-box-about-content">
+                            <p>Liên hệ</p>
+                            <p>với chúng tôi</p>
+                        </div>
+                    </a>
+
+                    <a href="assets/Gio_hang.html" class="header-box-search-item-product">
+                        <div class="about-box-icon">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <div class="header-box-about-content">
+                            <p>Tra cứu</p>
+                            <p>Đơn hàng</p>
+                        </div>
+                    </a>
+
+                    <a href="#" class="header-box-cart">
+                        <div class="about-box-icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <div class="header-box-about-content">
+                            Giỏ hàng
+                        </div>
+                    </a>
+
+                    <div class="box-login">
+                        <?php
+                    // session_start();
+                    if (isset($_SESSION['user'])) { ?>
+                        <div class="box-user">
+                            <!-- <div class="about-icon">
+                                <i class="fa-regular fa-circle-user"></i>
+                            </div> -->
+                            <div class="about-contact">
+                                <i class="fa-regular fa-circle-user"></i>
+                                <p style="color: white;">Xin chào,
+                                    <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!
+                                </p>
+                                <a href="?act=logout-client">
+                                    <div class="about-icon">
+                                        <i class="fa-solid fa-sign-out-alt"></i>
+                                    </div>
+
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <?php } else { ?>
+                        <a href="?act=login-client">
+                            <div class="about-icon">
+                                <i class="fa-regular fa-circle-user"></i>
+                            </div>
+                            <div class="about-contact">
+                                <p style="color: white;">Đăng nhập</p>
+                            </div>
+                        </a>
+                        <?php } ?>
+                    </div>
+
+
                 </div>
-
-
             </div>
+
+
+
         </div>
+    </header>
+
+</body>
 
 
 
-    </div>
-</header>
 
 </html>
-
-</header>

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <?php
 session_start();
 require_once '../commons/function.php';
@@ -22,7 +20,7 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'dashboard';
 $user = $_POST['user'] ?? null;
 $pass = $_POST['pass'] ?? null;
 $Id_cat = isset($_GET['Id_cat']) ? $_GET['Id_cat'] : null;
-$database = new PDO('mysql:host=localhost;dbname=duan1', 'root', '');
+$database = new PDO('mysql:host=localhost;dbname=duanmau1', 'root', '');
 $productController = new ProductController();
 
 $categoryController = new CategoryController();
@@ -155,4 +153,3 @@ switch ($act) {
         break;
 }
 ?>
->>>>>>> main

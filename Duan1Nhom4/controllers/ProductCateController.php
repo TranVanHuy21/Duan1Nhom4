@@ -6,7 +6,7 @@ class ClientProductCateController
     public function __construct()
     {
         $pdo = connectDB();
-        $this->clienProductCatetModel = new ClientModel($pdo);
+        $this->clienProductCatetModel = new ClientModelCate($pdo);
     }
     public function productsByCategory($id)
     {
@@ -35,7 +35,7 @@ class ClientProductCateController
             $totalProducts = $this->clienProductCatetModel->getTotalProductsByParentId($parentId);
             $totalPages = ceil($totalProducts / $itemsPerPage);
         }
-        include './views/products_byCategory.php';
+        include './views/products_byParentId.php';
     }
 }
 ?>

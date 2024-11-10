@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-<<<<<<< HEAD
-=======
+
     <link rel="stylesheet" type="text/javascript" href="./assets/js/script.js">
     <script>
     // Lấy thời gian kết thúc từ PHP
@@ -101,13 +100,12 @@
         autoSlide();
     };
     </script>
->>>>>>> main
+
 </head>
 
 <body>
 
-<<<<<<< HEAD
-=======
+
     <body>
         <div class="box-controll">
             <div class="body-menu-tree">
@@ -858,7 +856,7 @@
             </div>
         </section>
     </body>
->>>>>>> main
+
 </body>
 
 </html>

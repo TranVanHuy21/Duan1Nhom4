@@ -152,4 +152,3 @@ switch ($act) {
         $DashboardController->showDashboard();
         break;
 }
-?>

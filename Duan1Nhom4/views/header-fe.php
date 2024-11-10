@@ -23,6 +23,24 @@
 
 
 </body>
+
+<header>
+    <div class="box-header-top">
+        <div class="header-top-swiper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 py-1 img-fluid">
+                        <img src="assets/image/top-banner-chinh-sach-bao-hanh-doi-tra.webp" alt="">
+                    </div>
+                    <div class="col-md-4 py-1 img-fluid">
+                        <img src="assets/image/top-banner-chinh-hang-xuat-vat-day-du.webp" alt="">
+                    </div>
+                    <div class="col-md-4 py-1 img-fluid">
+                        <img src="assets/image/top-banner-giao-nhanh-mien-phi.webp" alt="">
+
+
+</html>
+
 <header>
     <div class="box-header-top">
         <div class="header-top-swiper">
@@ -40,6 +58,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <div id="cps-container-navbar">
@@ -135,34 +154,34 @@
                     <?php
                     // session_start();
                     if (isset($_SESSION['user'])) { ?>
-                        <div class="box-user">
-                            <!-- <div class="about-icon">
+                    <div class="box-user">
+                        <!-- <div class="about-icon">
                                 <i class="fa-regular fa-circle-user"></i>
                             </div> -->
-                            <div class="about-contact">
-                                <i class="fa-regular fa-circle-user"></i>
-                                <p style="color: white;">Xin chào,
-                                    <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!
-                                </p>
-                                <a href="?act=logout-client">
-                                    <div class="about-icon">
-                                        <i class="fa-solid fa-sign-out-alt"></i>
-                                    </div>
+                        <div class="about-contact">
+                            <i class="fa-regular fa-circle-user"></i>
+                            <p style="color: white;">Xin chào,
+                                <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!
+                            </p>
+                            <a href="?act=logout-client">
+                                <div class="about-icon">
+                                    <i class="fa-solid fa-sign-out-alt"></i>
+                                </div>
 
-                                </a>
-                            </div>
-
+                            </a>
                         </div>
 
+                    </div>
+
                     <?php } else { ?>
-                        <a href="?act=login-client">
-                            <div class="about-icon">
-                                <i class="fa-regular fa-circle-user"></i>
-                            </div>
-                            <div class="about-contact">
-                                <p style="color: white;">Đăng nhập</p>
-                            </div>
-                        </a>
+                    <a href="?act=login-client">
+                        <div class="about-icon">
+                            <i class="fa-regular fa-circle-user"></i>
+                        </div>
+                        <div class="about-contact">
+                            <p style="color: white;">Đăng nhập</p>
+                        </div>
+                    </a>
                     <?php } ?>
                 </div>
 
@@ -171,7 +190,10 @@
         </div>
 
 
+
     </div>
 </header>
 
 </html>
+
+</header>

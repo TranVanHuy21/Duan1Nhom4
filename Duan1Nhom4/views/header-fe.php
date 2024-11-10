@@ -7,11 +7,10 @@
     <title>CellphoneS</title>
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-<<<<<<< HEAD
-=======
+
     <link rel="stylesheet" type="text/css" href="./assets/css/home_fe.css">
     <link rel="stylesheet" type="text/javascript" href="./assets/js/script.js">
->>>>>>> main
+
     <link rel="icon" href="../image/logo.jpg" type="image/jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
@@ -21,12 +20,12 @@
 </head>
 
 <body>
-<<<<<<< HEAD
+
 
 </body>
 
 </html>
-=======
+
     <header>
         <div class="box-header-top">
             <div class="header-top-swiper">
@@ -178,4 +177,4 @@
 
         </div>
     </header>
->>>>>>> main
+

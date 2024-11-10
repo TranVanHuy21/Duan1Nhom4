@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 function concectDB()
+=======
+function connectDB()
+>>>>>>> main
 {
     $host = 'localhost';
     $dbname = 'duanmau1';

@@ -611,6 +611,116 @@
     .comment a:hover {
         text-decoration: underline;
     }
+    /* Kiểu cho phần hộp chứa bình luận */
+.box_comment {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Kiểu cho phần tiêu đề của danh sách bình luận */
+.box_comment h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Kiểu cho từng mục bình luận */
+.comment-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Kiểu cho tên người dùng và thời gian bình luận */
+.comment-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.comment-item p strong {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-item p span {
+    font-size: 12px;
+    color: #999;
+    margin-left: 10px;
+}
+
+/* Kiểu cho nội dung bình luận */
+.comment-item p:nth-child(2) {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444;
+}
+
+/* Kiểu cho form nhập bình luận */
+.form2 {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form2 label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form2 textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    font-size: 14px;
+    color: #333;
+}
+
+.form2 .button2 {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form2 .button2:hover {
+    background-color: #45a049;
+}
+
+/* Kiểu cho phần thông báo khi chưa có bình luận */
+.comment-item p {
+    font-size: 16px;
+    color: #888;
+}
+
+/* Kiểu cho phần yêu cầu đăng nhập để bình luận */
+.comment-item p a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.comment-item p a:hover {
+    text-decoration: underline;
+}
+
     </style>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -965,34 +1075,63 @@
             </div>
     </section>
     <section>
-        <div class="box_comment">
-            <div class="comment">
-                <?php
-                if (isset($_SESSION['user'])):
-                    ?>
-                <h2>Để lại bình luận</h2>
-                <form action="?act=submit-comment" method="POST">
-                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+    <section>
+    <div class="box_comment">
+    <?php
+   
+   if (isset($_SESSION['flash_message'])) {
+       $messageClass = strpos($_SESSION['flash_message'], 'thành công') !== false ? 'success' : 'error';
+       echo '<div class="alert alert-' . $messageClass . '">' . $_SESSION['flash_message'] . '</div>';
+       unset($_SESSION['flash_message']);
+   }
+   ?>
+    
+    <div class="comment">
+        <!-- Phần hiển thị danh sách bình luận -->
+        <h2>Bình luận</h2>
+        <?php if (is_array($comments) && count($comments) > 0): ?>
+            <?php foreach ($comments as $comment): ?>
+                <div class="comment-item">
+                    <!-- Hiển thị tên người dùng và thời gian bình luận -->
+                    <p><strong><?= htmlspecialchars($comment['username']) ?></strong>
+                    <?php 
+                        if (isset($comment['comment_time']) && !empty($comment['comment_time'])) {
+                            // Nếu comment_time không rỗng và tồn tại, chuyển đổi nó thành đối tượng DateTime
+                            $commentTime = new DateTime($comment['comment_time']);
+                            echo $commentTime->format('d/m/Y, H:i'); // Định dạng ngày tháng năm và giờ phút
+                        } else {
+                            // Nếu không có thời gian, hiển thị thông báo hoặc giá trị mặc định
+                            echo 'Thời gian không xác định';
+                        }
+                    ?></p>
 
-                    <div>
-                        <label for="phone_number">Số điện thoại:</label>
-                        <input type="text" name="phone_number" id="phone_number" required>
-                    </div>
-                    <div>
-                        <label for="comment_content">Nội dung bình luận:</label>
-                        <textarea name="comment_content" id="comment_content" required></textarea>
-                    </div>
-                    <button type="submit">Gửi bình luận</button>
-                </form>
-                <?php else:
-                    ?>
-                <p>Vui lòng <a href="?act=login-client">đăng nhập</a> để bình luận.</p>
-                <?php
-                endif;
-                ?>
+                    <!-- Hiển thị nội dung bình luận -->
+                    <p><?= nl2br(htmlspecialchars($comment['comment_content'])) ?></p>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Chưa có bình luận nào.</p>
+        <?php endif; ?>
+    </div>
+
+    <!-- Phần form để lại bình luận -->
+    <?php if (isset($_SESSION['user'])): ?>
+        <form class="form2" action="?act=submit-comment" method="POST">            
+            <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+            <div>
+                <textarea name="comment_content" id="comment_content" required></textarea>
             </div>
-            <div></div>
-        </div>
+            <button class="button2" type="submit">Gửi bình luận</button>
+        </form>
+    <?php else: ?>
+        <p>Vui lòng <a href="?act=login-client">đăng nhập</a> để bình luận.</p>
+    <?php endif; ?>
+</div>
+
+</div>
+
+</section>
+
     </section>
 </body>
 

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 
     <link rel="stylesheet" type="text/css" href="./assets/css/home_fe.css">
-    <link rel="stylesheet" type="text/javascript" href="./assets/js/script.js">
+    <script src="./assets/js/script.js"></script>
 
     <link rel="icon" href="../image/logo.jpg" type="image/jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -26,13 +26,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 py-1 img-fluid">
-                            <img src="assets/image/top-banner-chinh-sach-bao-hanh-doi-tra.webp" alt="">
+                             <img src="./assets/image/top-banner-chinh-sach-bao-hanh-doi-tra.webp" alt="">
                         </div>
                         <div class="col-md-4 py-1 img-fluid">
-                            <img src="assets/image/top-banner-chinh-hang-xuat-vat-day-du.webp" alt="">
+                            <img src="./assets/image/top-banner-chinh-hang-xuat-vat-day-du.webp" alt="">
                         </div>
                         <div class="col-md-4 py-1 img-fluid">
-                            <img src="assets/image/top-banner-giao-nhanh-mien-phi.webp" alt="">
+                            <img src="./assets/image/top-banner-giao-nhanh-mien-phi.webp" alt="">
                         </div>
                     </div>
                 </div>
@@ -131,9 +131,7 @@
                     </a>
 
                     <div class="box-login">
-                        <?php
-                    // session_start();
-                    if (isset($_SESSION['user'])) { ?>
+                    <?php if (isset($_SESSION['user'])) { ?>
                         <div class="box-user">
                             <!-- <div class="about-icon">
                                 <i class="fa-regular fa-circle-user"></i>

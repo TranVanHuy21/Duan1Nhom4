@@ -6,232 +6,202 @@
     <title>Kết quả Tìm kiếm Sản phẩm</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-    .body-menu-tree {
-        max-width: 130rem;
-        margin: 0 auto;
-    }
+  /* Cập nhật chung cho toàn bộ trang */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
 
-    .mega-menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-    }
+/* Sửa menu mega-menu */
+.mega-menu {
+    /* background-color: #333; */
+    padding: 10px 0;
+}
 
-    .mega-menu>ul>li {
-        position: relative;
-        margin-right: 20px;
-    }
+.mega-menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    font-size: 16px;
+}
 
-    .mega-menu a {
-        text-decoration: none;
-        padding: 10px 20px;
-        display: block;
-        background-color: #333;
-        color: #fff;
-    }
+.mega-menu ul ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    border-radius: 5px;
+}
 
-    .mega-menu ul ul {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        display: none;
-        flex-direction: column;
-        z-index: 1000;
-    }
+.mega-menu > ul > li:hover > ul {
+    display: block;
+}
 
-    .mega-menu ul ul li {
-        width: 200px;
-    }
+.mega-menu ul ul li {
+    width: 200px;
+}
 
-    .mega-menu ul ul a {
-        background-color: #444;
-    }
+.mega-menu ul ul a {
+    padding: 10px;
+    font-size: 14px;
+}
 
-    .mega-menu ul li:hover>ul {
-        display: flex;
-    }
+/* Tạo một kiểu dáng đẹp cho các sản phẩm */
+.products_byParentCategory {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 130rem;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-    .mega-menu ul ul ul {
-        left: 100%;
-        top: 0;
+.product {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    }
+.product:hover {
+    transform: translateY(-10px);
+}
 
-    .box_slides_bottom,
-    .box-searchProduct {
+/* Hình ảnh sản phẩm */
+.product__image img {
+    width: 100%;
+    max-width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
 
-        max-width: 130rem;
-        margin: 0 auto;
-        overflow: hidden;
-        margin-bottom: 3rem;
-    }
+/* Tên sản phẩm */
+.product__name h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin: 10px 0;
+}
 
-    .box-searchProduct {
-        margin-top: 3rem;
-        min-height: 50rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+/* Giá sản phẩm */
+.block-box-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 
-    .search-results {
-        width: 100%;
-    }
+.product__price--show {
+    font-size: 18px;
+    color: #e74c3c;
+    font-weight: bold;
+}
 
-    .products_byParentCategory {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        max-width: 130rem;
-        margin: 0 auto;
-        margin-bottom: 2rem;
-    }
+.product__price--through {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+}
 
-    .product {
-        min-height: 250px;
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin: 10px;
-        border-radius: 1rem;
-        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: transparent;
-        position: relative;
-        justify-content: space-between;
-    }
+/* Hiệu ứng giảm giá */
+.product__price--percent {
+    background-color: red; /* Màu nền để nổi bật */;
+    color: white;
+    border-radius: 20px;
+    font-size: 11px;
+    padding: 10px 10px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    
+}
 
-    .product__info {
-        text-align: center;
-    }
+/* Phần slide */
+/* Phần slide */
+.box_slides_bottom {
+    max-width: 130rem;
+    margin: 40px auto;
+    overflow: hidden; /* Ẩn thanh cuộn ngang */
+}
 
-    .product__link {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .product__price--percent {
-        background-image: url(./admin/assets/images/rating/detail_discount.png);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: contain;
-        height: 34px;
-        left: -8px;
-        position: absolute;
-        top: -6px;
-        width: 80px;
-    }
-
-    .product__price--percent-detail {
-
-        color: #fff;
-        font-size: 12px;
-        font-weight: 700;
-        margin: 5px 0 0;
-        text-align: center;
-        width: 100%;
-    }
-
-    .product__image img {
-        width: 100%;
-        max-width: 15em;
-        height: auto;
-        object-fit: cover;
-        border-radius: 1rem;
-        font-family: Roboto, sans-serif;
-    }
-
-    .product__name h3 {
-        font-size: 1.2em;
-        margin: 1rem 0;
-        text-align: center;
-        height: 4em;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .block-box-price {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .product__price--show {
-        font-size: 1.7em;
-        color: #e74c3c;
-        font-weight: bold;
-    }
-
-    .product__price--through {
-        font-size: 1.2em;
-        color: #999;
-        text-decoration: line-through;
-        font-weight: bold;
-    }
-
-    .product_Detail .Detail-price {
-        align-items: flex-start;
-        background: #f3f4f6;
-        border: 1px solid #e5e7eb;
-        border-radius: 5px;
-        display: flex;
-        font-size: 12px;
-        line-height: 1.5;
-        margin-left: 0;
-        overflow: hidden;
-        padding: 5px;
-        text-transform: none;
-        width: auto;
-    }
-
-    .bottom-div {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 3.5em;
-        margin-top: auto;
-    }
-
-    .star-icon {
-        display: flex;
-    }
-
-    .heart-content {
-        display: flex;
-        align-items: center;
+.slides_bottom {
+    display: flex;
+    gap: 10px;
+    overflow-x: hidden; /* Ẩn thanh cuộn ngang */
+    overflow-y: hidden; /* Ẩn thanh cuộn dọc */
+    padding-bottom: 10px;
+    width: 100%; /* Đảm bảo chiều rộng không tràn */
+    scroll-snap-type: x mandatory; /* Dùng để tạo hiệu ứng cuộn ngang nếu cần */
+}
 
 
-    }
 
-    .slides_bottom {
-        display: flex;
-        gap: 1rem;
+.slide_image {
+    flex: 0 0 calc(25% - 10px);
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-    }
 
-    .slide_image {
-        flex: 0 0 calc(25% - 1rem);
+ .news_title {
+    height: 80px;
+    /* position: absolute; */
+    bottom: 10px;
+    left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    /* color: white; */
+    /* background-color: rgba(0, 0, 0, 0.6);   */
+    padding: 5px;
+    border-radius: 5px;
+} 
 
-    }
+/* Trang kết quả tìm kiếm */
+.box-searchProduct {
+    padding: 20px;
+    text-align: center;
+}
 
-    .slide_image img {
-        width: 100%;
-        object-fit: cover;
-        object-position: center;
-        border-radius: 1rem;
-        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
-    }
+h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 30px;
+}
 
-    .box_slides_bottom .news_title {
-        color: #444;
-        font-size: 16px;
-        font-weight: 600;
-        height: 48px;
+/* Phân trang */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
 
-    }
+.pagination a {
+    text-decoration: none;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #2980b9;
+}
+
     </style>
 </head>
 
@@ -265,7 +235,7 @@
                     <div class="product__info"><a href="?act=showProductDetail&id=<?= $product['id'] ?> "
                             class="product__link">
                             <div class="product__price--percent">
-                                <p class="product__price--percent-detail">Giảm&nbsp;
+                                <p class="">Giảm&nbsp;
                                     <?= htmlspecialchars($product['discount'] ?? '0') ?>%
                                 </p>
                             </div>

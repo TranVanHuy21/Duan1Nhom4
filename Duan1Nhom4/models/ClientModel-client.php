@@ -304,36 +304,76 @@ class ClientModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function addComment($productID, $userId, $commentContent, $phoneNumber)
-    {
-        $sql = "INSERT INTO comments (product_id, user_id, comment_content, phone_number) VALUES (:productID, :userId, :commentContent, :phoneNumber)";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':productID', $productID, PDO::PARAM_INT);
-        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindParam(':commentContent', $commentContent, PDO::PARAM_STR);
-        $stmt->bindParam(':phoneNumber', $phoneNumber, PDO::PARAM_STR);
-
-        return $stmt->execute();
-        // $sql = "INSERT INTO comments (id, User_id, Comment_content, Phone_number) VALUES ('$productID', '$userId', '$commentContent', '$phoneNumber')";
-        // $stmt = $this->pdo->query($sql);
-        // return true;
+    public function addComment($product_id, $user_id, $content){ //$phone_number) {
+        try {
+            // Validate input
+            if (empty($product_id) || empty($user_id) || empty($content)) {
+                throw new Exception("Invalid input data");
+            }
+    
+            // Ensure user_id is an integer
+            if (is_array($user_id)) {
+                $user_id = (int)$user_id;
+            }
+            
+            // Check if user exists
+            $userCheck = $this->pdo->prepare("SELECT User_id FROM user WHERE User_id = ?");
+            $userCheck->execute([$user_id]);
+            //var_dump($user_id);
+            
+            if ($userCheck->rowCount() == 0) {
+                throw new Exception("User does not exist".$user_id);
+            }
+            
+            // Prepare SQL statement with Phone_number
+            $stmt = $this->pdo->prepare("INSERT INTO comments (product_id, user_id, comment_content) VALUES (?, ?, ?)");
+            $stmt->execute([$product_id, $user_id, $content]);//$phone_number]);
+        
+            return true;
+        } catch (PDOException $e) {
+            echo "Error adding comment: " . $e->getMessage();
+            return false;
+        
     }
-
+}
+    
     public function getCommentsByProductId($productId)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM comments WHERE id = ?");
-        $stmt->execute([$productId]);
-        return $stmt->fetchAll();
+        $sql = "
+            SELECT c.comment_content, u.username, c.comment_time
+            FROM comments c
+            INNER JOIN user u ON c.user_id = u.user_id
+            WHERE c.product_id = :product_id
+            ORDER BY c.comment_time DESC
+        ";
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['product_id' => $productId]);
+        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $comments ?: [];  // Nếu không có bình luận, trả về mảng rỗng
     }
-    public function register_client($username, $password, $name)
+    
+
+    
+     public function register_client($username, $password, $name)
     {
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    try {
+        // Prepare SQL statement for inserting a new user
         $stmt = $this->pdo->prepare("INSERT INTO user (username, password, name) VALUES (:username, :password, :name)");
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
-        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        return $stmt->execute();
+        // Execute the statement with the provided values
+        $stmt->execute([':username' => $username, ':password' => $hashedPassword, ':name' => $name]);
+
+        return true; // Registration successful
+    } catch (PDOException $e) {
+        // Handle any database connection or query errors
+        echo "Error: " . $e->getMessage();
+        return false; // Registration failed
     }
+}
+
+     
 
     public function resetPassword($username, $newPassword)
     {
@@ -343,5 +383,6 @@ class ClientModel
         $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
         return $stmt->execute();
     }
+    
 }
 ?>

@@ -1,4 +1,6 @@
 <?php
+
+ob_start();
 class ClientController
 {
     private $clientModel;
@@ -83,34 +85,13 @@ class ClientController
         }
     }
 
-
-    // public function showProductByParent()
-    // {
-    //     // $id_parents = [3, 4, 5, 6, 7, 8];
-    //     // $products = [];
-    //     // foreach ($id_parents as $id_parent) {
-    //     $products[3] = $this->clientModel->getProductsByParent(3);
-    //     // }
-
-    // }
-
     public function showProductsByCategory($categoryId)
     {
         $products = $this->clientModel->getProductsByCategoryId($categoryId);
         include './views/products_category.php';
     }
 
-    public function showProductDetail($id)
-    {
-        $product = $this->clientModel->getProductById($id);
-        if ($product) {
-            $categoryId = $product['Id_cat'];
-            $relatedProducts = $this->clientModel->getTopViewedProductsByCategory($product['Id_cat']);
-            include './views/productDetailView.php';
-        } else {
-            include 'views/404.php';
-        }
-    }
+   
 
     public function listCategories()
     {
@@ -129,62 +110,47 @@ class ClientController
         // // Gọi view và truyền dữ liệu
         // include 'views/home-fe.php';
     }
-    // public function submitComment($id)
-    // {
 
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $productID = $id;
-    //         $userId = $_SESSION['user'];
-    //         $phoneNumber = $_POST['phone_number'];
-    //         $commentContent = $_POST['comment_content'];
-    //         $this->clientModel->addComment($productID, $userId, $commentContent, $phoneNumber);
-    //         header("Location: ?act=showProductDetail&id=$productID");
-    //         exit();
-
-
-    //     }
-
-    // }
     public function submitComment()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $productID = $_POST['product_id'];
-            $userId = $_SESSION['user'];
+            $userId = $_SESSION['user']['User_id'];
             $commentContent = $_POST['comment_content'];
-            $phoneNumber = $_POST['phone_number'];
+    
+            $success = $this->clientModel->addComment($productID, $userId, $commentContent);
+    
+            if ($success) {
+                $_SESSION['flash_message'] = "Bình luận đã được gửi thành công!";
+            } else {
+                $_SESSION['flash_message'] = "Có lỗi xảy ra khi gửi bình luận. Vui lòng thử lại.";
+            }
+    
+            // Chuyển hướng về trang chi tiết sản phẩm
+            header("Location:index.php?act=showProductDetail&id=".urlencode($productID));
 
-            $this->clientModel->addComment($productID, $userId, $commentContent, $phoneNumber);
+            exit();
+        } else {
+            // Nếu không phải POST request, chuyển hướng về trang chủ
+            header("Location: index.php");
+            exit();
         }
     }
-    // public function showComments($id)
-    // {
-    //     $commentViews = $this->clientModel->showComment($id);
-    // }
+    public function showProductDetail($id)
+{
+    $product = $this->clientModel->getProductById($id);
+    if ($product) {
+        $categoryId = $product['Id_cat'];
+        $relatedProducts = $this->clientModel->getTopViewedProductsByCategory($product['Id_cat']);
+        // Lấy danh sách bình luận
+        $comments = $this->clientModel->getCommentsByProductId($id);
+        // Truyền biến $comments vào view
+        include './views/productDetailView.php';
+    } else {
+        include 'views/404.php';
+    }
+}
 
-    // public function login_client_comment()
-    // {
-    //     include_once './views/login-fe.php';
-    //     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn-login-client'])) {
-    //         $username = $_POST['username'];
-    //         $password = $_POST['password'];
-    //         $user = $this->clientModel->checkAccClient($username, $password);
-    //         // var_dump($user);
-    //         // die;
-    //         if ($user) {
-    //             if ($password == $user['password']) {
-    //                 $_SESSION['user'] = $user;
-    //                 echo '<script type="text/javascript">
-    //     window.location.href = "index.php?act=";
-    //   </script>';
-    //                 exit();
-    //             }
-    //         } else {
-    //             echo '<script>alert("Sai tên đăng nhập hoặc mật khẩu!");</script>';
-    //             header("location:?act=login-client-comment");
-    //             exit();
-    //         }
-    //     }
-    // }
     public function login_client()
     {
         include_once './views/login-fe.php';
@@ -198,8 +164,8 @@ class ClientController
                 if ($password == $user['password']) {
                     $_SESSION['user'] = $user;
                     echo '<script type="text/javascript">
-        window.location.href = "index.php?act=home";
-      </script>';
+                         window.location.href = "index.php?act=home";
+                        </script>';
                     exit();
                 }
             } else {
@@ -257,3 +223,5 @@ class ClientController
         }
     }
 }
+ob_end_flush();
+?>

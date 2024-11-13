@@ -1,4 +1,5 @@
 <?php
+ob_start(); 
 // Bắt đầu phiên làm việc
 session_start();
 require_once 'commons/function.php';
@@ -90,4 +91,5 @@ switch ($act) {
 
 // Bao gồm footer
 include 'views/footer-fe.php';
+ob_end_flush();
 ?>

@@ -58,10 +58,13 @@ switch ($act) {
     case 'addCategory':
         $categoryController->addCategory();
         break;
+    case 'form-edit-category':
+        $categoryController->formEditCategory();
     case 'editCategory':
         $id = isset($_GET['id']) ? $_GET['id'] : null;
         $categoryController->editCategory($id);
         break;
+
     case 'deleteCategory':
         $id = $_GET['id'];
         $categoryController->deleteCategory($id);
@@ -152,3 +155,4 @@ switch ($act) {
         $DashboardController->showDashboard();
         break;
 }
+?>

@@ -1,185 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- header -->
+<?php include './views/layout/header.php'; ?>
+ <!-- header -->
+  <!-- <nav>
+    <?php include './views/layout/navbar.php';  ?>
+  </nav> -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Products</title>
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
+  
 
-    .box-views {
-        width: 95%;
-        margin: auto;
-        background: #fff;
-        padding: 2rem;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        overflow-x: auto;
-    }
-
-    h2 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 2rem;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 2rem;
-    }
-
-    th,
-    td {
-        padding: 0.75rem;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f2f2f2;
-        color: #333;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    img {
-        max-width: 50px;
-        height: auto;
-    }
-
-    .btn {
-        padding: 0.5rem 1rem;
-        background-color: #5c67f2;
-        color: #fff;
-        text-align: center;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    .btn:hover {
-        background-color: #5058e2;
-    }
-
-    @media (max-width: 768px) {
-
-        table,
-        thead,
-        tbody,
-        th,
-        td,
-        tr {
-            display: block;
-        }
-
-        th {
-            display: none;
-            /* Hide headers on small screens */
-        }
-
-        tr {
-            margin-bottom: 1rem;
-        }
-
-        td {
-            text-align: right;
-            position: relative;
-            padding-left: 50%;
-            /* Space for label */
-        }
-
-        td::before {
-            content: attr(data-label);
-            /* Use data-label for headers */
-            position: absolute;
-            left: 0;
-            width: 50%;
-            padding-left: 10px;
-            text-align: left;
-            font-weight: bold;
-        }
-    }
-
-    .truncate {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        max-width: 150px;
-        /* Adjust width as needed */
-    }
-
-    .expandable {
-        display: none;
-    }
-
-    .show-more {
-        cursor: pointer;
-        color: #5c67f2;
-        text-decoration: underline;
-    }
-
-    .limited-height {
-        max-height: 250px;
-        /* Giới hạn chiều cao */
-        width: 300px;
-        /* Giới hạn chiều rộng */
-        overflow: hidden;
-        /* Ẩn nội dung vượt quá */
-        position: relative;
-        /* Để sử dụng cho nút xem thêm */
-    }
-
-    .expandable {
-        display: none;
-        /* Ẩn nội dung mở rộng */
-    }
-
-    .show-more {
-        cursor: pointer;
-        color: #5c67f2;
-        text-decoration: underline;
-        position: absolute;
-        bottom: 0;
-        /* Đặt nút ở dưới cùng */
-        left: 0;
-        background: white;
-        /* Nền trắng cho nút */
-        padding: 5px;
-        /* Khoảng cách cho nút */
-    }
-
-    .sort-options {
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-
-    .sort-options label {
-        margin-right: 0.5rem;
-    }
-
-    .sort-options select {
-        padding: 0.5rem;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-    }
-    </style>
-
-
-    <script>
+  <!-- Main Sidebar Container -->
+  <?php include './views/layout/sidebar.php';  ?>
+  
+<!-- js  -->
+<script>
     function toggleDescription(element) {
         const container = element.parentElement;
         const description = container.querySelector('.expandable');
@@ -206,42 +38,33 @@
         window.location.href = '?act=listProduct&categoryId=' + categoryId; // Redirect to filter by category
     }
     </script>
-</head>
-
-<body>
-    <?php
-    require '/laragon/www/DuAnCellphoneS/admin/views/header.php';
-    ?>
-    <div class="box-main">
-        <div class="menu">
-            <nav class="wrapper nav-main">
-                <ul>
-                    <li><a href="?act=dashboard">Thống kê </a></li>
-
-                    <li><a href="?act=listCategories">Quản trị danh mục</a></li>
-                    <li><a href="?act=listParentCategories">Quản trị danh mục Parent</a></li>
-                    <li><a href="?act=listProduct">Quản trị sản phẩm</a></li>
-                    <li><a href="?act=listSlides">Quản trị Slide</a></li>
-                    <li><a href="?act=listUsers">Quản trị người dùng</a></li>
-                    <li><a href="?act=listUserAdmins">Quản trị admin</a></li>
-                    <li><a href="">Thoát</a></li>
-                </ul>
-            </nav>
+ <!-- js -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Quản Lý Sản Phẩm</h1>
+          </div>
         </div>
-        <div class="box-views">
+      </div><!-- /.container-fluid -->
+    </section>
 
-            <h2>Product List</h2>
-            <div class="sort-options">
-                <label for="category-select">Sort by Category:</label>
-                <select id="category-select" onchange="sortByCategory(this.value)">
-                    <option value="">All Categories</option>
-                    <?php foreach ($categories as $category): ?>
-                    <option value="<?= $category['id'] ?>"><?= $category['Category_name'] ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div style="margin-bottom:20px"><a href="?act=insertProduct" class="btn">Thêm Mới Sản Phẩm</a></div>
-            <div class="toggle-columns">
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=insertProduct' ?>">
+                  <button class="btn btn-success">Thêm Sản Phẩm</button>
+                </a>
+              </div>
+              <!-- checkbox -->
+              <div class="toggle-columns">
                 <label><input type="checkbox" onclick="toggleColumn('col-description')" checked> Description</label>
                 <label><input type="checkbox" onclick="toggleColumn('col-size')" checked> Size</label>
                 <label><input type="checkbox" onclick="toggleColumn('col-weight')" checked> Weight</label>
@@ -266,10 +89,13 @@
                 <label><input type="checkbox" onclick="toggleColumn('col-detail')" checked> Details</label>
                 <label><input type="checkbox" onclick="toggleColumn('col-screen')" checked> Screen</label>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
+              <!-- checkbox -->
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                  <th>ID</th>
                         <th>Name</th>
                         <th>Title</th>
                         <th class="col-description">Description</th>
@@ -295,13 +121,14 @@
                         <th class="col-detail">Details</th>
                         <th class="col-screen">Screen</th>
                         <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (isset($products) && is_array($products)): ?>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <?php if (isset($products) && is_array($products)): ?>
                     <?php foreach ($products as $row): ?>
-                    <tr>
-                        <td data-label="ID"><?= $row['id'] ?></td>
+
+                  <tr>
+                  <td data-label="ID"><?= $row['id'] ?></td>
                         <td data-label="Name"><?= $row['Name_product'] ?></td>
                         <td data-label="Title"><?= $row['Title'] ?></td>
                         <td class="col-description" data-label="Description">
@@ -335,23 +162,106 @@
                         <td class="col-detail" data-label="Details"><?= $row['Detail'] ?></td>
                         <td class="col-screen" data-label="Screen"><?= $row['Screen'] ?></td>
                         <td data-label="Actions">
-                            <a href="?act=editProduct&id=<?= $row['id'] ?>" class="btn btn-edit">Edit</a>
-                            <a href="?act=deleteProduct&id=<?= $row['id'] ?>" class="btn btn-delete"
+                            <a href="?act=editProduct&id=<?= $row['id'] ?>" class="btn btn-warning">Edit</a>
+                            <a href="?act=deleteProduct&id=<?= $row['id'] ?>" class="btn btn-danger"
                                 onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
                         </td>
-                    </tr>
-                    <?php endforeach; ?>
-                    <?php else: ?>
+                    
+                  </tr>
+                  <?php endforeach; ?>
+                  
+                  <?php else: ?>
                     <tr>
                         <td colspan="26">No products found.</td>
                     </tr>
                     <?php endif; ?>
-                </tbody>
-            </table>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>STT</th>
+                    <th>Category_name</th>
+                    <th>Parent_id</th>
+                    <th>Chức Năng</th>
+                    
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
         </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    <?php include './views/layout/footer.php'; ?>
+  <!-- <footer> -->
 
-    </div>
+
+    <!-- end Footer -->
+
+ <!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 
 </body>
-
 </html>

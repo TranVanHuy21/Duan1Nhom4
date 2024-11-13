@@ -81,7 +81,7 @@
 
 <body>
     <?php
-    require '/laragon/www/DuAnCellphoneS/admin/views/header.php';
+    require '/laragon/www/DuAnCellphoneS/admin/views/layout/header.php';
     ;
     ?>
     <div class="box-main">

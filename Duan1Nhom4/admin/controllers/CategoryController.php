@@ -27,6 +27,7 @@ class CategoryController
             try {
                 $this->categoryModel->insertCategory($category_name, $parent_id);
                 header("Location: index.php?act=listCategories");
+                exit();
             } catch (Exception $e) {
                 echo "Error: " . $e->getMessage();
             }
@@ -34,7 +35,9 @@ class CategoryController
         require_once './views/category/addCategory.php';
     }
 
-
+    public function formEditCategory(){
+        // require_once  './views/'
+    }
     public function editCategory()
     {
         $id = $_GET['id'];

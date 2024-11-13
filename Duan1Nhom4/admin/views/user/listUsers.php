@@ -1,133 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- header -->
+<?php include './views/layout/header.php'; ?>
+ <!-- header -->
+  <!-- <nav>
+    <?php include './views/layout/navbar.php';  ?>
+  </nav> -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Users</title>
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
+  
 
-    .container {
-        width: 90%;
-        margin: 2rem auto;
-        background: #fff;
-        padding: 2rem;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        overflow-x: auto;
+  <!-- Main Sidebar Container -->
+  <?php include './views/layout/sidebar.php';  ?>
+  
 
-    }
-
-    h1 {
-        text-align: center;
-        /* color: #333; */
-        margin-bottom: 2rem;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 2rem;
-    }
-
-    table,
-    th,
-    td {
-        border: 1px solid #ddd;
-    }
-
-    th,
-    td {
-        padding: 1rem;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
-        color: #333;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    .btn {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        margin: 0.5rem 0;
-        background-color: #5c67f2;
-        color: #fff;
-        text-align: center;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    .btn:hover {
-        background-color: #5058e2;
-    }
-
-    .btn-edit {
-        background-color: #4CAF50;
-    }
-
-    .btn-edit:hover {
-        background-color: #45a049;
-    }
-
-    .btn-delete {
-        background-color: #f44336;
-    }
-
-    .btn-delete:hover {
-        background-color: #e53935;
-    }
-    </style>
-</head>
-
-<body>
-    <?php
-    require './views/header.php';
-    ?>
-    <div class="box-main">
-        <div class="menu">
-            <nav class="wrapper nav-main">
-                <ul>
-                    <li><a href="?act=dashboard">Thống kê </a></li>
-
-                    <li><a href="?act=listCategories">Quản trị danh mục</a></li>
-                    <li><a href="?act=listParentCategories">Quản trị danh mục Parent</a></li>
-                    <li><a href="?act=listProduct">Quản trị sản phẩm</a></li>
-                    <li><a href="?act=listSlides">Quản trị Slide</a></li>
-                    <li><a href="?act=listUsers">Quản trị người dùng</a></li>
-                    <li><a href="?act=listUserAdmins">Quản trị admin</a></li>
-                    <li><a href="">Thoát</a></li>
-                </ul>
-            </nav>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Quan Ly User</h1>
+          </div>
         </div>
-        <div class="box-views">
-            <div class="container">
-                <h1>User List</h1>
-                <table>
-                    <tr>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=insertUser' ?>">
+                  <button class="btn btn-success">Thêm User</button>
+                </a>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
                         <th>ID</th>
                         <th>Username</th>
                         <th>Passworld</th>
                         <th>Name</th>
                         <th>Actions</th>
-                    </tr>
-                    <?php if (isset($users) && is_array($users)): ?>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <?php if (isset($users) && is_array($users)): ?>
                     <?php foreach ($users as $user): ?>
                     <tr>
                         <td><?= $user['User_id'] ?></td>
@@ -148,10 +69,96 @@
                         <td colspan="4">No users found.</td>
                     </tr>
                     <?php endif; ?>
+                  
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                  <th>ID</th>
+                        <th>Username</th>
+                        <th>Passworld</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    
+                  </tr>
+                  </tfoot>
                 </table>
                 <a href="?act=insertUser" class="btn">Add New User</a>
+              </div>
+              <!-- /.card-body -->
             </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
         </div>
-</body>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    <?php include './views/layout/footer.php'; ?>
+  <!-- <footer> -->
 
+
+    <!-- end Footer -->
+
+ <!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body>
 </html>

@@ -67,7 +67,7 @@
 
 <body>
     <?php
-    require './views/header.php';
+    require './views/layout/header.php';
     ?>
     <div class="box-main">
         <div class="menu">

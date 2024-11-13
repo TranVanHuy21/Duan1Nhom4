@@ -1,134 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- header -->
+<?php include './views/layout/header.php'; ?>
+ <!-- header -->
+  <!-- <nav>
+    <?php include './views/layout/navbar.php';  ?>
+  </nav> -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Users</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+  
+
+  <!-- Main Sidebar Container -->
+  <?php include './views/layout/sidebar.php';  ?>
+  
+<!-- js  -->
+<script>
+    function toggleDescription(element) {
+        const container = element.parentElement;
+        const description = container.querySelector('.expandable');
+
+        if (description.style.display === "none") {
+            description.style.display = "block"; // Hiển thị nội dung đầy đủ
+            container.style.maxHeight = "none"; // Bỏ giới hạn chiều cao
+            element.textContent = "Ẩn bớt"; // Thay đổi văn bản thành "Hide"
+        } else {
+            description.style.display = "none"; // Ẩn nội dung đầy đủ
+            container.style.maxHeight = "250px"; // Đặt lại chiều cao giới hạn
+            element.textContent = "Xem thêm"; // Thay đổi văn bản thành "Show more"
         }
+    }
 
-        .container {
-            width: 90%;
-            margin: 2rem auto;
-            background: #fff;
-            padding: 2rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow-x: auto;
-
+    function toggleColumn(columnClass) {
+        var elements = document.getElementsByClassName(columnClass);
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.display = elements[i].style.display === 'none' ? '' : 'none';
         }
+    }
 
-        h1 {
-            text-align: center;
-            /* color: #333; */
-            margin-bottom: 2rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
-        }
-
-        th,
-        td {
-            padding: 1rem;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            margin: 0.5rem 0;
-            background-color: #5c67f2;
-            color: #fff;
-            text-align: center;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background-color: #5058e2;
-        }
-
-        .btn-edit {
-            background-color: #4CAF50;
-        }
-
-        .btn-edit:hover {
-            background-color: #45a049;
-        }
-
-        .btn-delete {
-            background-color: #f44336;
-        }
-
-        .btn-delete:hover {
-            background-color: #e53935;
-        }
-    </style>
-</head>
-
-<body>
-    <?php
-    require './views/header.php';
-    ?>
-    <div class="box-main">
-        <div class="menu">
-            <nav class="wrapper nav-main">
-                <ul>
-                    <li><a href="?act=dashboard">Thống kê </a></li>
-
-                    <li><a href="?act=listCategories">Quản trị danh mục</a></li>
-                    <li><a href="?act=listParentCategories">Quản trị danh mục Parent</a></li>
-                    <li><a href="?act=listProduct">Quản trị sản phẩm</a></li>
-                    <li><a href="?act=listUsers">Quản trị người dùng</a></li>
-                    <li><a href="?act=listUserAdmins">Quản trị admin</a></li>
-                    <li><a href="?act=listSlides">Quản trị Slide</a></li>
-                    <li><a href="">Thoát</a></li>
-                </ul>
-            </nav>
+    function sortByCategory(categoryId) {
+        window.location.href = '?act=listProduct&categoryId=' + categoryId; // Redirect to filter by category
+    }
+    </script>
+ <!-- js -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Quản Trị Slide</h1>
+          </div>
         </div>
-        <div class="box-views">
-            <div class="container">
-                <h2>Slide List</h2>
-                <table>
-                    <tr>
-                        <th>ID</th>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=insertSlide' ?>">
+                  <button class="btn btn-success">Thêm Slide</button>
+                </a>
+              </div>
+              <!-- checkbox -->
+              <!-- checkbox -->
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                  <th>ID</th>
                         <th>Title</th>
                         <th>Image</th>
                         <th>Role</th>
                         <th>Description</th>
                         <th>Actions</th>
-                    </tr>
-                    <?php foreach ($slides as $slide): ?>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <?php foreach ($slides as $slide): ?>
                         <tr>
                             <td><?= $slide['id'] ?></td>
                             <td><?= htmlspecialchars($slide['title']) ?></td>
@@ -143,10 +94,44 @@
                             </td>
                         </tr>
                     <?php endforeach; ?>
+                  
+                    <tr>
+                        <td colspan="26">No products found.</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Image</th>
+                        <th>Role</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    
+                  </tr>
+                  </tfoot>
                 </table>
-                <a href="?act=showInsertForm" class="btn">Add New Slide</a>
+              </div>
+              <!-- /.card-body -->
             </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
         </div>
-</body>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    <?php include './views/layout/footer.php'; ?>
+  <!-- <footer> -->
 
+
+    <!-- end Footer -->
+
+ <!-- Page specific script -->
+
+</body>
 </html>

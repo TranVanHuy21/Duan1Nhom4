@@ -1,147 +1,156 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- header -->
+ <?php include './views/layout/header.php'; ?>
+ <!-- header -->
+  <!-- <nav>
+    <?php include './views/layout/navbar.php';  ?>
+  </nav> -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>listCategory</title>
-    <!-- <link rel="stylesheet" href="../assets/css/categories.css"> -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+  
 
-        .container {
-            width: 90%;
-            margin: 0 auto;
-            background: #fff;
-            padding: 0 2rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow-x: auto;
-            /* Enable horizontal scrolling */
-        }
+  <!-- Main Sidebar Container -->
+  <?php include './views/layout/sidebar.php';  ?>
+  
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 2rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
-        }
-
-        th,
-        td {
-            padding: 0.5rem;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            color: #333;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            margin: 0.5rem 0;
-            background-color: #5c67f2;
-            color: #fff;
-            text-align: center;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background-color: #5058e2;
-        }
-
-        .btn-edit {
-            background-color: #4CAF50;
-        }
-
-        .btn-edit:hover {
-            background-color: #45a049;
-        }
-
-        .btn-delete {
-            background-color: #f44336;
-        }
-
-        .btn-delete:hover {
-            background-color: #e53935;
-        }
-    </style>
-</head>
-
-<body>
-    <?php
-    require './views/header.php';
-    ?>
-    <div class="box-main">
-        <div class="menu">
-            <nav class="wrapper nav-main">
-                <ul>
-                    <li><a href="?act=dashboard">Thống kê </a></li>
-                    <li><a href="?act=listCategories">Quản trị danh mục</a></li>
-                    <li><a href="?act=listParentCategories">Quản trị danh mục Parent</a></li>
-                    <li><a href="?act=listProduct">Quản trị sản phẩm</a></li>
-                    <li><a href="?act=listSlides">Quản trị Slide</a></li>
-                    <li><a href="?act=listUsers">Quản trị người dùng</a></li>
-                    <li><a href="?act=listUserAdmins">Quản trị admin</a></li>
-                    <li><a href="">Thoát</a></li>
-                </ul>
-            </nav>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Quan Ly Danh Muc</h1>
+          </div>
         </div>
-        <div class="box-views">
-            <div class="container">
-                <h2>Categories</h2>
-                <a href="index.php?act=addCategory">Add Category</a>
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Parent ID</th>
-                        <th>Actions</th>
-                    </tr>
-                    <?php foreach ($categories as $category): ?>
-                        <tr>
-                            <td><?= $category['id'] ?></td>
-                            <td><?= $category['Category_name'] ?></td>
-                            <td><?= $category['Parent_id'] ?></td>
-                            <td>
-                                <a href="index.php?act=editCategory&id=<?= $category['id'] ?>">Edit</a>
-                                <a href="index.php?act=deleteCategory&id=<?= $category['id'] ?>">Delete</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=addCategory' ?>">
+                  <button class="btn btn-success">Thêm Danh Mục</button>
+                </a>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Category_name</th>
+                    <th>Parent_id</th>
+                    <th>Chức Năng</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach($categories  as $key => $categorie ): ?>
+
+                  <tr>
+                    <td><?= $key + 1  ?></td>
+                    <td><?= $categorie['Category_name'] ?></td>
+                    <td><?= $categorie['Parent_id'] ?></td>
+                    <td>
+                    <a href="?act=editCategory&id=<?= $row['id'] ?>" class="btn btn-warning">Edit</a>
+                      <a href="?act=deleteCategory&id=<?= $row['id'] ?>" class="btn btn-danger"
+                      onclick="return confirm('Are you sure you want to delete this Category?');">Delete</a>
+                        <!-- <button class="btn btn-danger">Xóa</button> -->
+                    </td>
+
+                    
+                  </tr>
+                  <?php endforeach; ?>
+                  
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>STT</th>
+                    <th>Category_name</th>
+                    <th>Parent_id</th>
+                    <th>Chức Năng</th>
+                    
+                  </tr>
+                  </tfoot>
                 </table>
+              </div>
+              <!-- /.card-body -->
             </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
         </div>
-    </div>
-</body>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    <?php include './views/layout/footer.php'; ?>
+  <!-- <footer> -->
 
+
+    <!-- end Footer -->
+
+ <!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body>
 </html>

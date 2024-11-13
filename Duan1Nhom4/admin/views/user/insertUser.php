@@ -1,102 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insert User</title>
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
+<!-- header -->
+<?php include './views/layout/header.php'; ?>
+ <!-- header -->
+  <!-- <nav>
+    <?php include './views/layout/navbar.php';  ?>
+  </nav> -->
 
-    .container {
-        width: 90%;
-        margin: 2rem auto;
-        background: #fff;
-        padding: 2rem;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-    }
+  
 
-    h1 {
-        text-align: center;
-        /* color: #333; */
-        margin-bottom: 2rem;
-    }
+  <!-- Main Sidebar Container -->
+  <?php include './views/layout/sidebar.php';  ?>
+  
 
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-
-    form p {
-        margin: 0.5rem 0;
-        color: #555;
-    }
-
-    form input[type="text"],
-    form input[type="password"] {
-        width: 100%;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    form input[type="submit"] {
-        background-color: #5c67f2;
-        color: #fff;
-        border: none;
-        padding: 0.75rem;
-        border-radius: 4px;
-        cursor: pointer;
-        width: 100%;
-        font-size: 1rem;
-    }
-
-    form input[type="submit"]:hover {
-        background-color: #5058e2;
-    }
-    </style>
-</head>
-
-<body>
-    <?php
-    require '/laragon/www/DuAnCellphoneS/admin/views/header.php';
-    ?>
-    <div class="box-main">
-        <div class="menu">
-            <nav class="wrapper nav-main">
-                <ul>
-                    <li><a href="?act=dashboard">Thống kê </a></li>
-
-                    <li><a href="?act=listCategories">Quản trị danh mục</a></li>
-                    <li><a href="?act=listProduct">Quản trị sản phẩm</a></li>
-                    <li><a href="?act=listParentCategories">Quản trị danh mục Parent</a></li>
-                    <li><a href="?act=listSlides">Quản trị Slide</a></li>
-                    <li><a href="?act=listUsers">Quản trị người dùng</a></li>
-                    <li><a href="?act=listUserAdmins">Quản trị admin</a></li>
-                    <li><a href="">Thoát</a></li>
-                </ul>
-            </nav>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Quản Lý User</h1>
+          </div>
         </div>
-        <div class="box-views">
-            <div class="container">
-                <h1>Insert User</h1>
-                <form action="?act=insertUser" method="post">
-                    <p>Username</p><input type="text" name="username">
-                    <p>Password</p><input type="password" name="password">
-                    <p>Name</p><input type="text" name="name">
-                    <input type="submit" value="Add User" name="btn_insert">
-                </form>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+          <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Quản Lý User <small></small></h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="?act=insertUser" method="post">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputUsername">Username</label>
+                    <input type="text" name="email" class="form-control" id="exampleInputemail" placeholder="Email hoặc Tên Tài Khoản">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword">Password</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputname">Name</label>
+                    <input type="name" name="name" class="form-control" id="exampleInputname" placeholder="Nhập Name">
+                  </div>
+                  <div class="form-group mb-0">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
+                      <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" value="Add User" name="btn_insert" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
             </div>
+          </div>
+          <!-- /.col -->
         </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    <?php include './views/layout/footer.php'; ?>
+ 
+
 </body>
-
-
 </html>

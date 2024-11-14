@@ -6,7 +6,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="<?= 'http://localhost/DuanCellphoneS/'?>" class="nav-link">WEBSITE</a>
+        <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/'?>" class="nav-link">WEBSITE</a>
       </li>
     </ul>
 

@@ -26,7 +26,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                <li class="nav-item">
-            <a href="http://localhost/DuanCellphoneS/admin/?act=dashboard" class="nav-link">
+            <a href="http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=dashboard" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -36,7 +36,7 @@
 
           
           <li class="nav-item">
-            <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=listCategories' ?>" class="nav-link">
+            <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=listCategories' ?>" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Quản Lý Danh Mục
@@ -45,7 +45,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=listProduct' ?>" class="nav-link">
+            <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=listProduct' ?>" class="nav-link">
             <i class="nav-icon fas fa-mobile"></i>
               <p>
                 Quản Lý Sản Phẩm
@@ -54,7 +54,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=listParentCategories' ?>" class="nav-link">
+            <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=listParentCategories' ?>" class="nav-link">
             <i class="nav-icon fas fa-window-restore"></i>
               <p>
               Quản trị Parent
@@ -63,7 +63,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=listSlides' ?>" class="nav-link">
+            <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=listSlides' ?>" class="nav-link">
             <i class="nav-icon fas fa-sliders-h"></i>
               <p>
               Quản trị Slide
@@ -72,7 +72,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=listUsers' ?>" class="nav-link">
+            <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=listUsers' ?>" class="nav-link">
             <i class="nav-icon fas fa-user"></i>
               <p>
               Quản trị người dùng
@@ -81,7 +81,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=listUserAdmins' ?>" class="nav-link">
+            <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=listUserAdmins' ?>" class="nav-link">
             <i class="nav-icon fas fa-users-cog"></i>
               <p>
               Quản trị admin

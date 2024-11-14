@@ -31,7 +31,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=insertUserAdmin' ?>">
+                <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=insertUserAdmin' ?>">
                   <button class="btn btn-success">Thêm Admin</button>
                 </a>
               </div>

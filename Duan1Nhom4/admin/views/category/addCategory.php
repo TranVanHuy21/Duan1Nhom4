@@ -36,7 +36,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="<?='http://localhost/DuanCellphoneS/admin/?act=listCategories' ?>" method="POST">
+              <form action="<?='http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=listCategories' ?>" method="POST">
                 <div class="card-body">
                   <div class="form-group">
                   <label for="Category_name">Category Name:</label>

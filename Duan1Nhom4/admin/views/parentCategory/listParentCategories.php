@@ -31,7 +31,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <a href="<?= 'http://localhost/DuanCellphoneS/admin/?act=addParentCategory' ?>">
+                <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=addParentCategory' ?>">
                   <button class="btn btn-success">Thêm Parent</button>
                 </a>
               </div>

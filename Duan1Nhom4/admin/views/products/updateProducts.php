@@ -6,82 +6,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sửa sản phẩm</title>
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-    .container {
-        width: 90%;
-        margin: 2rem auto;
-        background: #fff;
-        padding: 2rem;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
+        .container {
+            width: 90%;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
 
-    }
+        }
 
-    h2 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 2rem;
-    }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+        }
 
-    .form-group {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
 
-    .form-group div {
-        width: 48%;
-        margin-bottom: 1rem;
-    }
+        .form-group div {
+            width: 48%;
+            margin-bottom: 1rem;
+        }
 
-    .form-group div.full-width {
-        width: 90%;
-    }
+        .form-group div.full-width {
+            width: 90%;
+        }
 
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #555;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
 
-    .form-group input[type="text"],
-    .form-group input[type="file"],
-    .form-group input[type="number"],
-    .form-group input[type="date"],
-    .form-group select {
-        width: 100%;
-        padding: 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-    .form-group input[type="submit"] {
-        background-color: #5c67f2;
-        color: #fff;
-        border: none;
-        padding: 0.75rem;
-        border-radius: 4px;
-        cursor: pointer;
-        width: 100%;
-        font-size: 1rem;
-    }
+        .form-group input[type="submit"] {
+            background-color: #5c67f2;
+            color: #fff;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
 
-    .form-group input[type="submit"]:hover {
-        background-color: #5058e2;
-    }
+        .form-group input[type="submit"]:hover {
+            background-color: #5058e2;
+        }
     </style>
 </head>
 
 <body>
     <?php
-    require '/laragon/www/DuAnCellphoneS/admin/views/layout/header.php';
+    require '/laragon/www/Duan1Nhom4/Duan1Nhom4/admin/views/layout/header.php';
     ;
     ?>
     <div class="box-main">
@@ -223,10 +223,9 @@
                             <label for="Id_cat">Loại sản phẩm</label>
                             <select id="Id_cat" name="Id_cat">
                                 <?php foreach ($categories as $cate): ?>
-                                <option value="<?= $cate['id'] ?>"
-                                    <?= $cate['id'] == $products['Id_cat'] ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($cate['Category_name']) ?>
-                                </option>
+                                    <option value="<?= $cate['id'] ?>" <?= $cate['id'] == $products['Id_cat'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($cate['Category_name']) ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

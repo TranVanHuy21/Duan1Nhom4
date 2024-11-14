@@ -81,7 +81,11 @@
 
 <body>
     <?php
+<<<<<<< HEAD
     require '/laragon/www/Duan1Nhom4/Duan1Nhom4/admin/views/layout/header.php';
+=======
+    require '/laragon/www/Duan1Nhom4//Duan1Nhom4/admin/views/layout/header.php';
+>>>>>>> main
     ;
     ?>
     <div class="box-main">

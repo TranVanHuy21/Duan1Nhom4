@@ -169,7 +169,7 @@
                     <input type="checkbox" id="student" name="student">
                     <label for="student">Tôi là Học sinh - sinh viên (nhận thêm ưu đãi tới 500k/sản phẩm)</label>
                 </div>
-                <button type="submit">Đăng ký</button>
+                <button type="submit" >Đăng ký</button>
             </form>
             <p>Bạn đã có tài khoản? <a href="?act=login-client">Đăng nhập ngay</a></p>
         </div>

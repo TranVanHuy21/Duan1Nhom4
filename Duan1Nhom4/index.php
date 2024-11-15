@@ -83,6 +83,10 @@ switch ($act) {
         $clientController->forgotPassword();
         break;
 
+    case 'viewCart':
+        $clientController->viewCart();
+        break;
+
     default:
         // Hành động mặc định là hiển thị trang chủ
         $clientController->showHome();

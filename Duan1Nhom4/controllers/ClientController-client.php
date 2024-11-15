@@ -222,6 +222,19 @@ class ClientController
             include 'views/forgot-password.php';
         }
     }
+
+    public function viewCart() {
+        // Kiểm tra session giỏ hàng
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = array();
+        }
+        
+        // Lấy dữ liệu giỏ hàng từ session
+        $cart = $_SESSION['cart'];
+        
+        // Load view giỏ hàng
+        include './views/Gio_hang-fe.php';
+    }
 }
 ob_end_flush();
 ?>

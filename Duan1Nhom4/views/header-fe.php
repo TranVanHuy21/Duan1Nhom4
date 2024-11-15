@@ -121,7 +121,7 @@
                         </div>
                     </a>
 
-                    <a href="http://localhost/Duan1Nhom4/Duan1Nhom4/views/Gio_hang-fe.php" class="header-box-cart">
+                    <a href="?act=viewCart" class="header-box-cart">
                         <div class="about-box-icon">
                             <i class="fa-solid fa-cart-shopping"></i>
                         </div>

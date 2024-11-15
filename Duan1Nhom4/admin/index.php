@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'auth.php';
 require_once '../commons/function.php';
 require_once 'controllers/DashboardController.php';
 require_once 'controllers/ProductController.php';

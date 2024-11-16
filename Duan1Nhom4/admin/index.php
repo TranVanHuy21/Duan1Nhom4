@@ -31,7 +31,7 @@ $slideController = new SlideController();
 
 // Kiểm tra xem người dùng đã đăng nhập chưa
 if (!isset($_SESSION['user_admin'])) {
-    header('Location: /laragon/www/Duan1Nhom4/Duan1Nhom4/admin/views/login.php'); // Chuyển hướng đến trang đăng nhập
+    header('Location: ?act=login'); // Chuyển hướng đến trang đăng nhập
     exit();
 }
 switch ($act) {

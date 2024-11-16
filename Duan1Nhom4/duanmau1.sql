@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 30, 2024 at 05:06 PM
+-- Generation Time: Nov 15, 2024 at 03:08 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `id` int NOT NULL,
-  `Category_name` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `Category_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `Parent_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
@@ -93,12 +93,20 @@ INSERT INTO `category` (`id`, `Category_name`, `Parent_id`) VALUES
 
 CREATE TABLE `comments` (
   `Comment_id` int NOT NULL,
-  `id` int NOT NULL,
+  `product_id` int NOT NULL,
   `User_id` int NOT NULL,
   `Comment_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Comment_content` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `Phone_number` varchar(25) COLLATE utf8mb3_unicode_ci NOT NULL
+  `Comment_content` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`Comment_id`, `product_id`, `User_id`, `Comment_time`, `Comment_content`) VALUES
+(1, 32, 6, '2024-11-13 15:33:41', ',m,m'),
+(2, 21, 6, '2024-11-13 15:38:35', 'hjgj'),
+(3, 21, 6, '2024-11-13 16:52:07', 'đẹp quá');
 
 -- --------------------------------------------------------
 
@@ -126,9 +134,9 @@ INSERT INTO `countdown` (`id`, `end_time`) VALUES
 
 CREATE TABLE `customer` (
   `Customer_id` int NOT NULL,
-  `Customer_name` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `Customer_phone` varchar(15) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `Customer_mail` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL
+  `Customer_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `Customer_phone` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `Customer_mail` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
@@ -139,8 +147,8 @@ CREATE TABLE `customer` (
 
 CREATE TABLE `deliverer` (
   `Deliverer_id` int NOT NULL COMMENT 'id nhan vien giao hang',
-  `Deliverer_name` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'ten nhan vien giao hang',
-  `Deliverer_phone` varchar(11) COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'so dien thoai nvgh'
+  `Deliverer_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'ten nhan vien giao hang',
+  `Deliverer_phone` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'so dien thoai nvgh'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
@@ -170,8 +178,8 @@ CREATE TABLE `order_pro` (
   `Deliverer` int NOT NULL COMMENT 'id nhân ',
   `Create_date` datetime NOT NULL COMMENT 'Ngày lập đơn hàng',
   `Total_Price` int NOT NULL COMMENT 'Tổng giá trị đơn hàng',
-  `Delivery_address` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'địa điểm nhận đơn hàng',
-  `Note` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'ghi chú'
+  `Delivery_address` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'địa điểm nhận đơn hàng',
+  `Note` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'ghi chú'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
@@ -182,7 +190,7 @@ CREATE TABLE `order_pro` (
 
 CREATE TABLE `parentcate` (
   `id` int NOT NULL,
-  `parent_name` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL
+  `parent_name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
@@ -209,30 +217,30 @@ INSERT INTO `parentcate` (`id`, `parent_name`) VALUES
 CREATE TABLE `products` (
   `id` int NOT NULL COMMENT 'ID sản phẩm',
   `Name_product` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'Tên điện thoại',
-  `Title` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'Tiêu đề sản phẩm',
+  `Title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'Tiêu đề sản phẩm',
   `Description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'Tính năng nổi bật',
   `Price` int NOT NULL COMMENT 'Gía sản phẩm',
   `Quanlity` int DEFAULT NULL COMMENT 'Số lượng điện thoại',
   `parent_cate` int NOT NULL,
-  `Size` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'kích thước sản phẩm',
-  `Weight` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Trọng lượng sản phẩm',
-  `Color` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Màu sắc sản phẩm',
-  `Image` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Hình ảnh sản phẩm',
-  `Memory` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Ram( Bộ nhớ)',
-  `Os` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Hệ điều hành',
-  `Cpu_speed` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Tốc độ CPU',
+  `Size` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'kích thước sản phẩm',
+  `Weight` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Trọng lượng sản phẩm',
+  `Color` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Màu sắc sản phẩm',
+  `Image` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Hình ảnh sản phẩm',
+  `Memory` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Ram( Bộ nhớ)',
+  `Os` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Hệ điều hành',
+  `Cpu_speed` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Tốc độ CPU',
   `Camera_primary` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Camera trước',
-  `Camera_secondary` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `Battery` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Loại pin số giờ hoạt động',
-  `Warranty` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Chế độ bảo hành',
-  `Bluetooth` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Bluetooth',
+  `Camera_secondary` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `Battery` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Loại pin số giờ hoạt động',
+  `Warranty` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Chế độ bảo hành',
+  `Bluetooth` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Bluetooth',
   `Promotion_price` int NOT NULL COMMENT 'Gía khuyến mãi',
   `Start_promotion` datetime DEFAULT NULL COMMENT 'Ngày bắt đầu khuyến mãi',
   `End_promotion` datetime DEFAULT NULL COMMENT 'Ngày kết thúc khuyến mãi',
-  `Wlan` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Mạng lan',
+  `Wlan` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'Mạng lan',
   `Id_cat` int NOT NULL,
   `Detail` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci,
-  `Screen` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'man hinh',
+  `Screen` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL COMMENT 'man hinh',
   `discount` int DEFAULT NULL,
   `clicks` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
@@ -244,9 +252,9 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `Name_product`, `Title`, `Description`, `Price`, `Quanlity`, `parent_cate`, `Size`, `Weight`, `Color`, `Image`, `Memory`, `Os`, `Cpu_speed`, `Camera_primary`, `Camera_secondary`, `Battery`, `Warranty`, `Bluetooth`, `Promotion_price`, `Start_promotion`, `End_promotion`, `Wlan`, `Id_cat`, `Detail`, `Screen`, `discount`, `clicks`) VALUES
 (19, 'iPhone 15 Pro Max 256GB | Chính hãng VN/A', 'iPhone 15 Pro Max 256GB | Chính hãng VN/A', 'Thiết kế khung viền từ titan chuẩn hàng không vũ trụ - Cực nhẹ', 34990000, 2, 3, '159,9 x 76,7 x 8,25 mm', '221 g', 'Titan Tự Nhiên', 'iphone-15-pro-max_3 (1).webp', '8 GB', 'IOS 18', 'Apple A17 Pro 6 nhân', 'Camera chính: 48MP, 24 mm, ƒ/1.78 Camera góc siêu rộng: 12 MP, 13 mm, ƒ/2.2 Camera Tele: 12 MP', '12MP, ƒ/1.9', '4422 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 29390000, '2024-07-01 00:00:00', '2024-07-31 00:00:00', 'không', 20, 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', '6.67', 16, 136),
 (20, 'Samsung Galaxy S24 Ultra 12GB 256GB', 'Samsung Galaxy S24 Ultra 12GB 256GB', 'Máy mới 100% , chính hãng Apple Việt Nam.', 33990000, 2, 3, '', '2', 'Xám', 'ss-s24-ultra-xam-222.webp', '', '', '', '', '', '', '', '', 29390000, NULL, NULL, '', 21, 'Trải nghiệm đỉnh cao với hiệu năng mạnh mẽ từ vi xử lý tân tiến, kết hợp cùng RAM 12GB cho khả năng đa nhiệm mượt mà.', '', 14, 24),
-(21, 'IPhone 15 Pro 256GB | Chính hãng VN/A', 'IPhone 15 Pro 256GB | Chính hãng VN/A', 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', 31990000, 10, 3, '', '', '', 'iphone-15-pro-256gb.webp', '', '', '', '', '', '', '', '', 27990000, NULL, NULL, 'không', 20, 'Thiết kế khung viền từ titan chuẩn hàng không vũ trụ - Cực nhẹ', '6.1 inches', 15, 41),
-(23, 'Samsung Galaxy Z Flip6', 'Samsung Galaxy Z Flip6', 'Samsung Z Flip 6 là chiếc điện thoại gập vỏ sò chạy chip Snapdragon 8 Gen 3 for Galaxy mạnh mẽ bậc nhất hiện nay. ', 28990000, 100, 3, 'Kích thước: 165.1 x 71.9 x 6.9 mm Kích thước gập: 85.1 x 71.9 x 14.9 mm', '187 g', 'Xanh', 'samsung-galaxy-z-flip-6-xanh-duong-6_2.webp', '12 GB', 'Android 14', 'Snapdragon 8 Gen 3 for Galaxy Tăng lên 42% AI', 'Camera chính: 48MP, 24 mm, ƒ/1.78 Camera góc siêu rộng: 12 MP, 13 mm, ƒ/2.2 Camera Tele: 12 MP', 'Camera góc chụp rộng: 50.0 MP, f/1.8, thu phóng quang học 2x Góc chụp siêu rộng: 12.0 MP, f/2.2', '4000mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 28990000, '2024-08-10 00:00:00', '2024-07-08 00:00:00', 'không', 21, 'Chip Snapdragon 8 Gen 2 8 nhân mang đến hiệu năng mạnh mẽ, cho phép bạn xử lý các tác vụ hàng ngày một cách mượt mà. ', '6.7 inches', 1, 17),
-(24, 'Samsung Galaxy Z Fold6', 'Samsung Galaxy Z Fold6', 'Samsung Z Fold 6 là siêu phẩm điện thoại gập được ra mắt ngày 10/7,', 43990000, 100, 3, ' Kích thước: 153.5 x 132.6 x 5.6 mm Kích thước gập: 153.5 x 68.1 x 12.1 mm', '239 g', 'Xanh Dương', 'samsung-galaxy-z-fold-6-xanh_5_.webp', '12 GB', 'Android 14', 'Snapdragon 8 Gen 3 for Galaxy Tăng lên 42% AI', 'Camera bên ngoài:10 MP, f/2.2 Camera bên trong: 4 MP, F1.8', 'Camera góc rộng: 50.0 MP, f/1.8, Thu phóng quang học 2x Camera chụp góc siêu rộng: 12.0 MP, f/2.2 Camera ống kính tele: 10.0 MP, f/2.4, Thu phóng Quang học 3x', '4400 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 43990000, '2024-07-02 00:00:00', '2024-08-10 00:00:00', 'không', 21, 'Chip Snapdragon 8 Gen 2 8 nhân mang đến hiệu năng mạnh mẽ', '7.6 inches', 1, 12),
+(21, 'IPhone 15 Pro 256GB | Chính hãng VN/A', 'IPhone 15 Pro 256GB | Chính hãng VN/A', 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', 31990000, 10, 3, '', '', '', 'iphone-15-pro-256gb.webp', '', '', '', '', '', '', '', '', 27990000, NULL, NULL, 'không', 20, 'Thiết kế khung viền từ titan chuẩn hàng không vũ trụ - Cực nhẹ', '6.1 inches', 15, 52),
+(23, 'Samsung Galaxy Z Flip6', 'Samsung Galaxy Z Flip6', 'Samsung Z Flip 6 là chiếc điện thoại gập vỏ sò chạy chip Snapdragon 8 Gen 3 for Galaxy mạnh mẽ bậc nhất hiện nay. ', 28990000, 100, 3, 'Kích thước: 165.1 x 71.9 x 6.9 mm Kích thước gập: 85.1 x 71.9 x 14.9 mm', '187 g', 'Xanh', 'samsung-galaxy-z-flip-6-xanh-duong-6_2.webp', '12 GB', 'Android 14', 'Snapdragon 8 Gen 3 for Galaxy Tăng lên 42% AI', 'Camera chính: 48MP, 24 mm, ƒ/1.78 Camera góc siêu rộng: 12 MP, 13 mm, ƒ/2.2 Camera Tele: 12 MP', 'Camera góc chụp rộng: 50.0 MP, f/1.8, thu phóng quang học 2x Góc chụp siêu rộng: 12.0 MP, f/2.2', '4000mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 28990000, '2024-08-10 00:00:00', '2024-07-08 00:00:00', 'không', 21, 'Chip Snapdragon 8 Gen 2 8 nhân mang đến hiệu năng mạnh mẽ, cho phép bạn xử lý các tác vụ hàng ngày một cách mượt mà. ', '6.7 inches', 1, 18),
+(24, 'Samsung Galaxy Z Fold6', 'Samsung Galaxy Z Fold6', 'Samsung Z Fold 6 là siêu phẩm điện thoại gập được ra mắt ngày 10/7,', 43990000, 100, 3, ' Kích thước: 153.5 x 132.6 x 5.6 mm Kích thước gập: 153.5 x 68.1 x 12.1 mm', '239 g', 'Xanh Dương', 'samsung-galaxy-z-fold-6-xanh_5_.webp', '12 GB', 'Android 14', 'Snapdragon 8 Gen 3 for Galaxy Tăng lên 42% AI', 'Camera bên ngoài:10 MP, f/2.2 Camera bên trong: 4 MP, F1.8', 'Camera góc rộng: 50.0 MP, f/1.8, Thu phóng quang học 2x Camera chụp góc siêu rộng: 12.0 MP, f/2.2 Camera ống kính tele: 10.0 MP, f/2.4, Thu phóng Quang học 3x', '4400 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 43990000, '2024-07-02 00:00:00', '2024-08-10 00:00:00', 'không', 21, 'Chip Snapdragon 8 Gen 2 8 nhân mang đến hiệu năng mạnh mẽ', '7.6 inches', 1, 13),
 (25, 'iPhone 15 128GB | Chính hãng VN/A', 'iPhone 15 128GB | Chính hãng VN/A', 'iPhone 15 128GB | Chính hãng VN/A', 22990000, 200, 3, '6.1 inches', '6.1 inches', 'Hồng', 'iphone-15-plus_1__1.webp', '6 GB', 'IOS 18', 'Apple A16 Bionic 6 nhân', 'Chính 48 MP & Phụ 12 MP', 'Apple A16 Bionic 6 nhân', '3349 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 19990000, '2024-07-01 00:00:00', '2024-09-27 00:00:00', 'không', 20, 'iPhone 15 128GB được trang bị màn hình Dynamic Island kích thước 6.1 inch với công nghệ hiển thị Super Retina XDR', '6.1 inches', 18, 14),
 (26, 'Apple MacBook Air M1 256GB 2020 I Chính hãng Apple Việt Nam', 'Apple MacBook Air M1 256GB 2020 I Chính hãng Apple Việt Nam', 'Hiệu năng vượt trội - Cân mọi tác vụ từ word, exel đến chỉnh sửa ảnh trên các phần mềm như AI, PTS', 22990000, 100, 4, ' 1.61 cm x 30.41 cm x 21.24 cm', '1.29 kg', '', 'air_m2.webp', '8GB', '', '8 nhân với 4 nhân hiệu năng cao và 4 nhân tiết kiệm điện', '8mp', 'Không', '49.9-watt lithium-polymer, củ sạc công suất 30W', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 18790000, '2024-07-01 00:00:00', '2024-09-07 00:00:00', 'không', 31, 'Macbook Air M1 2020 - Sang trọng, tinh tế, hiệu năng khủng', '13.3 inches', 17, 58),
 (27, 'MacBook Air M3 13 inch 2024 8GB - 256GB | Chính hãng Apple Việt Nam', 'MacBook Air M3 13 inch 2024 8GB - 256GB | Chính hãng Apple Việt Nam', 'Sức mạnh xử lý hàng đầu trên chip Apple M3 - Cân tốt mọi tác vụ từ đồ hoạ đến lập trình Màn hình Liquid Retina 13,6 inch - Màu sắc hiển thị rực rỡ, sắc nét Camera FaceTime HD 1080p - Đàm thoại, hội họp mọi lúc mọi nơi Hỗ trợ sạc 30W - Nhanh chóng nạp đầy pin khi bạn cần', 27990000, 120, 4, '304.1 x 215.4 x 11.3 mm (13.6 inch) và 350.5 x 240.1 x 11.3 mm (15.3 inch)', '	1.24 kg', 'Đen', 'apple_m3_slot.webp', '8GB', 'MacOS', 'Chip Apple M3  CPU 8 lõi với 4 lõi hiệu năng và 4 lõi tiết kiệm điện GPU 8 lõi', 'Camera FaceTime HD 1080p  Bộ xử lý tín hiệu hình ảnh tiên tiến với video điện toán', 'Không', 'Bộ Tiếp Hợp Nguồn USB-C 30W (M2 và M3 với GPU 8 lõi) hoặc', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 27290000, NULL, NULL, 'không', 31, 'Apple Macbook Air 13 M3 với con chip Apple M3 mạnh mẽ cùng công nghệ dò tia tốc độ cao mang lại trải nghiệm dùng mượt mà.', 'Màn hình có đèn nền LED 13,6 inch (theo đường chéo) với công nghệ IPS;1 độ phân giải gốc 2560x1664 với mật độ 224 pixel mỗi inch Độ sáng 500 nit', 3, 28),
@@ -254,11 +262,11 @@ INSERT INTO `products` (`id`, `Name_product`, `Title`, `Description`, `Price`, `
 (29, 'OPPO Find X5 Pro 12GB 256GB - Giá mới chỉ có tại CellphoneS', 'OPPO Find X5 Pro 12GB 256GB - Giá mới chỉ có tại CellphoneS', 'Chip Snapdragon 8 Gen 1 cho hiệu suất mạnh mẽ, cân mọi tác vụ từ giải trí đến làm việc Màn hình AMOLED 120 Hz mang đến cho bạn trải nghiệm mượt mà, màu sắc sống động Dùng thoải mái cả ngày với dung lượng pin 5.000 mAh, tích hợp sạc nhanh 80W hiện đại RAM 12GB đảm bảo khả năng xử lý đa nhiệm không giật lag, ROM 256GB giúp lưu trữ tốt', 19990000, 300, 3, '163.7 x 73.9 x 8.5 mm', '218 g', 'Trắng', 'finx5.webp', '12 GB - 256 GB', 'Android 14', 'Qualcomm Snapdragon 8 Gen 1', 'Camera chính 32MP: f/2.4; FOV 90°, ống kính: 5P, lấy nét cố định', 'Camera chính: 50MP, f/1.7 Camera góc rộng: 50MP, f/2.2; FOV 112° Camera tele: 13MP, f/2.4', '5.000 mAh - Sạc siêu nhanh 80W Sạc không dây', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 15990000, NULL, NULL, 'không', 23, ' Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '6.7 inches', 20, 2),
 (30, 'iPhone 15 Plus 128GB | Chính hãng VN/A', 'iPhone 15 Plus 128GB | Chính hãng VN/A', 'Thiết kế dẫn đầu xu hướng - Nhiều màu sắc trendy cùng chất liệu kính pha màu và khung nhôm vô cùng bền bỉ Nắm bắt và tương tác mọi thông tin dễ dàng hơn với Dynamic Island mở rộng Chụp ảnh chân dung xuất sắc mọi khoảnh khắc - Camera chính 48MP với tele 2X và chế độ chỉnh sửa đa dạng Hiệu năng cân mọi tác vụ - A16 Bionic mạnh mẽ cho mọi thao tác mượt mà và nhanh chóng', 25990000, 1000, 3, ' 160,9 x 77,8 x 7,80 mm', '201 g', 'Hồng', 'iphone-15-plus_1_.webp', '6 GB', 'IOS 18', 'Apple A16 Bionic', '12MP, ƒ/1.9', 'Chính 48 MP & Phụ 12 MP', '4383 mAh - Sạc nhanh Sạc không dây MagSafe lên đến 15W Sạc không dây Qi lên đến 7,5W', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 22690000, '2024-09-01 00:00:00', '2024-09-07 00:00:00', 'không', 20, 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', '6.7 inches', 13, 0),
 (31, 'Samsung Galaxy M55 (12GB 256GB)', 'Samsung Galaxy M55 (12GB 256GB)', 'ĐẶC ĐIỂM NỔI BẬT Trải nghiệm hình ảnh sống động và sắc nét với màn hình AMOLED 6.7 inch, độ phân giải Super AMOLED+. Ghi lại những bức ảnh tuyệt đẹp với camera chính 50MP, khẩu độ f/1.8, cùng nhiều tính năng chụp ảnh thông minh. Qualcomm Snapdragon 7 Gen 1 nhân kết hợp với RAM 8GB mang đến hiệu suất mạnh mẽ cho mọi tác vụ, từ chơi game đến chỉnh sửa video. Pin khủng 5000mAh - Sử dụng điện thoại cả ngày dài mà không lo hết pin nhờ viên pin.', 12690000, 1000, 3, '163.9 x 76.5 x 7.8 mm', '180 g', 'Xanh', 'dien-thoai-samsung-galaxy-m55.webp', '12 GB - 256GB', 'Android 14', 'Qualcomm Snapdragon 7 Gen 1 (4 nm)', 'Camera góc rộng: 50 MP, f/2.4', 'Camera góc rộng: 50 MP, f/1.8, 1/1.56\", 1.0µm, PDAF, OIS Camera góc siêu rộng: 8 MP, f/2.2, 123˚ Camera macro: 2 MP, f/2.4', '5000 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 10750000, '2024-07-29 00:00:00', '2024-09-07 00:00:00', 'không', 21, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '6.7 inches', 15, 18),
-(32, 'Samsung Galaxy A55 5G 8GB 128GB', 'Samsung Galaxy A55 5G 8GB 128GB', 'Chip Exynos 1480 4nm - Sử dụng mượt mà, linh hoạt với các tác vụ nặng nề mà không gặp trở ngại. Với camera góc rộng 12MP mang đến khả năng thu trọn mọi khung cảnh vào khung hình. Tần số quét 120Hz - Mỗi hành động trên màn hình đều trở nên mượt mà đáng kinh ngạc. Pin 5000 mAh kết hợp cùng sạc nhanh 25W - Sử dụng thoải mái trong mọi hoạt động hằng ngày.', 9990000, 10000, 3, '161.1 x 77.4 x 8.2 mm', '213g', 'Tím', 'sm-a556_galaxy_a55_awesome_lilac_ui.webp', '8 GB - 128GB', 'Android 14', 'Exynos 1480 4nm 2.4GHz', '32 MP', 'Camera chính: 50 MP OIS+HDR Camera góc rộng: 12MP Camera macro: 5MP', '5000 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 9690000, '2024-07-28 00:00:00', '2024-09-07 00:00:00', 'không', 21, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', ' 6.6 inches', 3, 8),
+(32, 'Samsung Galaxy A55 5G 8GB 128GB', 'Samsung Galaxy A55 5G 8GB 128GB', 'Chip Exynos 1480 4nm - Sử dụng mượt mà, linh hoạt với các tác vụ nặng nề mà không gặp trở ngại. Với camera góc rộng 12MP mang đến khả năng thu trọn mọi khung cảnh vào khung hình. Tần số quét 120Hz - Mỗi hành động trên màn hình đều trở nên mượt mà đáng kinh ngạc. Pin 5000 mAh kết hợp cùng sạc nhanh 25W - Sử dụng thoải mái trong mọi hoạt động hằng ngày.', 9990000, 10000, 3, '161.1 x 77.4 x 8.2 mm', '213g', 'Tím', 'sm-a556_galaxy_a55_awesome_lilac_ui.webp', '8 GB - 128GB', 'Android 14', 'Exynos 1480 4nm 2.4GHz', '32 MP', 'Camera chính: 50 MP OIS+HDR Camera góc rộng: 12MP Camera macro: 5MP', '5000 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 9690000, '2024-07-28 00:00:00', '2024-09-07 00:00:00', 'không', 21, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', ' 6.6 inches', 3, 25),
 (33, 'iPad Pro M4 11 inch 5G 2TB  ', 'iPad Pro M4 11 inch 5G 2TB', 'Chip Apple M4. Hiệu năng như mơ, đồ họa thay đổi cuộc chơi và năng lực AI mạnh mẽ.', 62990000, 100, 5, '24.97 x 17.75 x 5.3 mm', '446gram', 'Đen', 'ipad pro 11 m4 den.webp', '16 GB', 'iPadOS 17', 'Apple M4', 'Camera góc rộng: 12MP, ƒ/1.8', 'Camera góc siêu rộng 12MP, ƒ/2.4', 'Sạc tối đa 20 W', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 60990000, '2024-08-05 00:00:00', '2024-08-30 00:00:00', 'không', 39, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '11 inches', 3, 21),
 (34, 'Tai nghe Bluetooth Apple AirPods Pro 2 2023 USB-C | Chính hãng Apple Việt Nam', 'Tai nghe Bluetooth Apple AirPods Pro 2 2023 USB-C | Chính hãng Apple Việt Nam', 'Tích hợp chip Apple H2 mang đến chất âm sống động cùng khả năng tái tạo âm thanh 3 chiều vượt trội Công nghệ Bluetooth 5.3 kết nối ổn định, mượt mà, tiêu thụ năng lượng thấp, giúp tiết kiệm pin đáng kể Chống ồn chủ động loại bỏ tiếng ồn hiệu quả gấp đôi thế hệ trước, giúp nâng cao trải nghiệm nghe nhạc Chống nước chuẩn IP54 trên tai nghe và hộp sạc, giúp bạn thỏa sức tập luyện không cần lo thấm mồ hôi', 6190000, 999, 6, 'Tai nghe: 30.9 x 21.8 x 24 mm Hộp sạc: 45.2 x 60.6 x 21.7mm', 'Tai nghe: 5.3g Hộp sạc: 50.8g', 'Trắng', 'apple-airpods-pro-2-usb-c_1_.webp', 'none', 'none', 'none', 'none', 'none', 'Tai nghe: Dùng 6 giờ Hộp sạc: Dùng 30 giờ', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 5690000, '2024-07-31 00:00:00', '2024-09-07 00:00:00', 'không', 44, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', 'Màn hình', 8, 0),
 (35, ' Apple Watch Series 9 45mm (GPS) viền nhôm dây cao su | Chính hãng Apple Việt Nam', ' Apple Watch Series 9 45mm (GPS) viền nhôm dây cao su | Chính hãng Apple Việt Nam', 'Trang bị chip S9 SiP mạnh mẽ hỗ trợ xử lý mọi tác vụ nhanh chóng với nhiều tiện ích Dễ dàng kết nối, nghe gọi, trả lời tin nhắn ngay trên cổ tay Trang bị nhiều tính năng sức khỏe như: Đo nhịp tim, điện tâm đồ, đo chu kỳ kinh nguyệt,... Độ sáng tối đa lên tới 2000 nit, dễ xem màn hình ngay dưới ánh nắng gắt Tích hợp nhiều chế độ tập luyện với các môn thể thao như: Bơi lội, chạy bộ, đạp xe,...', 11290000, 999, 7, ' 45 x 38 x 10.7 mm', '38.7 gram', 'Trắng vàng', 'apple_lte_3__1.webp', 'none -  64GB', ' WatchOS', 'S9 SiP', 'none', 'none', 'Chế độ thông minh: 18 giờ Chế độ tiết kiệm pin: 36 giờ', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 10490000, '2024-08-01 00:00:00', '2024-09-07 00:00:00', 'không', 51, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '1.7 inch', 7, 0),
-(36, 'Apple Watch Series 7 45mm (4G) Viền nhôm dây cao su | Chính hãng VN/A', 'Apple Watch Series 7 45mm (4G) Viền nhôm dây cao su | Chính hãng VN/A', 'Hỗ trợ Esim cho phép nghe gọi ngay trên đồng hồ Chức năng màn hình luôn bật giữ cho chức năng xem giờ luôn hoạt động,tiết kiệm pin hơn Thoải mái sử dụng ở hồ bơi hay ngoài trời với chuẩn kháng bụi IP6X ,chống nước đến 50m Đo nhịp tim,oxy trong máu,theo dõi giấc ngủ cùng nhiều tính năng sức khoẻ tích hợp sẵn Cổng sạc Type C,sạc nhanh 45 phút cho 80% pin Hỗ trợ Esim cho phép nghe gọi ngay trên đồng hồ', 15990000, 999, 7, '14 - 22 cm', '38.8 gram', 'Đen', 'apple_lte_6_.webp', 'none -32GB', 'WatchOS', 'None', 'None', 'Không', 'Chế độ thông minh: Khoảng 0.75 ngày Chế độ tiết kiệm pin: Khoảng 1.5 ngày', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 9990000, '2024-08-01 00:00:00', '2024-09-06 00:00:00', 'không', 51, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '1.77 inch  45mm', 38, 1),
+(36, 'Apple Watch Series 7 45mm (4G) Viền nhôm dây cao su | Chính hãng VN/A', 'Apple Watch Series 7 45mm (4G) Viền nhôm dây cao su | Chính hãng VN/A', 'Hỗ trợ Esim cho phép nghe gọi ngay trên đồng hồ Chức năng màn hình luôn bật giữ cho chức năng xem giờ luôn hoạt động,tiết kiệm pin hơn Thoải mái sử dụng ở hồ bơi hay ngoài trời với chuẩn kháng bụi IP6X ,chống nước đến 50m Đo nhịp tim,oxy trong máu,theo dõi giấc ngủ cùng nhiều tính năng sức khoẻ tích hợp sẵn Cổng sạc Type C,sạc nhanh 45 phút cho 80% pin Hỗ trợ Esim cho phép nghe gọi ngay trên đồng hồ', 15990000, 999, 7, '14 - 22 cm', '38.8 gram', 'Đen', 'apple_lte_6_.webp', 'none -32GB', 'WatchOS', 'None', 'None', 'Không', 'Chế độ thông minh: Khoảng 0.75 ngày Chế độ tiết kiệm pin: Khoảng 1.5 ngày', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 9990000, '2024-08-01 00:00:00', '2024-09-06 00:00:00', 'không', 51, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '1.77 inch  45mm', 38, 6),
 (37, 'Máy rửa chén bát để bàn thông minh KOCHI DW-C400VN', 'Máy rửa chén bát để bàn thông minh KOCHI DW-C400VN', 'Có thể sử dụng bằng 2 cách: Đổ nước trực tiếp (chỉ 5 lít / lần sử dụng) hoặc lắp đặt. Đánh bay các vết bẩn từ mọi vị trí nhờ vào lực nước mạnh có thể phun 360 độ Diệt khuẩn và bảo quản lên đến 73 giờ với tính năng sấy khô ở nhiệt độ cao Trang bị 5 chương trình rửa thông minh giúp bạn tiết kiệm thời gian đáng kể Ngăn xếp chén dĩa thông minh với sức chứa tới 4 bộ chén đĩa, ly, thìa, đũa,...', 6490000, 999, 8, '42.8 x 42.5 x 45.9 cm', '5L', 'Trắng', 'may-rua-chen-bat-mini-de-ban-kochi-dw-c400vn-spa.webp', 'None', 'None', 'None', 'None', 'None', '950W', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 5190000, '2024-07-28 00:00:00', '2024-09-06 00:00:00', 'không', 59, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', 'LCD', 20, 1),
 (38, 'Laptop ASUS Vivobook 16 M1605YA-MB303W', 'Laptop ASUS Vivobook 16 M1605YA-MB303W', 'Sở hữu màn hình kích thước 16 inch WUXGA cho hình ảnh rõ nét với màu sắc và gam màu phong phú CPU AMD Ryzen 7 7730U có thể xử lý đa nhiệm các chương trình đòi hỏi hiệu suất cao một cách hiệu quả Đồ họa AMD Radeon cải thiện đáng kể đầu ra hình ảnh và tăng cường hiệu suất tổng thể RAM 16 GB cùng ổ cứng 512 GB SSD rộng rãi, lưu trữ nhiều file, tài liệu Bàn phím Chiclet tích hợp cảm biến vân tay hỗ trợ bảo mật thông tin hiệu quả', 18490000, 999, 4, '35.87 x 24.95 x 1.99 ~ 1.99 cm (W x H x D)', '1.88 kg', 'Bạc', 'text_d_i_3_2.webp', '16GB DDR4', 'Windows 11', 'AMD Ryzen 7 7730U (2.0GHz, 8 lõi / 16 luồng, 16MB cache, up to 4.5 GHz max boost)', '720p HD với màn trập camera', 'None', '42WHrs, 3S1P, 3-cell Li-ion', 'Bảo hành 24 tháng tại trung tâm bảo hành Chính hãng. 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ nhà sản xuất. (xem chi tiết)', '5.3', 13990000, '2024-07-30 00:00:00', '2024-09-07 00:00:00', 'có', 30, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '16.0 inch', 24, 1),
 (39, 'Laptop Lenovo Ideapad Flex 5 14ALC7 82R900ECVN', 'Laptop Lenovo Ideapad Flex 5 14ALC7 82R900ECVN', 'Thiết kế thanh mãng, thời thượng với trọng lượng nhe chỉ 1.55 kg. Màn hình 14 inch cùng độ phân giải WUXGA, mang đến hình ảnh hiển thị mượt êm, rõ nét. CPU AMD Ryzen 7 5700U cho tốc độ phản hồi nhanh và xử lý đa nhiệm, tiết kiệm điện tối ưu, làm việc trơn tru. RAM 16GB đảm bảo cho người dùng làm việc một các mượt mà với các ứng dụng mà không bị xảy ra tình trạng giật lag. Ổ cứng SSD 512GB giúp quá trình khởi động máy hay sao chép dữ liệu trở nên nhanh chóng hơn.', 16990000, 999, 4, ' 313.1 x 224.9 x 17.8 mm (W x D x H)', '1.55 kg', 'xám', 'laptop-lenovo-ideapad-flex-5-14alc7-82r900ecvn.webp', '16GB-LPDDR4x-4266 Onboard', 'Windows 11', 'AMD Ryzen 7 5700U (8 lõi / 16 luồng, 1.8 / 4.3GHz, 4MB L2 / 8MB L3)', ' FHD 1080p với màn trập camera', 'Không', '52.5Wh', 'Bảo hành 24 tháng tại trung tâm bảo hành Chính hãng. 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ nhà sản xuất. (xem chi tiết)', '5.3', 14990000, NULL, NULL, 'không', 33, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '14 inchs', 12, 0),
@@ -272,7 +280,7 @@ INSERT INTO `products` (`id`, `Name_product`, `Title`, `Description`, `Price`, `
 (47, 'Tai nghe Bluetooth True Wireless Samsung Galaxy Buds 3', 'Tai nghe Bluetooth True Wireless Samsung Galaxy Buds 3', 'Chống ồn chủ động ANC cho bạn thoải sức đắm chìm trong không gian âm nhạc Âm thanh Hi-Fi 24 bit giúp trải nghiệm âm thanh chi tiết và sống động như thật Thời lượng pin dài lên đến 30 giờ khi tắt ANC, sẵn sàng nghe nhạc cả ngày dài Công nghệ Bluetooth 5.4 giúp kết nối nhanh và ổn định với các thiết bị của bạn', 3990000, 1111, 6, 'Tai nghe: 18.1 x 20.4 x 31.9mm Hộp sạc: 58.9 x 48.7 x 24.4mm', 'Tai nghe: 4.7g Hộp sạc: 46.5g', 'Xám', 'samsung-galaxy-buds-3-spa_1.webp', 'none', 'none', 'None', 'None', 'None', 'Tai nghe:6 giờ (Tắt ANC) / 5 giờ (Bật ANC) Hộp sạc: 30 giờ (Tắt ANC) / 24 giờ (Bật ANC)', 'Bảo hành 12 tháng tại trung tâm bảo hành Chính hãng. 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ nhà sản xuất. (xem chi tiết)', '5.3', 3890000, '2024-07-30 00:00:00', '2024-09-07 00:00:00', 'không', 44, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', 'none', 1, 1),
 (48, 'Tai nghe Bluetooth chụp tai Sony WH-1000XM5', 'Tai nghe Bluetooth chụp tai Sony WH-1000XM5', 'Công nghệ Auto NC Optimizer tự động khử tiếng ồn dựa theo môi trường Trải nghiệm nghe chân thật, sống động nhờ tính năng 360 Reality Audio Thiết kế sang trọng, trọng lượng nhẹ với phần da mềm mại, ôm khít đầu Năng lượng cho cả ngày dài với thời lượng sử dụng pin lên đến 40 giờ', 7990000, 200, 6, '1.2m', '250 g', 'Bạc', 'group_172_2.webp', 'none', 'none', 'None', 'None', 'Không', 'Tắt chống ồn ANC: Dùng 40 giờ Bật chống ồn ANC: Dùng 30 giờ', 'Bảo hành 24 tháng tại trung tâm bảo hành Chính hãng. 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ nhà sản xuất. (xem chi tiết)', '5.3', 6640000, '2024-08-01 00:00:00', '2024-09-07 00:00:00', 'không', 47, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', 'none', 17, 0),
 (49, 'Đồng hồ thông minh Huawei Watch GT4 dây da', 'Đồng hồ thông minh Huawei Watch GT4 dây da', 'Đàm thoại dễ dàng với tính năng nghe gọi trên đồng hồ Lưu trữ nhạc trên đồng hồ và thưởng thức thông qua loa ngoài hoặc tai nghe bluetooth Thời lượng pin sử dụng đến 14 ngày cho bạn thỏa thích sử dụng Phát hiện sớm các nguy cơ về sức khoẻ với tính năng cảnh báo nhịp tim bất thường Theo dõi lượng calo tiêu thụ trong ngày thông qua ứng dụng Stay Fit Thiết kế dây vải sang trọng cùng vòng benzel chắc hắn sẽ giúp bạn trông nổi bật hơn', 6490000, 1111, 7, '120 - 190 cm', 'Khoảng 37 g', 'Nâu', 'huawei_3__1_1.webp', 'none', 'HarmonyOS', 'None', 'None', 'None', 'Chế độ tiết kiệm pin: 7 ngày Sử dụng pin thông thường lên đến 4 ngày Bật AOD: lên đến 2 ngày', 'Bảo hành 12 tháng tại trung tâm bảo hành Chính hãng. 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ nhà sản xuất. (xem chi tiết)', '5.3', 4590000, '2024-07-31 00:00:00', '2024-08-30 00:00:00', 'không', 53, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '1.32 inchMàn hình AMOLED', 29, 0),
-(51, 'Vòng đeo tay thông minh Xiaomi Mi Band 8', 'Vòng đeo tay thông minh Xiaomi Mi Band 8', 'Màn hình 1.62\'\' AMOLED cho chất lượng hiển thị sắc nét Thời lượng pin lên đến 16 ngày sử dụng - thoả sức tập luyện mà không lo hết pin Bảo vệ sức khoẻ hằng ngày với tính năng đo nhịp tim, SpO2, giấc ngủ, VO2 max Kháng nước chuẩn 5ATM, không ngại trời mưa hay nước bắn Nâng cao hiệu quả tập luyện với hơn 150 chế độ thể thao', 990000, 1111, 7, '13 - 21cm', '27g', 'Đen', '3_338.webp', 'none', 'Android 6.0 và iOS10', 'None', 'None', 'None', '16 ngày', 'Bảo hành 12 tháng tại trung tâm bảo hành Chính hãng. 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ nhà sản xuất. (xem chi tiết)', '5.3', 690000, '2024-08-09 00:00:00', '2024-08-31 00:00:00', 'không', 55, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '1.62 inch AMOLED', 30, 7),
+(51, 'Vòng đeo tay thông minh Xiaomi Mi Band 8', 'Vòng đeo tay thông minh Xiaomi Mi Band 8', 'Màn hình 1.62\'\' AMOLED cho chất lượng hiển thị sắc nét Thời lượng pin lên đến 16 ngày sử dụng - thoả sức tập luyện mà không lo hết pin Bảo vệ sức khoẻ hằng ngày với tính năng đo nhịp tim, SpO2, giấc ngủ, VO2 max Kháng nước chuẩn 5ATM, không ngại trời mưa hay nước bắn Nâng cao hiệu quả tập luyện với hơn 150 chế độ thể thao', 990000, 1111, 7, '13 - 21cm', '27g', 'Đen', '3_338.webp', 'none', 'Android 6.0 và iOS10', 'None', 'None', 'None', '16 ngày', 'Bảo hành 12 tháng tại trung tâm bảo hành Chính hãng. 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ nhà sản xuất. (xem chi tiết)', '5.3', 690000, '2024-08-09 00:00:00', '2024-08-31 00:00:00', 'không', 55, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '1.62 inch AMOLED', 30, 8),
 (52, 'Đồng hồ thông minh trẻ em Myalo KidsPhone K84', 'Đồng hồ thông minh trẻ em Myalo KidsPhone K84', 'Thực hiện cuộc thông thường hay video call với sim 4G Nút liên lạc khẩn cấp tự động gửi vị trí cùng một bản ghi âm 30 giây tới các số được lưu sẵn Ghi lại lịch sử di chuyển với định vị GPS Thao tác thuận tiện với màng hình 1.3 inch Không ngại mưa rơi hay nước bắn với kháng nước chuẩn IP67', 2990000, 111, 7, 'None', 'none', 'Hồng', '_nh_v_tr_em_3_.webp', 'none', 'none', 'None', 'None', 'None', 'none', 'Bảo hành 12 tháng tại trung tâm bảo hành Chính hãng. 1 đổi 1 trong 30 ngày nếu có lỗi phần cứng từ nhà sản xuất. (xem chi tiết)', '5.3', 2490000, '2024-08-01 00:00:00', '2024-08-31 00:00:00', 'không', 56, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', 'none', 10, 0);
 
 -- --------------------------------------------------------
@@ -283,7 +291,7 @@ INSERT INTO `products` (`id`, `Name_product`, `Title`, `Description`, `Price`, `
 
 CREATE TABLE `role_slide` (
   `role_slide_id` int NOT NULL,
-  `role_name` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL
+  `role_name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
@@ -310,10 +318,10 @@ INSERT INTO `role_slide` (`role_slide_id`, `role_name`) VALUES
 
 CREATE TABLE `slides` (
   `id` int NOT NULL,
-  `title` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `role_slide_id` int NOT NULL,
-  `description` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL
+  `description` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
@@ -355,7 +363,7 @@ INSERT INTO `slides` (`id`, `title`, `image`, `role_slide_id`, `description`) VA
 
 CREATE TABLE `status` (
   `Status_id` int NOT NULL,
-  `Status` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL
+  `Status` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
@@ -387,8 +395,8 @@ INSERT INTO `user` (`User_id`, `username`, `password`, `name`) VALUES
 
 CREATE TABLE `useradmin` (
   `User_admin_id` int NOT NULL,
-  `Username_admin` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `Password_id` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL
+  `Username_admin` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `Password_id` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
@@ -415,7 +423,7 @@ ALTER TABLE `category`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`Comment_id`),
-  ADD KEY `id` (`id`),
+  ADD KEY `id` (`product_id`),
   ADD KEY `User_id` (`User_id`);
 
 --
@@ -512,7 +520,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `Comment_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `Comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `countdown`
@@ -600,7 +608,7 @@ ALTER TABLE `category`
 -- Constraints for table `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`User_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE;
 
 --

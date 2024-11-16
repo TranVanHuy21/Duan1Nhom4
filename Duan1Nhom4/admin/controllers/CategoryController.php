@@ -71,7 +71,7 @@ class CategoryController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $ParentCategory_name = $_POST['ParentCategory_name'];
             $this->parentCategoryModel->insertParentCategory($ParentCategory_name);
-            header("Location: index.php?act=displayParentCategories");
+            header("Location: index.php?act=listParentCategories");
         }
         require_once './views/parentCategory/addParentCategory.php';
     }
@@ -83,7 +83,7 @@ class CategoryController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $ParentCategory_name = $_POST['ParentCategory_name'];
             $this->parentCategoryModel->editParentCategory($id, $ParentCategory_name);
-            header("Location: index.php?act=displayParentCategories");
+            header("Location: index.php?act=listParentCategories");
         }
         require_once './views/parentCategory/editParentCategory.php';
     }
@@ -91,7 +91,7 @@ class CategoryController
     public function deleteParentCategory($id)
     {
         $this->parentCategoryModel->deleteParentCategory($id);
-        header("Location: index.php?act=displayParentCategories");
+        header("Location: index.php?act=listParentCategories");
     }
 }
 ?>

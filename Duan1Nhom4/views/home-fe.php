@@ -209,9 +209,9 @@
         <div class="product">
             <div class="product__info">
                 <a href="?act=showProductDetail&id=<?= $product['id'] ?>" class="product__link">
-                    <div class="product__price--percent">
+                    <!-- <div class="product__price--percent">
                         <p class=""><?= htmlspecialchars($product['discount'] ?? '0') ?>%</p>
-                    </div>
+                    </div> -->
                     <div class="product__image">
                         <img style="width: 160px; height: 160px;" src="./admin/assets/images/uploads/<?= htmlspecialchars($product['Image']) ?>" alt="" loading="lazy">
                     </div>

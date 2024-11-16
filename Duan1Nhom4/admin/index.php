@@ -32,7 +32,10 @@ $accController = new accController();
 $DashboardController = new DashboardController();
 $slideModel = new SlideModel();
 $slideController = new SlideController();
-
+if (!isset($_SESSION['user_admin'])) {
+    header('Location: login.php'); // Chuyển hướng đến trang đăng nhập
+    exit();
+}
 switch ($act) {
     case 'listProduct':
         $productController->listProducts();

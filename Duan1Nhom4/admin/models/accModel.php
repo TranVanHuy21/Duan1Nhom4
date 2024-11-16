@@ -19,9 +19,14 @@ class accModel
             $stmt->execute(
                 [':Username_admin' => $Username_admin]
             );
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
+            // Kiểm tra mật khẩu
+            if ($user && password_verify($password, $user['password'])) {
+                return $user; // Đăng nhập thành công
+            } else {
+                return false; // Đăng nhập không thành công
+            }
 
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();

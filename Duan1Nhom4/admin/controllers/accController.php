@@ -9,11 +9,21 @@ class accController
         $this->accModel = new accModel();
     }
 
+
     public function login()
     {
-        require_once './views/login.php';
-    }
+        $user = $_POST['user'] ?? null;
+        $pass = $_POST['pass'] ?? null;
 
+        if ($this->accModel->checkAcc($user, $pass)) {
+            $_SESSION['user_admin'] = $user; // Thiết lập phiên đăng nhập
+            header('Location: index.php'); // Chuyển hướng đến trang chính
+            exit();
+        } else {
+            // Xử lý thông báo lỗi
+            echo "Đăng nhập không thành công!";
+        }
+    }
     public function checkLogin()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_login'])) {

@@ -22,10 +22,15 @@ class accModel
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Kiểm tra mật khẩu
-            if ($user && password_verify($password, $user['password'])) {
-                return $user; // Đăng nhập thành công
+            if ($user) { // Nếu tìm thấy người dùng
+                // So sánh mật khẩu người dùng nhập vào với mật khẩu đã mã hóa
+                if (password_verify($password, $user['Password_id'])) { // Sử dụng 'Password_id' để kiểm tra
+                    return $user; // Đăng nhập thành công
+                } else {
+                    return false; // Mật khẩu không khớp
+                }
             } else {
-                return false; // Đăng nhập không thành công
+                return false; // Không tìm thấy người dùng
             }
 
         } catch (PDOException $e) {

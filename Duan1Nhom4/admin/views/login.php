@@ -1,18 +1,9 @@
-<?php
-session_start();
-include '../controllers/accController.php'; // Thêm include cho accController
-$accController = new accController();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $accController->login(); // Gọi phương thức login từ accController
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập</title>
 </head>
 

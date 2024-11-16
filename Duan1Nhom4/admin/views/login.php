@@ -1,17 +1,10 @@
 <?php
 session_start();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+include '../controllers/accController.php'; // Thêm include cho accController
+$accController = new accController();
 
-    if ($username === 'admin' && $password === 'password') {
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
-        header('Location: index.php');
-        exit;
-    } else {
-        $error = "Tên đăng nhập hoặc mật khẩu không đúng.";
-    }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $accController->login(); // Gọi phương thức login từ accController
 }
 ?>
 
@@ -25,14 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <h2>Đăng Nhập</h2>
-    <?php if (isset($error))
-        echo "<p style='color:red;'>$error</p>"; ?>
-    <form method="post" action="">
+    <form method="post" action="?act=login">
         <label for="username">Tên đăng nhập:</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="user" required> <!-- Đổi name thành 'user' -->
         <br>
         <label for="password">Mật khẩu:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="pass" required> <!-- Đổi name thành 'pass' -->
         <br>
         <button type="submit">Đăng Nhập</button>
     </form>

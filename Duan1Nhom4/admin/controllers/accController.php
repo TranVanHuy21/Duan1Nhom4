@@ -1,27 +1,36 @@
 <?php
-
+require_once '../models/accModel.php';
+require_once '../commons/function.php';
 class accController
 {
-    private $accModel;
+    public $accModel;
 
     public function __construct()
     {
-        $this->accModel = new accModel();
+        $pdo = connectDB();
+        $this->accModel = new accModel(connectDB());
     }
 
     public function login()
     {
-        $user = $_POST['user'];
-        $pass = $_POST['pass'];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $Username_admin = $_POST['Username_admin'];
+            $password = $_POST['Password_id'];
 
-        if ($this->accModel->checkAcc($user, $pass)) {
-            $_SESSION['user_admin'] = $user; // Thiết lập phiên đăng nhập
-            header('Location: ./index.php'); // Chuyển hướng đến trang chính
-            exit();
-        } else {
-            // Xử lý thông báo lỗi
-            echo '<script>alert("Đăng nhập không thành công!");</script>';
+            // Lấy thông tin người dùng từ model
+            $user = $this->accModel->getUserByUsername($Username_admin);
+
+            // So sánh trực tiếp Username_admin và Password_id
+            if ($user && $password === $user['Password_id']) {
+                $_SESSION['user_admin'] = $user; // Lưu thông tin người dùng vào session
+                header('location: views/dashBoard.php'); // Chuyển hướng đến trang dashboard
+                exit();
+            } else {
+                echo '<script>alert("Tên đăng nhập hoặc mật khẩu không đúng.");</script>';
+            }
         }
+
+        require 'views/login.php'; // Hiển thị trang đăng nhập
     }
 
     public function logout()

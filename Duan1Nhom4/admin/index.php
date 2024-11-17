@@ -32,9 +32,8 @@ $slideController = new SlideController();
 
 // Kiểm tra xem người dùng đã đăng nhập chưa
 if (isset($_SESSION['user_admin'])) {
-    // header('location: views/login.php'); // Chuyển hướng đến trang đăng nhập
-    require_once 'views/login.php';
-    exit();
+    header('Location: views/login.php');
+    exit;
 }
 switch ($act) {
     case 'listProduct':

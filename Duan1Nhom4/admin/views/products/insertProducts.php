@@ -2,16 +2,10 @@
 <?php include './views/layout/header.php'; ?>
 <!-- header -->
 <!-- <nav>
-<<<<<<< HEAD
+
     <?php include './views/layout/navbar.php'; ?>
   </nav> -->
 
-=======
-    <?php include './views/layout/navbar.php';  ?>
-  </nav> -->
-
-<!-- js  -->
->>>>>>> main
 <script>
 document.querySelector('form').addEventListener('submit', function(event) {
     let errors = [];
@@ -39,7 +33,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
 </script>
 
 <!-- Main Sidebar Container -->
-<<<<<<< HEAD
+
 <?php include './views/layout/sidebar.php'; ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -55,24 +49,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
         </div><!-- /.container-fluid -->
     </section>
 
-=======
-<?php include './views/layout/sidebar.php';  ?>
 
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Quản Lý Sản Phẩm</h1>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
->>>>>>> main
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -270,14 +247,12 @@ document.querySelector('form').addEventListener('submit', function(event) {
 <!-- /.content-wrapper -->
 <?php include './views/layout/footer.php'; ?>
 
-<<<<<<< HEAD
+<<<<<<< HEAD <!-- /.content-wrapper -->
+    <?php include './views/layout/footer.php'; ?>
 
-<!-- /.content-wrapper -->
-<?php include './views/layout/footer.php'; ?>
+    =======
+    >>>>>>> main
 
-=======
->>>>>>> main
+    </body>
 
-</body>
-
-</html>
+    </html>

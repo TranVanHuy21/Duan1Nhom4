@@ -15,6 +15,9 @@
             </div>
             <div class="info">
                 <a href="#" class="d-block">DungNhay</a>
+                <?php
+                echo $_SESSION['user_admin'];
+                ?>
             </div>
         </div>
 

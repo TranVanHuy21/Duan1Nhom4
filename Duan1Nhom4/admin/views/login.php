@@ -1,3 +1,8 @@
+<?php
+require_once '../controllers/accController.php';
+$accController = new accController();
+$error = $accController->login();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,14 +14,10 @@
 
 <body>
     <h2>Đăng Nhập</h2>
-    <form method="post" action="?act=login">
-        <label for="username">Tên đăng nhập:</label>
-        <input type="text" id="username" name="user" required> <!-- Đổi name thành 'user' -->
-        <br>
-        <label for="password">Mật khẩu:</label>
-        <input type="password" id="password" name="pass" required> <!-- Đổi name thành 'pass' -->
-        <br>
-        <button type="submit">Đăng Nhập</button>
+    <form method="POST" action="?act=login">
+        <input type="text" name="Username_admin" placeholder="Tên đăng nhập" required>
+        <input type="password" name="Password_id" placeholder="Mật khẩu" required>
+        <button type="submit">Đăng nhập</button>
     </form>
 </body>
 

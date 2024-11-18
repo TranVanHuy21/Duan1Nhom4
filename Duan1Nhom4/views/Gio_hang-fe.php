@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="./assets/css/gio_hang.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> 
-    <script src="scripts.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="./assets/js/script.js"></script>
 </head>
 
 <body>
@@ -26,7 +27,7 @@
     <div class="container-box-cart">
         <div class="body-cart">
             <div class="cart-header">
-                <a href="/Cellpones/index.html">
+                <a href="index.php">
                     <ion-icon name="arrow-back-outline"></ion-icon>
                 </a>
                 <div class="title">
@@ -47,73 +48,103 @@
                         Chọn tất cả
                     </div>
                 </div>
-                <div class="list-cart">
-                    <div class="cart-list-items">
-                        <div class="cart-item">
-                            <div class="item-top">
-                                <div>
-                                    <input type="checkbox" class="rounded-checkbox">
-            
-                                </div>
-                                <div class="img-item">
-                                    <img src="./assets/image/iphone15-pro-max-titan-xanh.webp" alt="">
-                                </div>
-                                <div class="item-left">
-                                    <div class="item-left-top">
-                                        <div class="title">Iphone 15 pro max TiTan Xanh</div>
-                                        <div><ion-icon name="trash-bin-outline"></ion-icon></div>
-                                    </div>
-                                    <div class="item-left-bot">
-                                        <div class="price">
-                                            
-                                                31.990.000đ
-                                            
-                                            
-                                        </div>
-                                        <div class="action">
-                                            <span class="span">-</span>
-                                            <input type="text" value="1" readonly="readonly" >
-                                            <span class="span">+</span>
-                                        </div>
-                                    </div>
-                                </div>
+                 <div class="list-cart">
+                <?php
+                if(!empty($cartItems)) {
+                    foreach($cartItems as $index => $item) {
+                ?>
+        <div class="cart-list-items">
+            <div class="cart-item" data-id="<?= $item['id'] ?>" data-index="<?= $index ?>">
+                <div class="item-top">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="rounded-checkbox" data-price="<?= $item['price'] ?>">
+                    </div>
+                    
+                    <div class="img-item">
+                        <img src="./admin/assets/images/uploads/<?= $item['image'] ?>" alt="<?= $item['name_product'] ?>">
+                    </div>
+                    
+                    <div class="item-left">
+                        <div class="item-left-top">
+                            <div class="title"><?= $item['name_product'] ?></div>
+                            <div class="delete-wrapper">
+                                <form action="index.php?act=deleteCart" method="POST">
+                                    <input type="hidden" name="id" value="<?= $item['id'] ?>">
+                                    <button type="submit" class="delete-btn" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                                        <ion-icon name="trash-bin-outline"></ion-icon>
+                                    </button>
+                                </form>
                             </div>
-                            <div class="item-bot">
-                                <div class="top">
-                                    <ion-icon name="bag-handle-outline"></ion-icon>
-                                    <div class="title">
-                                        Chương trình khuyến mãi
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <ul>
-                                        <li>
-                                            Trả góp lãi suất 0% qua công ty tài chính trên giá khuyến mãi (kỳ hạn 4-6-8) tháng
-                                        </li>
-                                        <li>
-                                            Nhập mã MOMO15P giảm thêm 500K khi trả góp qua MOMO
-                                        </li>
-                                        <li>
-                                            Giảm ngay 500K khi thanh toán qua VNPAY
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="bot">
-                                    <div class="left">
-                                        <ion-icon name="shield-half-outline"></ion-icon>
-                                        <span>Bảo vệ toàn diện với Bảo hành mở rộng</span>
-                                    </div>
-                                    <div class="right">
-                                        <span>Chọn gói</span>
-                                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                                    </div>
+                        </div>
+                        
+                        <div class="item-left-bot">
+                        <div class="price-quantity-wrapper">
+                        <div class="price"><?= number_format($item['price'] , 0, ',', '.') ?>đ</div>
+                        <div class="action">
+                                    <button type="button" class="decrease-btn" onclick="updateQuantity(this, -1)">-</button>
+                                    <input type="text" style="border:2px solid #00000066" class="quantity-input" value="<?= $item['quantity'] ?>" readonly>
+                                    <button type="button" class="increase-btn" onclick="updateQuantity(this, 1)">+</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="clear"></div>
+        </div>
+    <?php 
+        }
+    } else {
+        echo '<div class="empty-cart">Giỏ hàng trống</div>';
+    }
+    ?>
+</div>
+            </div>
+            <div class="cart-summary">
+            <div class="cart-total">Tổng tiền: <span>0đ</span></div>
+                    <button class="checkout-btn">Mua ngay</button>
+                </div>
+
+                <!-- Thêm vào cuối file, trước </body> -->
+                <script src="./assets/js/cart.js"></script>
+                <script>
+                    // Chạy khi trang load xong
+                    document.addEventListener('DOMContentLoaded', function() {
+                        displayCart();
+                    });
+
+                    // Thêm function để xử lý tăng/giảm số lượng
+                    function updateQuantity(button, change) {
+                        const quantityInput = button.parentElement.querySelector('.quantity-input');
+                        let currentQuantity = parseInt(quantityInput.value);
+                        
+                        // Đảm bảo số lượng không nhỏ hơn 1
+                        if (currentQuantity + change >= 1) {
+                            currentQuantity += change;
+                            quantityInput.value = currentQuantity;
+                            
+                            // Cập nhật tổng tiền
+                            updateTotalPrice();
+                        }
+                    }
+
+                    // Hàm cập nhật tổng tiền
+                    function updateTotalPrice() {
+                        const checkedItems = document.querySelectorAll('.rounded-checkbox:checked');
+                        let total = 0;
+                        
+                        checkedItems.forEach(checkbox => {
+                            const price = parseFloat(checkbox.getAttribute('data-price'));
+                            const quantityInput = checkbox.closest('.cart-item').querySelector('.quantity-input');
+                            const quantity = parseInt(quantityInput.value);
+                            total += price * quantity;
+                        });
+                        
+                        document.querySelector('.cart-total span').textContent = new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(total);
+                    }
+        </script>
         </div>
 
     </div>
@@ -122,7 +153,7 @@
     </div>
     
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script> -->
-    <script src="scripts.js"></script>
+    <script src="./assets/js/cart.js"></script>
 </body>
 
 </html>

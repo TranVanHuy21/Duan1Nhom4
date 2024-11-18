@@ -36,7 +36,7 @@ class UserAdminController
     public function editUserAdmin($id)
     {
         $userAdmin = $this->userAdminModel->getUserAdminByID($id);
-        require_once '/laragon/www/DuAnCellphoneS/admin/views/useradmin/editUserAdmin.php';
+        require_once '/laragon/www/Duan1Nhom4/Duan1Nhom4/admin/views/useradmin/editUserAdmin.php';
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_update'])) {
             $data = [

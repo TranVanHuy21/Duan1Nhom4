@@ -59,7 +59,7 @@
 </head>
 
 <body>
-    <?php require '/laragon/www/DuAnCellphoneS/admin/views/layout/header.php'; ?>
+    <?php require '/laragon/www/Duan1Nhom4/Duan1Nhom4/admin/views/layout/header.php'; ?>
     <div class="box-main">
         <div class="menu">
             <nav class="wrapper nav-main">

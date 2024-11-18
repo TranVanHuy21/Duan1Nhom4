@@ -43,7 +43,7 @@ class UserAdminModel
         try {
             $sql = "INSERT INTO useradmin (Username_admin, Password_id) VALUES (:Username_admin, :Password_id)";
             $stmt = $this->pdo->prepare($sql);
-            return $stmt->execute($data);
+            return $stmt->execute($data); // Không mã hóa mật khẩu
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();
             return false;
@@ -54,10 +54,10 @@ class UserAdminModel
     public function updateUserAdmin($id, $data)
     {
         try {
-            $sql = "UPDATE useradd SET Username_admin = :Username_admin, Password_id = :Password_id";
+            $sql = "UPDATE useradmin SET Username_admin = :Username_admin, Password_id = :Password_id WHERE User_admin_id = :id"; // Fixed table name
             $stmt = $this->pdo->prepare($sql);
-            $data['id'] = $id;
-            return $stmt->execute($data);
+            $data['id'] = $id; // Ensure the ID is included in the data array
+            return $stmt->execute($data); // Không mã hóa mật khẩu
         } catch (PDOException $e) {
             echo "Lỗi truy vấn: " . $e->getMessage();
             return false;

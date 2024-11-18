@@ -25,6 +25,7 @@
             <a href="?act=forgotPassword" class="forgot-password">Quên mật khẩu?</a>
             <button type="submit" name="btn-login-client">Đăng nhập</button>
         </form>
+        <p><a href="http://localhost/DuAn1Nhom4/DuAn1Nhom4/admin">đăng nhập với tư cách quản trị viên</a></p>
         <p>Bạn chưa có tài khoản? <a href="index.php?act=register-client">Đăng ký ngay</a></p>
         <p><a href="#">Xem chính sách ưu đãi Smember</a></p>
     </div>

@@ -13,7 +13,7 @@ class DashboardController
 
     public function showDashboard()
     {
-        require_once 'views/dashBoard.php';
+        require_once '../admin/views/dashBoard.php';
     }
 }
 

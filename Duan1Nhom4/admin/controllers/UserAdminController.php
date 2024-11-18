@@ -19,17 +19,21 @@ class UserAdminController
     {
         require_once './views/useradmin/insertUserAdmin.php';
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_insert'])) {
-            $data = [
-                'Username_admin' => $_POST['Username_admin'],
-                'Password_id' => password_hash($_POST['Password_id'], PASSWORD_BCRYPT)
-            ];
-            $this->userAdminModel->insertUserAdmin($data);
-            echo '<script>
-            alert("Thêm userAdmin thành công!");
-            window.location.href="?act=listUserAdmins";
-            </script>';
-
-            exit();
+            // Kiểm tra nếu mật khẩu không rỗng
+            if (!empty($_POST['Password_id'])) {
+                $data = [
+                    'Username_admin' => $_POST['Username_admin'],
+                    'Password_id' => $_POST['Password_id'] // Không mã hóa mật khẩu
+                ];
+                $this->userAdminModel->insertUserAdmin($data);
+                echo '<script>
+        alert("Thêm userAdmin thành công!");
+        window.location.href="?act=listUserAdmins";
+        </script>';
+                exit();
+            } else {
+                echo '<script>alert("Mật khẩu không được để trống!");</script>';
+            }
         }
     }
 
@@ -39,20 +43,23 @@ class UserAdminController
         require_once '/laragon/www/Duan1Nhom4/Duan1Nhom4/admin/views/useradmin/editUserAdmin.php';
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_update'])) {
-            $data = [
-                'Username_admin' => $_POST['Username_admin'],
-                'Password_id' => password_hash($_POST['Password_id'], PASSWORD_BCRYPT)
-            ];
-            if ($this->userAdminModel->updateUserAdmin($id, $data))
-                ;
-            echo '<script>
-            alert("Sửa userAdmin thành công!");
-            window.location.href="?act=listUserAdmins";
-            </script>';
-            exit();
+            // Kiểm tra nếu mật khẩu không rỗng
+            if (!empty($_POST['Password_id'])) {
+                $data = [
+                    'Username_admin' => $_POST['Username_admin'],
+                    'Password_id' => $_POST['Password_id'] // Không mã hóa mật khẩu
+                ];
+                $this->userAdminModel->updateUserAdmin($id, $data); // Assuming you have an update method
+                echo '<script>
+        alert("Sửa userAdmin thành công!");
+        window.location.href="?act=listUserAdmins";
+        </script>';
+                exit();
+            } else {
+                echo '<script>alert("Mật khẩu không được để trống!");</script>';
+            }
         }
     }
-
     public function deleteUserAdmin($id)
     {
         if ($this->userAdminModel->deleteUserAdmin($id)) {

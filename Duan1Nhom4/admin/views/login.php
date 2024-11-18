@@ -1,40 +1,23 @@
 <?php
-session_start();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    if ($username === 'admin' && $password === 'password') {
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
-        header('Location: index.php');
-        exit;
-    } else {
-        $error = "Tên đăng nhập hoặc mật khẩu không đúng.";
-    }
-}
+// `require_once '../controllers/accController.php';
+// $accController = new accController();
+// $error = $accController->login();`
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập</title>
 </head>
 
 <body>
     <h2>Đăng Nhập</h2>
-    <?php if (isset($error))
-        echo "<p style='color:red;'>$error</p>"; ?>
-    <form method="post" action="">
-        <label for="username">Tên đăng nhập:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Mật khẩu:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Đăng Nhập</button>
+    <form method="POST" action="?act=login">
+        <input type="text" name="Username_admin" placeholder="Tên đăng nhập" required>
+        <input type="password" name="Password_id" placeholder="Mật khẩu" required>
+        <button type="submit">Đăng nhập</button>
     </form>
 </body>
 

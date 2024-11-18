@@ -15,14 +15,15 @@
 
     <style>
     .main-body-footer {
-        max-width: 150rem;
-    
-    padding: 2rem 0;
-    background-color: #f8f8f8;
-    border-top: 1px solid #ddd;
-}
+        margin: 0 auto;
+
+        padding: 2rem 0;
+        background-color: #f8f8f8;
+        border-top: 1px solid #ddd;
+    }
 
     .columns-columns-flex {
+        max-width: 130rem;
         display: flex;
         flex-wrap: wrap;
     }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'auth.php';
+
 require_once '../commons/function.php';
 require_once 'controllers/DashboardController.php';
 require_once 'controllers/ProductController.php';
@@ -18,12 +18,9 @@ require_once 'controllers/SlideController.php';
 require_once 'controllers/ParentCategoryController.php';
 
 $act = isset($_GET['act']) ? $_GET['act'] : 'dashboard';
-$user = $_POST['user'] ?? null;
-$pass = $_POST['pass'] ?? null;
-$Id_cat = isset($_GET['Id_cat']) ? $_GET['Id_cat'] : null;
 $database = new PDO('mysql:host=localhost;dbname=duanmau1', 'root', '');
-$productController = new ProductController();
 
+$productController = new ProductController();
 $categoryController = new CategoryController();
 $parentCategoryController = new CategoryController();
 $userAdminController = new UserAdminController();
@@ -33,6 +30,11 @@ $DashboardController = new DashboardController();
 $slideModel = new SlideModel();
 $slideController = new SlideController();
 
+// Kiểm tra xem người dùng đã đăng nhập chưa
+if (isset($_SESSION['user_admin'])) {
+    header('Location: views/login.php');
+    exit;
+}
 switch ($act) {
     case 'listProduct':
         $productController->listProducts();
@@ -143,15 +145,15 @@ switch ($act) {
     case 'login':
         $accController->login();
         break;
-    case 'home':
-        $DashboardController->showDashboard();
-        break;
+    // case 'home':
+    //     $DashboardController->showDashboard();
+    //     break;
     case 'header':
         $productController->header();
         break;
-    case 'checkLogin':
-        $accController->checkLogin($user, $pass);
-        break;
+    // case 'checkLogin':
+    //     $accController->checkAcc($user, $pass);
+    //     break;
     default:
         $DashboardController->showDashboard();
         break;

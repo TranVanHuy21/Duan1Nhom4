@@ -15,12 +15,15 @@
             </div>
             <div class="info">
                 <a href="#" class="d-block">DungNhay</a>
+                <?php
+                echo $_SESSION['user_admin'];
+                ?>
             </div>
         </div>
 
         <!-- SidebarSearch Form -->
 
-
+        <a href="?act=logout">dăng xuất</a>
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

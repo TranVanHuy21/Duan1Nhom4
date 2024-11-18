@@ -25,20 +25,20 @@ class ClientModelCate
         return $stmt->fetchColumn();
     }
 
-    public function getProductsByCategoryIdDetail($categoryId, $limit, $offset)
+    public function getProductsByCategoryIdDetail($id_cat, $limit, $offset)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM products WHERE category_id = :categoryId LIMIT :limit OFFSET :offset");
-        $stmt->bindParam(':categoryId', $categoryId);
+        $stmt = $this->pdo->prepare("SELECT * FROM products WHERE id_cat = :id_cat LIMIT :limit OFFSET :offset");
+        $stmt->bindParam(':id_cat', $id_cat);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTotalProductsByCategoryId($categoryId)
+    public function getTotalProductsByCategoryId($id_cat)
     {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM products WHERE category_id = :categoryId");
-        $stmt->bindParam(':categoryId', $categoryId);
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM products WHERE id_cat = :id_cat");
+        $stmt->bindParam(':id_cat', $id_cat);
         $stmt->execute();
         return $stmt->fetchColumn();
     }

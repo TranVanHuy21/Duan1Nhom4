@@ -86,7 +86,13 @@ switch ($act) {
     case 'viewCart':
         $clientController->viewCart();
         break;
-
+    
+    case 'add-to-cart':
+         $clientController->addToCart();
+         break;
+    case 'deleteCart':
+         $clientController->deleteCart();
+         break;
     default:
         // Hành động mặc định là hiển thị trang chủ
         $clientController->showHome();

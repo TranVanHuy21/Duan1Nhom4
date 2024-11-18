@@ -740,6 +740,27 @@
         breadcrumb.innerHTML = breadcrumbHTML;
     });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        <?php if (isset($_GET['success'])): ?>
+            Swal.fire({
+                title: 'Thành công!',
+                text: 'Đã thêm sản phẩm vào giỏ hàng!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        <?php endif; ?>
+        
+        <?php if (isset($_GET['error'])): ?>
+            Swal.fire({
+                title: 'Lỗi!',
+                text: 'Có lỗi xảy ra khi thêm vào giỏ hàng!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        <?php endif; ?>
+    });
+</script>
 </head>
 
 <body>
@@ -888,7 +909,7 @@
                 </div>
                 <div class="box-product-promotion">
                     <div class="pay-left">
-                        <a href="#">
+                        <a href="?act=checkout&id=<?= $product['id'] ?>">
                             <div class="p1">
                                 <strong>MUA NGAY</strong>
                             </div>
@@ -898,16 +919,20 @@
                         </a>
                     </div>
                     <div class="add-to-card">
-                        <a href="#">
-                            <div class="box-pay-to-card">
+                        <form action="?act=add-to-cart" method="POST">
+                            <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                            <input type="hidden" name="product_name" value="<?= htmlspecialchars($product['Name_product']) ?>">
+                            <input type="hidden" name="product_price" value="<?= $product['Promotion_price'] ?>">
+                            <input type="hidden" name="product_image" value="<?= htmlspecialchars($product['Image']) ?>">
+                            <button type="submit" class="box-pay-to-card">
                                 <div class="img">
                                     <img src="./admin/assets/images/add-to-cart.png" alt="">
                                 </div>
                                 <div class="p">
                                     <p>Thêm vào giỏ hàng</p>
                                 </div>
-                            </div>
-                        </a>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -967,7 +992,7 @@
                                     </p>
                                 </div>
                             </div>
-                        </a></div>
+                        </a></div>d
                     <div class="rating-items">
                         <div class="bottom-div">
                             <div class="star-icon">

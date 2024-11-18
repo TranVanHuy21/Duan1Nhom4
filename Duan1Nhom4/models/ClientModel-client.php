@@ -373,16 +373,76 @@ class ClientModel
     }
 }
 
-     
+public function addToCart($userId, $productId, $quantity) {
+    try {
+        // Kiểm tra sản phẩm trong giỏ hàng
+        $stmt = $this->pdo->prepare("SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?");
+        $stmt->execute([$userId, $productId]);
+        $existingItem = $stmt->fetch();
 
-    public function resetPassword($username, $newPassword)
-    {
-        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-        $stmt = $this->pdo->prepare("UPDATE user SET password = :password WHERE username = :username");
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
-        return $stmt->execute();
+        if ($existingItem) {
+            // Cập nhật số lượng nếu sản phẩm đã tồn tại
+            $newQuantity = $existingItem['quantity'] + $quantity;
+            $stmt = $this->pdo->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?");
+            return $stmt->execute([$newQuantity, $userId, $productId]);
+        } else {
+            // Thêm mới nếu sản phẩm chưa có trong giỏ hàng
+            $stmt = $this->pdo->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)");
+            return $stmt->execute([$userId, $productId, $quantity]);
+        }
+    } catch (PDOException $e) {
+        error_log("Error in addToCart: " . $e->getMessage());
+        return false;
     }
-    
+}
+
+public function getCartItems() {
+    try {
+        // Kiểm tra xem có user_id trong session không
+        if(isset($_SESSION['user_id'])) {
+            $sql = "SELECT c.*, sp.name_product, sp.price, sp.image 
+                    FROM cart c 
+                    JOIN products sp ON c.product_id = sp.id 
+                    WHERE c.user_id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$_SESSION['user_id']]);
+        } else {
+            // Nếu không có user_id, lấy tất cả sản phẩm
+            $sql = "SELECT c.*, sp.name_product, sp.price, sp.image 
+                    FROM cart c 
+                    JOIN products sp ON c.product_id = sp.id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return [];
+    }
+}
+
+
+
+public function deleteCartItem($id) {
+    try {
+        // Debug trước khi xóa
+        error_log("Executing delete query for ID: " . $id);
+        
+        $sql = "DELETE FROM cart WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        
+        $result = $stmt->execute();
+        
+        // Debug sau khi xóa
+        error_log("Rows affected: " . $stmt->rowCount());
+        
+        return $result && $stmt->rowCount() > 0;
+        
+    } catch (PDOException $e) {
+        error_log("Error deleting cart item: " . $e->getMessage());
+        return false;
+    }
+}
 }
 ?>

@@ -230,11 +230,71 @@ class ClientController
         }
         
         // Lấy dữ liệu giỏ hàng từ session
-        $cart = $_SESSION['cart'];
+        $cartItems = $this->clientModel->getCartItems();
         
         // Load view giỏ hàng
         include './views/Gio_hang-fe.php';
     }
-}
+
+    public function addToCart() {
+        try {
+            // Kiểm tra phương thức request
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new Exception("Invalid request method");
+            }
+    
+            // Kiểm tra đăng nhập
+            if (!isset($_SESSION['user'])) {
+                $_SESSION['flash_message'] = "Vui lòng đăng nhập để thêm vào giỏ hàng!";
+                header("Location: index.php?act=login-client");
+                exit();
+            }
+    
+            // Lấy dữ liệu từ POST
+            $userId = $_SESSION['user']['User_id'];
+            $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+            $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+    
+            // Validate dữ liệu
+            if ($productId <= 0) {
+                throw new Exception("Invalid product ID");
+            }
+    
+            // Gọi phương thức từ model để thêm vào giỏ hàng
+            $success = $this->clientModel->addToCart($userId, $productId, $quantity);
+    
+            if ($success) {
+                header("Location: index.php?act=showProductDetail&id=" . $productId . "&success=1");
+            } else {
+                header("Location: index.php?act=showProductDetail&id=" . $productId . "&success=0");
+            }
+            exit();
+    
+        } catch (Exception $e) {
+            error_log("Error adding to cart: " . $e->getMessage());
+            $_SESSION['flash_message'] = "Có lỗi xảy ra khi thêm vào giỏ hàng!";
+            header("Location: index.php");
+            exit();
+        }
+    }
+
+
+    public function deleteCart() {
+        if(isset($_POST['id'])) {
+            $id = $_POST['id'];
+            
+            // Sử dụng clientModel thay vì truy cập trực tiếp PDO
+            $success = $this->clientModel->deleteCartItem($id);
+            
+            // Chuyển về trang giỏ hàng
+            header("Location: index.php?act=viewCart");
+            exit();
+        }
+        header("Location: index.php?act=viewCart");
+        exit();
+    }
+
+ 
+    }
 ob_end_flush();
 ?>

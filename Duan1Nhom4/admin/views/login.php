@@ -1,7 +1,7 @@
 <?php
-require_once '../controllers/accController.php';
-$accController = new accController();
-$error = $accController->login();
+// `require_once '../controllers/accController.php';
+// $accController = new accController();
+// $error = $accController->login();`
 ?>
 <!DOCTYPE html>
 <html lang="en">

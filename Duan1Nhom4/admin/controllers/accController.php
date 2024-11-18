@@ -1,6 +1,22 @@
 <?php
-require_once '../models/accModel.php';
-require_once '../commons/function.php';
+if (!function_exists('connectDB')) {
+    // Define the connectDB() function to establish a database connection
+    function connectDB()
+    {
+        $host = 'localhost';
+        $username = 'your_username';
+        $password = 'your_password';
+        $dbname = 'your_database_name';
+
+        try {
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $pdo;
+        } catch (PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
+        }
+    }
+}
 class accController
 {
     public $accModel;
@@ -8,7 +24,7 @@ class accController
     public function __construct()
     {
         $pdo = connectDB();
-        $this->accModel = new accModel(connectDB());
+        $this->accModel = new accModel($pdo);
     }
 
     public function login()
@@ -23,10 +39,12 @@ class accController
             // So sánh trực tiếp Username_admin và Password_id
             if ($user && $password === $user['Password_id']) {
                 $_SESSION['user_admin'] = $user; // Lưu thông tin người dùng vào session
-                header('location: views/dashBoard.php'); // Chuyển hướng đến trang dashboard
+                echo '<script>window.location.href = "views/dashBoard.php";</script>'; // Chuyển hướng đến trang dashboard
                 exit();
             } else {
                 echo '<script>alert("Tên đăng nhập hoặc mật khẩu không đúng.");</script>';
+                header("location: views/login.php"); // Chuyển hướng đến trang đăng nhập
+                exit();
             }
         }
 

@@ -101,8 +101,24 @@
             </div>
             <div class="cart-summary">
             <div class="cart-total">Tổng tiền: <span>0đ</span></div>
-                    <button class="checkout-btn">Mua ngay</button>
+                    <button class="checkout-btn" onclick="processCheckout()" >Mua ngay</button>
                 </div>
+                
+                <script>
+    // ... existing code ...
+
+                // Thêm hàm xử lý thanh toán
+                function processCheckout() {
+                    const checkedItems = document.querySelectorAll('.rounded-checkbox:checked');
+                    if (checkedItems.length === 0) {
+                        alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
+                        return;
+                    }
+                    
+                    // Chuyển hướng đến trang thanh toán
+                    window.location.href = 'index.php?act=checkout';
+                }
+            </script>
 
                 <!-- Thêm vào cuối file, trước </body> -->
                 <script src="./assets/js/cart.js"></script>

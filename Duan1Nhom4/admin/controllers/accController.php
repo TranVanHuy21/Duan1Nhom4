@@ -4,9 +4,9 @@ if (!function_exists('connectDB')) {
     function connectDB()
     {
         $host = 'localhost';
-        $username = 'your_username';
-        $password = 'your_password';
-        $dbname = 'your_database_name';
+        $username = 'root';
+        $password = '';
+        $dbname = 'duanmau1';
 
         try {
             $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -30,21 +30,20 @@ class accController
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $Username_admin = $_POST['Username_admin'];
+            $Username_admin = filter_input(INPUT_POST, 'Username_admin', FILTER_SANITIZE_STRING);
             $password = $_POST['Password_id'];
 
             // Lấy thông tin người dùng từ model
             $user = $this->accModel->getUserByUsername($Username_admin);
 
-            // So sánh trực tiếp Username_admin và Password_id
-            if ($user && $password === $user['Password_id']) {
+            // So sánh mật khẩu đã mã hóa
+            if ($user && password_verify($password, $user['Password_id'])) { // Sử dụng hàm password_verify nếu bạn đã mã hóa mật khẩu
                 $_SESSION['user_admin'] = $user; // Lưu thông tin người dùng vào session
-                echo '<script>window.location.href = "views/dashBoard.php";</script>'; // Chuyển hướng đến trang dashboard
+                header("Location: views/dashBoard.php"); // Chuyển hướng đến trang dashboard
                 exit();
             } else {
                 echo '<script>alert("Tên đăng nhập hoặc mật khẩu không đúng.");</script>';
-                header("location: views/login.php"); // Chuyển hướng đến trang đăng nhập
-                exit();
+                // Không sử dụng header chuyển hướng sau echo script
             }
         }
 
@@ -54,8 +53,10 @@ class accController
     public function logout()
     {
         unset($_SESSION['user_admin']); // Đảm bảo xóa phiên đăng nhập đúng
-        header("location: views/login.php");
+        header("Location: views/login.php");
         exit();
     }
 }
+
+
 ?>

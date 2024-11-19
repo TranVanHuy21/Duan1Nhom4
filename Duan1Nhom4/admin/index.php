@@ -30,8 +30,8 @@ $slideModel = new SlideModel();
 $slideController = new SlideController();
 
 // Kiểm tra xem người dùng đã đăng nhập chưa
-if (!isset($_SESSION['user_admin'])) {
-    header("Location: ../admin/views/login.php");
+if (!isset($_SESSION['user_admin']) && (!isset($_GET['act']) || $_GET['act'] != 'login')) {
+    header("Location: ../admin/index.php?act=login");
     exit();
 }
 $act = isset($_GET['act']) ? $_GET['act'] : 'dashboard';

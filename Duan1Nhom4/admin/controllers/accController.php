@@ -30,29 +30,26 @@ class accController
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $Username_admin = filter_input(INPUT_POST, 'Username_admin', FILTER_SANITIZE_STRING);
+            $Username_admin = filter_input(INPUT_POST, 'Username_admin');
             $password = $_POST['Password_id'];
 
-            // Lấy thông tin người dùng từ model
             $user = $this->accModel->getUserByUsername($Username_admin);
 
-            // So sánh mật khẩu đã mã hóa
-            if ($user && password_verify($password, $user['Password_id'])) { // Sử dụng hàm password_verify nếu bạn đã mã hóa mật khẩu
-                $_SESSION['user_admin'] = $user; // Lưu thông tin người dùng vào session
-                header("Location: views/dashBoard.php"); // Chuyển hướng đến trang dashboard
+            if ($user) {
+                $_SESSION['user_admin'] = $user;
+                header("Location: views/dashBoard.php");
                 exit();
             } else {
                 echo '<script>alert("Tên đăng nhập hoặc mật khẩu không đúng.");</script>';
-                // Không sử dụng header chuyển hướng sau echo script
             }
         }
 
-        require 'views/login.php'; // Hiển thị trang đăng nhập
+        require 'views/login.php';
     }
 
     public function logout()
     {
-        unset($_SESSION['user_admin']); // Đảm bảo xóa phiên đăng nhập đúng
+        unset($_SESSION['user_admin']);
         header("Location: views/login.php");
         exit();
     }

@@ -78,7 +78,7 @@
 <body>
     <div class="login">
         <h1>Login</h1>
-        <form action="../index.php?act=login" method="post">
+        <form action="?act=login" method="post">
             <label for="username">
                 <i class="fas fa-user"></i>
             </label>

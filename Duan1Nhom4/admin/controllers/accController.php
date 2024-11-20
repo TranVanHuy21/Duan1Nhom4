@@ -53,7 +53,7 @@ class accController
     public function logout()
     {
         unset($_SESSION['user_admin']);
-        header("Location: views/login.php");
+        header("Location:../admin");
         exit();
     }
 }

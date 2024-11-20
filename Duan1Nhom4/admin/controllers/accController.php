@@ -43,8 +43,11 @@ class accController
                     header("Location: ?act=dashboard");
                     exit();
                 } else {
+
                     $_SESSION['error_message'] = "Tên đăng nhập hoặc mật khẩu không đúng.";
                 }
+            } else {
+                $_SESSION['error_message'] = "Tên đăng nhập hoặc mật khẩu không đúng.";
             }
         }
 

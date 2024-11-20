@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Login</title>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <style>
     * {
@@ -77,6 +78,24 @@
 
 <body>
     <div class="login">
+        <?php
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $error_message = '';
+        if (isset($_SESSION['error_message'])) {
+            $error_message = $_SESSION['error_message'];
+            unset($_SESSION['error_message']); // Clear the message after displaying
+        }
+        ?>
+        <script>
+        window.onload = function() {
+            var errorMessage = "<?php echo addslashes($error_message); ?>"; // Escape quotes for JavaScript
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        };
+        </script>
         <h1>Login</h1>
         <form action="?act=login" method="post">
             <label for="username">

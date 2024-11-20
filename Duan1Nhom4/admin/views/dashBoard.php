@@ -1,6 +1,15 @@
 <!-- header -->
 
-<?php include './views/layout/header.php'; ?>
+<?php
+if (isset($_SESSION['success_message'])) {
+    echo "<script>alert('" . $_SESSION['success_message'] . "');</script>";
+    unset($_SESSION['success_message']);
+}
+if (isset($_SESSION['error_message'])) {
+    echo "<script>alert('" . $_SESSION['error_message'] . "');</script>";
+    unset($_SESSION['error_message']);
+}
+include './views/layout/header.php'; ?>
 <!-- header -->
 <!-- <nav>
     <?php include './views/layout/navbar.php'; ?>

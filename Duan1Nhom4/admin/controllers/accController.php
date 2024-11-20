@@ -39,10 +39,11 @@ class accController
             if ($user) {
                 if ($password == $user['Password_id']) {
                     $_SESSION['user_admin'] = $user;
+                    $_SESSION['success_message'] = "Đăng nhập thành công!";
                     header("Location: ?act=dashboard");
                     exit();
                 } else {
-                    echo '<script>alert("Tên đăng nhập hoặc mật khẩu không đúng.");</script>';
+                    $_SESSION['error_message'] = "Tên đăng nhập hoặc mật khẩu không đúng.";
                 }
             }
         }

@@ -37,11 +37,13 @@
               <!-- /.card-header -->
               <!-- form start -->
               <h1>Edit User</h1>
-                <form action="?act=editUser&id=<?= $user['User_id'] ?>" method="post">
+                <form style="padding: 30px;" action="?act=editUser&id=<?= $user['User_id'] ?>" method="post">
                     <p>Username</p><input type="text" name="username"
                         value="<?= htmlspecialchars($user['username']) ?>">
                     <p>Password</p><input type="text" name="password" value="<?= htmlspecialchars($user['password']) ?>" >
                     <p>Name</p><input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>">
+                    <br> <br>
+                    
                     <input type="submit" value="Update User" name="btn_update">
                 </form>
             </div>

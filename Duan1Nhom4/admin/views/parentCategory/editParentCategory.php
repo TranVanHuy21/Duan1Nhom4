@@ -1,83 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Parent Category</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+<!-- header -->
+<?php include './views/layout/header.php'; ?>
+ <!-- header -->
+  <!-- <nav>
+    <?php include './views/layout/navbar.php';  ?>
+  </nav> -->
 
-        .container {
-            width: 90%;
-            margin: 2rem auto;
-            background: #fff;
-            padding: 2rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
+  
 
-        form {
-            display: flex;
-            flex-direction: column;
-        }
+  <!-- Main Sidebar Container -->
+  <?php include './views/layout/sidebar.php';  ?>
+  
 
-        form p {
-            margin: 0.5rem 0;
-            color: #555;
-        }
-
-        form input[type="text"] {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        form input[type="submit"] {
-            background-color: #5c67f2;
-            color: #fff;
-            border: none;
-            padding: 0.75rem;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1rem;
-        }
-
-        form input[type="submit"]:hover {
-            background-color: #5058e2;
-        }
-    </style>
-</head>
-
-<body>
-    <?php require '/laragon/www/Duan1Nhom4/Duan1Nhom4/admin/views/layout/header.php'; ?>
-    <div class="box-main">
-        <div class="menu">
-            <nav class="wrapper nav-main">
-                <ul>
-                    <li><a href="?act=dashboard">Thống kê </a></li>
-                    <li><a href="?act=listCategories">Quản trị danh mục</a></li>
-                    <li><a href="?act=listParentCategories">Quản trị danh mục Parent</a></li>
-                    <li><a href="?act=listProduct">Quản trị sản phẩm</a></li>
-                    <li><a href="?act=listSlides">Quản trị Slide</a></li>
-                    <li><a href="?act=listUsers">Quản trị người dùng</a></li>
-                    <li><a href="?act=listUserAdmins">Quản trị admin</a></li>
-                    <li><a href="">Thoát</a></li>
-                </ul>
-            </nav>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Quản Lý Parent</h1>
+          </div>
         </div>
+      </div><!-- /.container-fluid -->
+    </section>
 
-        <div class="box-views">
-            <div class="container">
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+          <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Thêm Danh Mục Parent</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <div class="box-views">
+
+              <div class="container">
                 <h2>Edit Parent Category</h2>
                 <form method="POST" action="index.php?act=editParentCategory&id=<?= $parentCategory['id'] ?>">
                     <label for="ParentCategory_name">Parent Category Name:</label>
@@ -86,8 +47,21 @@
                     <button type="submit">Save</button>
                 </form>
             </div>
-        </div>
-    </div>
-</body>
 
+        </div>
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+    <?php include './views/layout/footer.php'; ?>
+ 
+
+</body>
 </html>

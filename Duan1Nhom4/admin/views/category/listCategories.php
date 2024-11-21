@@ -31,7 +31,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="<?= 'http://localhost/Duan1Nhom4/Duan1Nhom4/admin/?act=addCategory' ?>">
+                            <a href="index.php?act=addCategory">
                                 <button class="btn btn-success">Thêm Danh Mục</button>
                             </a>
                         </div>
@@ -47,22 +47,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($categories as $key => $categorie): ?>
+                                    <?php
+                  if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                  }
 
+                  if (isset($_SESSION['success_message'])) {
+                    echo '<div class="alert alert-success" role="alert">' . $_SESSION['success_message'] . '</div>';
+                    unset($_SESSION['success_message']);
+                  }
+                  foreach ($categories as $category): ?>
                                     <tr>
-                                        <td><?= $key + 1 ?></td>
-                                        <td><?= $categorie['Category_name'] ?></td>
-                                        <td><?= $categorie['Parent_id'] ?></td>
+                                        <td><?= $category['id'] ?></td>
+                                        <td><?= $category['Category_name'] ?></td>
+                                        <td><?= $category['Parent_id'] ?></td>
                                         <td>
                                             <a href="index.php?act=editCategory&id=<?= $category['id'] ?>"
-                                                class="btn btn-warning">Edit</a>
+                                                class="btn btn-warning">Chỉnh
+                                                Sửa</a>
                                             <a href="index.php?act=deleteCategory&id=<?= $category['id'] ?>"
                                                 class="btn btn-danger"
-                                                onclick="return confirm('Are you sure you want to delete this Category?');">Delete</a>
+                                                onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">Xóa</a>
                                             <!-- <button class="btn btn-danger">Xóa</button> -->
                                         </td>
-
-
                                     </tr>
                                     <?php endforeach; ?>
 

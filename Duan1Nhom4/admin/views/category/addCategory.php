@@ -35,7 +35,9 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <?php if (!empty($this->errorMessage)): ?>
+                        <?php
+
+                        if (!empty($this->errorMessage)): ?>
                         <div class="error-message" style="color: red;">
                             <?php echo $this->errorMessage; ?>
                         </div>
@@ -49,7 +51,7 @@
                                 <div class="form-group">
                                     <label for="Parent_id">Parent Category:</label>
                                     <select name="Parent_id">
-                                        <option value="0">None</option>
+
                                         <?php foreach ($parentCategories as $parentCategory): ?>
                                         <option value="<?= $parentCategory['id'] ?>">
                                             <?= $parentCategory['parent_name'] ?>

@@ -15,7 +15,7 @@ require_once 'controllers/accController.php';
 require_once 'models/accModel.php';
 require_once 'models/SlideModel.php';
 require_once 'controllers/SlideController.php';
-require_once 'controllers/ParentCategoryController.php';
+// require_once 'controllers/ParentCategoryController.php';
 
 
 
@@ -89,6 +89,9 @@ switch ($act) {
         break;
     case 'addParentCategory':
         $parentCategoryController->addParentCategory();
+        break;
+    case 'form-edit-parent-category':
+        $categoryController->formEditParentCategory();
         break;
     case 'editParentCategory':
         $id = isset($_GET['id']) ? $_GET['id'] : null;

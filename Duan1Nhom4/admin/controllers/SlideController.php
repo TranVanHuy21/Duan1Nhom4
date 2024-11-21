@@ -32,6 +32,7 @@ class SlideController
 
         if (move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
             $this->slideModel->insertSlide($title, $image, $role_slide_id, $description);
+            $_SESSION['success_message'] = "Thêm mới slide thành công!";
             header('Location: ?act=listSlides');
         } else {
             echo "uploads không thành công";
@@ -60,6 +61,7 @@ class SlideController
         }
 
         $this->slideModel->updateSlide($id, $title, $image, $role_slide_id, $description);
+        $_SESSION['success_message'] = "Cập nhật slide thành công!";
         header('Location: ?act=listSlides');
     }
 

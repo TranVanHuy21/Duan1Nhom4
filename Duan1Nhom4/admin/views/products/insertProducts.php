@@ -247,12 +247,8 @@ document.querySelector('form').addEventListener('submit', function(event) {
 <!-- /.content-wrapper -->
 <?php include './views/layout/footer.php'; ?>
 
-<<<<<<< HEAD <!-- /.content-wrapper -->
-    <?php include './views/layout/footer.php'; ?>
 
-    =======
-    >>>>>>> main
 
-    </body>
+</body>
 
-    </html>
+</html>

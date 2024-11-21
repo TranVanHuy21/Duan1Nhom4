@@ -143,7 +143,7 @@ class ProductController
                     $discount
                 );
 
-                echo '<script>alert("Thêm sản phẩm thành công!");</script>';
+                $_SESSION['success_message'] = "Thêm mới sản phẩm thành công!";
                 header('location:?act=listProduct');
                 exit();
             }
@@ -159,7 +159,7 @@ class ProductController
     {
         $categories = $this->productModel->getCategories();
         $product = $this->productModel->getProductById($id);
-        // require_once 'views/products/updateProducts.php';
+        require_once 'views/products/updateProducts.php';
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_update'])) {
             $Name_product = $_POST['Name_product'];
             $Title = $_POST['Title'];
@@ -230,7 +230,7 @@ class ProductController
                     $discount
                 )
             ) {
-                echo '<script>alert("Cập nhật sản phẩm thành công!");</script>';
+                $_SESSION['success_message'] = "Cập nhật sản phẩm thành công!";
                 header("location:?act=listProduct");
                 exit();
             } else {

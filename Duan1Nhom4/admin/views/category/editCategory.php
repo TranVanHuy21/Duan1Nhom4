@@ -49,13 +49,18 @@
                                 <div class="form-group">
                                     <label for="Parent_id">Parent Category:</label>
                                     <select name="Parent_id">
-                                        <option value="0">None</option>
+
                                         <?php foreach ($parentCategories as $parentCategory): ?>
                                         <option value="<?= $parentCategory['id'] ?>">
                                             <?= $parentCategory['parent_name'] ?>
                                         </option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <?php if (isset($this->errorParentCategory)): ?>
+                                    <div class="error-message" style="color: red;">
+                                        <?php echo $this->errorParentCategory; ?>
+                                    </div>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>

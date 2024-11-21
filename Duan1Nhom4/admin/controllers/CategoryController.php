@@ -1,5 +1,7 @@
 <?php
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 class CategoryController
 {
     private $categoryModel;
@@ -31,6 +33,7 @@ class CategoryController
             } else {
                 try {
                     $this->categoryModel->insertCategory($category_name, $parent_id);
+                    $_SESSION['success_message'] = "Thêm danh mục thành công!";
                     header("Location: index.php?act=listCategories");
                     exit();
                 } catch (Exception $e) {
@@ -44,7 +47,10 @@ class CategoryController
     public function formEditCategory()
     {
     }
+    public function formEditParentCategory()
+    {
 
+    }
     public function editCategory()
     {
         $id = $_GET['id'];
@@ -60,6 +66,7 @@ class CategoryController
             } else {
                 try {
                     $this->categoryModel->editCategory($id, $category_name, $parent_id);
+                    $_SESSION['success_message'] = "Sửa danh mục thành công!";
                     header("Location: index.php?act=listCategories");
                 } catch (Exception $e) {
                     $this->errorMessage = "Lỗi: " . $e->getMessage();
@@ -92,6 +99,7 @@ class CategoryController
             } else {
                 try {
                     $this->parentCategoryModel->insertParentCategory($ParentCategory_name);
+                    $_SESSION['success_message'] = "Thêm danh mục cha thành công!";
                     header("Location: index.php?act=listParentCategories");
                 } catch (Exception $e) {
                     $this->errorMessage = "Lỗi: " . $e->getMessage();
@@ -104,15 +112,18 @@ class CategoryController
     public function editParentCategory($id)
     {
         $parentCategory = $this->parentCategoryModel->getParentCategoryByID($id);
-        $id = $_GET['id'];
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $ParentCategory_name = $_POST['ParentCategory_name'];
+            $Parent_id = $_POST['Parent_id'];
 
             if (empty($ParentCategory_name)) {
                 $this->errorMessage = "Tên danh mục cha là bắt buộc.";
+            } elseif ($Parent_id == '0') {
+                $this->errorMessage = "Bạn phải chọn danh mục cha.";
             } else {
                 try {
                     $this->parentCategoryModel->editParentCategory($id, $ParentCategory_name);
+                    $_SESSION['success_message'] = "Sửa danh mục cha thành công!";
                     header("Location: index.php?act=listParentCategories");
                 } catch (Exception $e) {
                     $this->errorMessage = "Lỗi: " . $e->getMessage();
@@ -121,7 +132,6 @@ class CategoryController
         }
         require_once './views/parentCategory/editParentCategory.php';
     }
-
     public function deleteParentCategory($id)
     {
         $this->parentCategoryModel->deleteParentCategory($id);

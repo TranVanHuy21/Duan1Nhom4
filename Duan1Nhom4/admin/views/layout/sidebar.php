@@ -14,16 +14,17 @@
                 <img src="./assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">DungNhay</a>
+                <a href="#" class="d-block">Xin Chào</a>
                 <?php
                 echo implode(', ', $_SESSION['user_admin']);
                 ?>
+
             </div>
         </div>
 
         <!-- SidebarSearch Form -->
 
-        <a href="?act=logout">dăng xuất</a>
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -95,7 +96,14 @@
                         </p>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="?act=logout" class="nav-link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <p>
+                            Đăng xuất
+                        </p>
+                    </a>
+                </li>
 
 
             </ul>

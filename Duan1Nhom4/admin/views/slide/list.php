@@ -89,9 +89,9 @@ function sortByCategory(categoryId) {
                                         <td><?= htmlspecialchars($slide['description']) ?></td>
                                         <td>
                                             <a href="?act=showEditForm&id=<?= $slide['id'] ?>"
-                                                class="btn btn-edit">Sửa</a>
-                                            <a href="?act=deleteSlide&id=<?= $slide['id'] ?>" class="btn btn-delete"
-                                                onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>
+                                                class="btn btn-warning">Chỉnh Sửa</a>
+                                            <a href="?act=deleteSlide&id=<?= $slide['id'] ?>" class="btn btn-danger"
+                                                onclick="return confirm('Bạn có chắc chắn muốn xóa Slide này không?');">Xóa</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>

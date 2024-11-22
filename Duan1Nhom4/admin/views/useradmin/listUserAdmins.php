@@ -53,10 +53,10 @@
                                         <td><?= htmlspecialchars($userAdmin['Username_admin']) ?></td>
                                         <td>
                                             <a href="?act=editUserAdmin&id=<?= $userAdmin['User_admin_id'] ?>"
-                                                class="edit-btn">Sửa</a>
+                                                class="btn btn-warning">Chỉnh Sửa</a>
                                             <a href="?act=deleteUserAdmin&id=<?= $userAdmin['User_admin_id'] ?>"
-                                                class="delete-btn"
-                                                onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>
+                                                class="btn btn-danger"
+                                                onclick="return confirm('Bạn có chắc chắn muốn xóa User Admin này không?');">Xóa</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -133,7 +133,7 @@ if ('WebSocket' in window) {
                 if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
                     var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
                     elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date()
-                    .valueOf());
+                        .valueOf());
                 }
                 parent.appendChild(elem);
             }

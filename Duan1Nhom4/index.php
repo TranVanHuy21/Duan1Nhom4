@@ -103,6 +103,15 @@ switch ($act) {
         $clientController->paymen();
         break;
 
+    case 'payment_qr':
+        if(isset($_GET['method']) && isset($_GET['amount'])) {
+            $paymentMethod = $_GET['method'];
+            $totalAmount = $_GET['amount'];
+            include "views/payment_qr.php";
+        } else {
+            header("Location: index.php?act=viewCart");
+        }
+
     default:
         // Hành động mặc định là hiển thị trang chủ
         $clientController->showHome();

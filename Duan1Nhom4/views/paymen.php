@@ -166,6 +166,29 @@
             margin-top: 10px;
             cursor: pointer;
         }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .payment-option {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option.active {
+            border-color: #d70018;
+            background-color: #fff5f5;
+        }
+
+        .payment-option:hover {
+            border-color: #d70018;
+        }
     </style>
 </head>
 <body>
@@ -208,11 +231,20 @@
 
         <div class="section">
             <div class="payment-title">THÔNG TIN THANH TOÁN</div>
-            <div class="payment-option">
-                <img src="path/to/card-icon.png" alt="Payment">
-                <div class="text" style="font-weight: 600; color: red; font-size: 16px;">Chọn phương thức thanh toán</div>
-                <div class="arrow">
-                    <i class="fas fa-chevron-right"></i>
+            <div class="payment-methods">
+                <div class="payment-option" data-method="momo">
+                    <img src="https://th.bing.com/th/id/OIP.1GNvjAZu4hlbE0bWflshGwHaHa?rs=1&pid=ImgDetMain" alt="Momo">
+                    <div class="text">Thanh toán qua Momo</div>
+                    <div class="arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="payment-option" data-method="bank">
+                    <img src="https://th.bing.com/th/id/OIP.yVztzr5ke-D_hI472kIWzQHaHa?rs=1&pid=ImgDetMain" alt="Bank">
+                    <div class="text">Thanh toán qua ngân hàng</div>
+                    <div class="arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -245,13 +277,50 @@
                 <span>Tổng tiền tạm tính:</span>
                 <span><?= number_format($totalAmount, 0, ',', '.') ?>₫</span>
             </div>
-            <button class="checkout-button">Thanh toán</button>
+            <button class="checkout-button" onclick="processPayment()">Thanh toán</button>
             <div class="product-check">
                 Kiểm tra danh sách sản phẩm (1)
             </div>            
         </div>
 
+
+        
+
        
     </div>
+
+    <script>
+    let selectedPaymentMethod = '';
+
+    document.querySelectorAll('.payment-option').forEach(option => {
+        option.addEventListener('click', function() {
+            selectedPaymentMethod = this.dataset.method;
+            // Xóa active class từ tất cả options
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            // Thêm active class cho option được chọn
+            this.classList.add('active');
+        });
+    });
+
+    function processPayment() {
+        if (!selectedPaymentMethod) {
+            alert('Vui lòng chọn phương thức thanh toán');
+            return;
+        }
+        
+        // Lưu thông tin đơn hàng vào session trước khi chuyển trang
+        const orderData = {
+            method: selectedPaymentMethod,
+            amount: <?= $totalAmount ?>,
+            timestamp: new Date().getTime()
+        };
+        sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
+        
+        // Chuyển hướng với thông tin thanh toán
+        window.location.href = `index.php?act=payment_qr&method=${selectedPaymentMethod}&amount=<?= $totalAmount ?>`;
+    }
+    </script>
 </body>
 </html>

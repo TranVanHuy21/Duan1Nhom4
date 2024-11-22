@@ -91,7 +91,7 @@ class ClientController
         include './views/products_category.php';
     }
 
-
+   
 
     public function listCategories()
     {
@@ -117,17 +117,17 @@ class ClientController
             $productID = $_POST['product_id'];
             $userId = $_SESSION['user']['User_id'];
             $commentContent = $_POST['comment_content'];
-
+    
             $success = $this->clientModel->addComment($productID, $userId, $commentContent);
-
+    
             if ($success) {
                 $_SESSION['flash_message'] = "Bình luận đã được gửi thành công!";
             } else {
                 $_SESSION['flash_message'] = "Có lỗi xảy ra khi gửi bình luận. Vui lòng thử lại.";
             }
-
+    
             // Chuyển hướng về trang chi tiết sản phẩm
-            header("Location:index.php?act=showProductDetail&id=" . urlencode($productID));
+            header("Location:index.php?act=showProductDetail&id=".urlencode($productID));
 
             exit();
         } else {
@@ -138,17 +138,17 @@ class ClientController
     }
     public function showProductDetail($id)
     {
-        $product = $this->clientModel->getProductById($id);
-        if ($product) {
-            $categoryId = $product['Id_cat'];
-            $relatedProducts = $this->clientModel->getTopViewedProductsByCategory($product['Id_cat']);
-            // Lấy danh sách bình luận
-            $comments = $this->clientModel->getCommentsByProductId($id);
-            // Truyền biến $comments vào view
-            include './views/productDetailView.php';
-        } else {
-            include 'views/404.php';
-        }
+    $product = $this->clientModel->getProductById($id);
+    if ($product) {
+        $categoryId = $product['Id_cat'];
+        $relatedProducts = $this->clientModel->getTopViewedProductsByCategory($product['Id_cat']);
+        // Lấy danh sách bình luận
+        $comments = $this->clientModel->getCommentsByProductId($id);
+        // Truyền biến $comments vào view
+        include './views/productDetailView.php';
+    } else {
+        include 'views/404.php';
+    }
     }
 
     public function login_client()
@@ -223,55 +223,53 @@ class ClientController
         }
     }
 
-    public function viewCart()
-    {
+    public function viewCart() {
         // Kiểm tra session giỏ hàng
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = array();
         }
-
+        
         // Lấy dữ liệu giỏ hàng từ session
         $cartItems = $this->clientModel->getCartItems();
-
+        
         // Load view giỏ hàng
         include './views/Gio_hang-fe.php';
     }
 
-    public function addToCart()
-    {
+    public function addToCart() {
         try {
             // Kiểm tra phương thức request
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 throw new Exception("Invalid request method");
             }
-
+    
             // Kiểm tra đăng nhập
             if (!isset($_SESSION['user'])) {
                 $_SESSION['flash_message'] = "Vui lòng đăng nhập để thêm vào giỏ hàng!";
                 header("Location: index.php?act=login-client");
                 exit();
             }
-
+    
             // Lấy dữ liệu từ POST
             $userId = $_SESSION['user']['User_id'];
-            $productId = isset($_POST['product_id']) ? (int) $_POST['product_id'] : 0;
-            $quantity = isset($_POST['quantity']) ? (int) $_POST['quantity'] : 1;
-
+            $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+            $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+    
             // Validate dữ liệu
             if ($productId <= 0) {
                 throw new Exception("Invalid product ID");
             }
-
+    
             // Gọi phương thức từ model để thêm vào giỏ hàng
             $success = $this->clientModel->addToCart($userId, $productId, $quantity);
-
+    
             if ($success) {
                 header("Location: index.php?act=showProductDetail&id=" . $productId . "&success=1");
             } else {
                 header("Location: index.php?act=showProductDetail&id=" . $productId . "&success=0");
             }
             exit();
-
+    
         } catch (Exception $e) {
             error_log("Error adding to cart: " . $e->getMessage());
             $_SESSION['flash_message'] = "Có lỗi xảy ra khi thêm vào giỏ hàng!";
@@ -281,14 +279,13 @@ class ClientController
     }
 
 
-    public function deleteCart()
-    {
-        if (isset($_POST['id'])) {
+    public function deleteCart() {
+        if(isset($_POST['id'])) {
             $id = $_POST['id'];
-
+            
             // Sử dụng clientModel thay vì truy cập trực tiếp PDO
             $success = $this->clientModel->deleteCartItem($id);
-
+            
             // Chuyển về trang giỏ hàng
             header("Location: index.php?act=viewCart");
             exit();
@@ -297,7 +294,188 @@ class ClientController
         exit();
     }
 
+    public function checkout() {
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+        if (!isset($_SESSION['user'])) {
+            header("Location: index.php?act=login-client");
+            exit();
+        }
+    
+        // Lấy thông tin người dùng
+        $userId = $_SESSION['user']['User_id'];
+        $user = $this->clientModel->getUserById($userId); // Gọi phương thức để lấy thông tin người dùng
+    
+        // Lấy ID của các bản ghi trong bảng cart từ URL
+        $cartIds = isset($_GET['cart_ids']) ? explode(',', $_GET['cart_ids']) : [];
+    
+        // Kiểm tra xem có ID nào không
+        if (empty($cartIds)) {
+            echo "ID giỏ hàng không hợp lệ.";
+            exit();
+        }
+    
+        // Lấy sản phẩm từ bảng cart dựa trên user_id và cart_ids
+        $selectedProducts = [];
+        foreach ($cartIds as $cartId) {
+            $cartId = (int)$cartId; // Ép kiểu sang số nguyên
+            if ($cartId > 0) {
+                $selectedProduct = $this->clientModel->getCartItemByUserIdAndCartId($userId, $cartId);
+                if ($selectedProduct) {
+                    $selectedProducts[] = $selectedProduct; // Thêm sản phẩm vào mảng
+                }
+            }
+        }
+    
+        // Nếu không tìm thấy sản phẩm nào, thông báo lỗi
+        if (empty($selectedProducts)) {
+            echo "Không tìm thấy sản phẩm nào trong giỏ hàng.";
+            exit();
+        }
+    
+        // Tính tổng tiền cho tất cả sản phẩm được chọn
+        $totalPrice = 0;
+        foreach ($selectedProducts as $product) {
+            $totalPrice += $product['price'] * $product['quantity'];
+        }
+    
+        // Hiển thị view checkout
+        include './views/checkout.php';
+    }
+    public function processOrder() {
+        try {
+            if (!isset($_SESSION['user'])) {
+                header("Location: index.php?act=login-client");
+                exit();
+            }
 
+            // Debug POST data
+            error_log("POST data received: " . print_r($_POST, true));
+
+            $userId = $_SESSION['user']['User_id'];
+            $status_id = 1; // Đơn hàng mới
+
+            // Lấy và kiểm tra dữ liệu
+            $totalPrice = isset($_POST['total_price']) ? floatval($_POST['total_price']) : 0;
+            if ($totalPrice <= 0) {
+                throw new Exception("Tổng tiền không hợp lệ");
+            }
+
+            // Xử lý địa chỉ
+            $deliveryMethod = $_POST['delivery_method'] ?? '';
+            $fullAddress = '';
+            
+            if ($deliveryMethod === 'store') {
+                $storeCity = $_POST['store_city'] ?? '';
+                $storeDistrict = $_POST['store_district'] ?? '';
+                $storeLocation = $_POST['store_location'] ?? '';
+                $fullAddress = "$storeLocation, $storeDistrict, $storeCity";
+            } else {
+                $city = $_POST['delivery_city'] ?? '';
+                $district = $_POST['delivery_district'] ?? '';
+                $ward = $_POST['delivery_ward'] ?? '';
+                $address = $_POST['delivery_address'] ?? '';
+                $fullAddress = "$address, $ward, $district, $city";
+            }
+
+            $notes = $_POST['note'] ?? '';
+
+            // Debug order data
+            error_log("Creating order with: " . 
+                      "userId: $userId, " .
+                      "status: $status_id, " .
+                      "total: $totalPrice, " .
+                      "address: $fullAddress");
+
+            // Tạo đơn hàng
+            $orderResult = $this->clientModel->createOrder(
+                $userId, 
+                $status_id,
+                $totalPrice,
+                $fullAddress, 
+                $notes
+            );
+
+            if (!$orderResult || !isset($orderResult['Order_id'])) {
+                throw new Exception("Không thể tạo đơn hàng - Kiểm tra log để biết chi tiết");
+            }
+
+            $orderId = $orderResult['Order_id'];
+            
+            // Lấy sản phẩm từ giỏ hàng
+            $cartItems = $this->clientModel->getCartItemsByUserId($userId);
+            if (empty($cartItems)) {
+                throw new Exception("Giỏ hàng trống");
+            }
+
+            // Lưu chi tiết đơn hàng
+            foreach ($cartItems as $item) {
+                $saveResult = $this->clientModel->saveOrderDetail(
+                    $orderId,
+                    $item['product_id'],
+                    $item['quantity'],
+                    $item['price']
+                );
+
+                if (!$saveResult) {
+                    throw new Exception("Lỗi khi lưu chi tiết đơn hàng");
+                }
+            }
+
+            // Xóa giỏ hàng
+            foreach ($cartItems as $item) {
+                $this->clientModel->deleteCartItem($item['id']);
+            }
+
+            header("Location: index.php?act=paymen");
+            exit();
+
+        } catch (Exception $e) {
+            error_log("Process Order Error: " . $e->getMessage());
+            echo "Có lỗi xảy ra: " . $e->getMessage();
+        }
+    }
+
+    public function paymen() {
+        try {
+            if (!isset($_SESSION['user'])) {
+                header("Location: index.php?act=login-client");
+                exit();
+            }
+
+            // Lấy đơn hàng mới nhất
+            $order = $this->clientModel->getLatestOrderWithoutUser();
+            
+            if (!$order) {
+                $_SESSION['error'] = "Không tìm thấy thông tin đơn hàng";
+                include './views/paymen.php';
+                return;
+            }
+
+            // Lấy thông tin user
+            $userInfo = $this->clientModel->getUserInfoForOrder($order['user_id']);
+            
+            // Lấy chi tiết đơn hàng
+            $orderDetails = $this->clientModel->getOrderDetailsByOrderId($order['Order_id']);
+            
+            // Lấy tổng số lượng sản phẩm trong đơn hàng
+            $totalQuantity = $this->clientModel->getOrderTotalQuantity($order['Order_id']);
+
+            // Tính tổng tiền từ chi tiết đơn hàng
+            $totalAmount = $this->clientModel->getOrderTotal($order['Order_id']);
+
+            // Load view payment
+            include './views/paymen.php';
+
+        } catch (Exception $e) {
+            error_log("Payment error: " . $e->getMessage());
+            echo "Có lỗi xảy ra: " . $e->getMessage();
+        }
+    }
+    
+
+  
+   
 }
+
 ob_end_flush();
 ?>

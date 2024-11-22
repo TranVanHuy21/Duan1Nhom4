@@ -93,6 +93,16 @@ switch ($act) {
     case 'deleteCart':
          $clientController->deleteCart();
          break;
+    case 'checkout':
+        $clientController->checkout();
+        break;
+    case 'processOrder':
+        $clientController->processOrder();
+        break;
+    case 'paymen':
+        $clientController->paymen();
+        break;
+
     default:
         // Hành động mặc định là hiển thị trang chủ
         $clientController->showHome();

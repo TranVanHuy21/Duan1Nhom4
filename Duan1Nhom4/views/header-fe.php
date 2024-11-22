@@ -146,7 +146,7 @@
                             <div class="about-contact">
                                 <i class="fa-regular fa-circle-user"></i>
                                 <p style="color: white;">Xin chào,
-                                    <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!
+                                    <?php echo isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Khách' ?>
                                 </p>
                                 <a href="?act=logout-client">
                                     <div class="about-icon">

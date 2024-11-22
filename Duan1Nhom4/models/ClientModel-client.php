@@ -444,5 +444,336 @@ public function deleteCartItem($id) {
         return false;
     }
 }
+public function getCartItemByUserIdAndProductId($userId, $productId) {
+    try {
+        $stmt = $this->pdo->prepare("SELECT c.*, sp.name_product, sp.price, sp.image 
+                                      FROM cart c 
+                                      JOIN products sp ON c.product_id = sp.id 
+                                      WHERE c.user_id = ? AND c.product_id = ?");
+        $stmt->execute([$userId, $productId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return null; // Trả về null nếu có lỗi
+    }
+}
+
+public function getUserById($userId) {
+    try {
+        $stmt = $this->pdo->prepare("SELECT * FROM user WHERE User_id = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return null; // Trả về null nếu có lỗi
+    }
+}
+
+public function getCartItemsByUserId($userId) {
+    try {
+        $sql = "SELECT c.*, p.price, p.id as product_id 
+                FROM cart c 
+                JOIN products p ON c.product_id = p.id 
+                WHERE c.user_id = :user_id";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':user_id' => $userId]);
+        
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        error_log("Cart items found for user $userId: " . print_r($result, true));
+        return $result;
+        
+    } catch (PDOException $e) {
+        error_log("Error getting cart items: " . $e->getMessage());
+        return [];
+    }
+}
+
+public function getCartItemByUserIdAndCartId($userId, $cartId) {
+    try {
+        $stmt = $this->pdo->prepare("SELECT c.*, p.name_product, p.price, p.image 
+                                      FROM cart c 
+                                      JOIN products p ON c.product_id = p.id 
+                                      WHERE c.user_id = ? AND c.id = ?");
+        $stmt->execute([$userId, $cartId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error getting cart item: " . $e->getMessage());
+        return null;
+    }
+}
+public function createOrder($userId, $status_id, $totalPrice, $fullAddress, $notes) {
+    try {
+        // Debug input values
+        error_log("createOrder input values: " . 
+                  "userId: $userId, " . 
+                  "status_id: $status_id, " . 
+                  "totalPrice: $totalPrice, " . 
+                  "address: $fullAddress, " . 
+                  "notes: $notes");
+
+        // Kiểm tra giá trị đầu vào
+        if (!$userId || !$status_id || !$totalPrice) {
+            error_log("Missing required values for order creation");
+            return false;
+        }
+
+        $sql = "INSERT INTO order_pro (user_id, status_id, Total_Price, delivery_address, note, Create_date) 
+                VALUES (:user_id, :status_id, :total_price, :address, :notes, NOW())";
+        
+        $stmt = $this->pdo->prepare($sql);
+        
+        // Bind values
+        $params = [
+            ':user_id' => $userId,
+            ':status_id' => $status_id,
+            ':total_price' => $totalPrice,
+            ':address' => $fullAddress,
+            ':notes' => $notes
+        ];
+        
+        // Debug SQL và parameters
+        error_log("SQL Query: " . $sql);
+        error_log("Parameters: " . print_r($params, true));
+        
+        $result = $stmt->execute($params);
+
+        if (!$result) {
+            error_log("SQL Error: " . print_r($stmt->errorInfo(), true));
+            return false;
+        }
+
+        $orderId = $this->pdo->lastInsertId();
+        error_log("Order created successfully with ID: " . $orderId);
+        
+        return [
+            'Order_id' => $orderId,
+            'success' => true
+        ];
+
+    } catch (PDOException $e) {
+        error_log("Database Error in createOrder: " . $e->getMessage());
+        error_log("SQL State: " . $e->getCode());
+        return false;
+    }
+}
+
+
+public function getLatestOrderWithoutUser() {
+    try {
+        // Lấy đơn hàng mới nhất từ bảng order_pro
+        $sql = "SELECT * FROM order_pro 
+                ORDER BY Create_date DESC 
+                LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        error_log("Error getting latest order: " . $e->getMessage());
+        return false;
+    }
+}
+
+public function getOrderDetails($orderId) {
+    try {
+        $sql = "SELECT op.*, p.name, p.image, p.price 
+                FROM order_pro_detail op
+                JOIN products p ON op.product_id = p.id 
+                WHERE op.order_id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$orderId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        error_log("Error getting order details: " . $e->getMessage());
+        return [];
+    }
+}
+
+public function processPayment($orderId, $paymentMethod) {
+    try {
+        $sql = "UPDATE order_pro 
+                SET status_id = 2, 
+                    payment_method = ?,
+                    payment_status = 'Completed',
+                    updated_at = NOW() 
+                WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$paymentMethod, $orderId]);
+    } catch(PDOException $e) {
+        error_log("Error processing payment: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+public function updateOrderPayment($orderId, $paymentMethod) {
+    try {
+        $sql = "UPDATE order_pro 
+                SET payment_method = ?,
+                    status_id = 2,
+                    updated_at = NOW() 
+                WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$paymentMethod, $orderId]);
+    } catch(PDOException $e) {
+        error_log("Error updating order payment: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+
+public function getSelectedCartItems() {
+    try {
+        $sql = "SELECT * FROM cart WHERE user_id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$_SESSION['user']['User_id']]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        error_log("Error getting cart items: " . $e->getMessage());
+        return [];
+    }
+}
+
+public function getUserInfoForOrder($userId) {
+    try {
+        $sql = "SELECT u.username, u.phone_number, u.email 
+                FROM user u 
+                WHERE u.User_id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$userId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        error_log("Error getting user info: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+
+public function getCartQuantity() {
+    try {
+        // Lấy số lượng từ cart dựa vào id giỏ hàng mới nhất
+        $sql = "SELECT quantity FROM cart ORDER BY id DESC LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $result ? (int)$result['quantity'] : 0;
+    } catch(PDOException $e) {
+        error_log("Error getting cart quantity: " . $e->getMessage());
+        return 0;
+    }
+}
+
+public function saveOrderDetail($orderId, $productId, $quantity, $price) {
+    try {
+        // Debug input values
+        error_log("saveOrderDetail input: " . 
+                "orderId=$orderId, " .
+                "productId=$productId, " .
+                "quantity=$quantity, " .
+                "price=$price");
+
+        // Kiểm tra giá trị đầu vào
+        if (!$orderId || !$productId || !$quantity || !$price) {
+            error_log("Invalid input parameters");
+            return false;
+        }
+
+        $sql = "INSERT INTO order_detail 
+                (order_id, product_id, sale_quantity, price) 
+                VALUES 
+                (:order_id, :product_id, :quantity, :price)";
+        
+        $stmt = $this->pdo->prepare($sql);
+        
+        // Bind parameters với kiểu dữ liệu cụ thể
+        $stmt->bindValue(':order_id', $orderId, PDO::PARAM_INT);
+        $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
+        $stmt->bindValue(':quantity', $quantity, PDO::PARAM_INT);
+        $stmt->bindValue(':price', $price);
+        
+        // Debug SQL
+        error_log("SQL Query: " . $sql);
+        error_log("Params: " . print_r([
+            ':order_id' => $orderId,
+            ':product_id' => $productId,
+            ':quantity' => $quantity,
+            ':price' => $price
+        ], true));
+        
+        $result = $stmt->execute();
+        
+        if (!$result) {
+            error_log("SQL Error: " . print_r($stmt->errorInfo(), true));
+            return false;
+        }
+        
+        error_log("Order detail saved successfully");
+        return true;
+        
+    } catch (PDOException $e) {
+        error_log("Database Error: " . $e->getMessage());
+        error_log("SQL State: " . $e->getCode());
+        return false;
+    }
+}
+
+
+
+public function getOrderDetailsByOrderId($orderId) {
+    try {
+        $sql = "SELECT od.*, p.Name_product, p.Image 
+                FROM order_detail od
+                JOIN products p ON od.product_id = p.id
+                WHERE od.order_id = :order_id";
+                
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':order_id' => $orderId]);
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+    } catch (PDOException $e) {
+        error_log("Error getting order details: " . $e->getMessage());
+        return [];
+    }
+}
+
+public function getOrderTotalQuantity($orderId) {
+    try {
+        $sql = "SELECT SUM(sale_quantity) as total_quantity 
+                FROM order_detail 
+                WHERE order_id = :order_id";
+                
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':order_id' => $orderId]);
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_quantity'] ?? 0;
+        
+    } catch (PDOException $e) {
+        error_log("Error getting order total quantity: " . $e->getMessage());
+        return 0;
+    }
+}
+
+public function getOrderTotal($orderId) {
+    try {
+        $sql = "SELECT SUM(od.sale_quantity * od.price) as total_amount 
+                FROM order_detail od 
+                WHERE od.order_id = :order_id";
+                
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':order_id' => $orderId]);
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_amount'] ?? 0;
+        
+    } catch (PDOException $e) {
+        error_log("Error calculating order total: " . $e->getMessage());
+        return 0;
+    }
+}
 }
 ?>

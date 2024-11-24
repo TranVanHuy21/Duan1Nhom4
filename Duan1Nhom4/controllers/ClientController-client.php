@@ -117,8 +117,15 @@ class ClientController
             $productID = $_POST['product_id'];
             $userId = $_SESSION['user']['User_id'];
             $commentContent = $_POST['comment_content'];
+            $rating = isset($_POST['rating']) ? $_POST['rating'] : 0;
+
+            if (empty($commentContent) || $rating < 1 || $rating > 5) {
+                $_SESSION['flash_message'] = "Vui lòng nhập đầy đủ nội dung và chọn số sao đánh giá!";
+                header("Location:index.php?act=showProductDetail&id=".urlencode($productID));
+                exit();
+            }
     
-            $success = $this->clientModel->addComment($productID, $userId, $commentContent);
+            $success = $this->clientModel->addComment($productID, $userId, $commentContent, $rating);
     
             if ($success) {
                 $_SESSION['flash_message'] = "Bình luận đã được gửi thành công!";
@@ -136,20 +143,26 @@ class ClientController
             exit();
         }
     }
+
+    // Hiển thị chi tiết sản phẩm
     public function showProductDetail($id)
     {
-    $product = $this->clientModel->getProductById($id);
-    if ($product) {
-        $categoryId = $product['Id_cat'];
-        $relatedProducts = $this->clientModel->getTopViewedProductsByCategory($product['Id_cat']);
-        // Lấy danh sách bình luận
-        $comments = $this->clientModel->getCommentsByProductId($id);
-        // Truyền biến $comments vào view
-        include './views/productDetailView.php';
-    } else {
-        include 'views/404.php';
+        $product = $this->clientModel->getProductById($id);
+        if ($product) {
+            $categoryId = $product['Id_cat'];
+            $relatedProducts = $this->clientModel->getTopViewedProductsByCategory($product['Id_cat']);
+            // Lấy danh sách bình luận
+            $comments = $this->clientModel->getCommentsByProductId($id);
+            // Lấy thống kê đánh giá
+            $ratingSummary = $this->clientModel->getProductRatingSummary($id);
+            
+            include './views/productDetailView.php';
+        } else {
+            include 'views/404.php';
+        }
     }
-    }
+
+
 
     public function login_client()
     {
@@ -223,6 +236,8 @@ class ClientController
         }
     }
 
+
+    // Hiển thị sản phẩm trong giỏ hàng
     public function viewCart() {
         // Kiểm tra session giỏ hàng
         if (!isset($_SESSION['cart'])) {
@@ -236,6 +251,7 @@ class ClientController
         include './views/Gio_hang-fe.php';
     }
 
+    // thêm sản phẩm vào giỏ hàng
     public function addToCart() {
         try {
             // Kiểm tra phương thức request

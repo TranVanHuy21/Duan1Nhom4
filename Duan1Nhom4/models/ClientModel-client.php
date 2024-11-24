@@ -304,7 +304,7 @@ class ClientModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function addComment($product_id, $user_id, $content){ //$phone_number) {
+    public function addComment($product_id, $user_id, $content, $rating){ //$phone_number) {
         try {
             // Validate input
             if (empty($product_id) || empty($user_id) || empty($content)) {
@@ -326,8 +326,8 @@ class ClientModel
             }
             
             // Prepare SQL statement with Phone_number
-            $stmt = $this->pdo->prepare("INSERT INTO comments (product_id, user_id, comment_content) VALUES (?, ?, ?)");
-            $stmt->execute([$product_id, $user_id, $content]);//$phone_number]);
+            $stmt = $this->pdo->prepare("INSERT INTO comments (product_id, user_id, comment_content, rating) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$product_id, $user_id, $content, $rating]);//$phone_number]);
         
             return true;
         } catch (PDOException $e) {
@@ -340,7 +340,7 @@ class ClientModel
     public function getCommentsByProductId($productId)
     {
         $sql = "
-            SELECT c.comment_content, u.username, c.comment_time
+            SELECT c.comment_content, u.username, c.comment_time, c.rating
             FROM comments c
             INNER JOIN user u ON c.user_id = u.user_id
             WHERE c.product_id = :product_id
@@ -772,6 +772,83 @@ public function getOrderTotal($orderId) {
         
     } catch (PDOException $e) {
         error_log("Error calculating order total: " . $e->getMessage());
+        return 0;
+    }
+}
+
+public function getProductRatingSummary($productId) {
+    try {
+        $sql = "SELECT 
+            COUNT(*) as total_reviews,
+            COALESCE(ROUND(AVG(rating), 1), 0) as average_rating,
+            COALESCE(SUM(CASE WHEN rating = 5 THEN 1 ELSE 0 END), 0) as five_star,
+            COALESCE(SUM(CASE WHEN rating = 4 THEN 1 ELSE 0 END), 0) as four_star,
+            COALESCE(SUM(CASE WHEN rating = 3 THEN 1 ELSE 0 END), 0) as three_star,
+            COALESCE(SUM(CASE WHEN rating = 2 THEN 1 ELSE 0 END), 0) as two_star,
+            COALESCE(SUM(CASE WHEN rating = 1 THEN 1 ELSE 0 END), 0) as one_star
+        FROM comments 
+        WHERE product_id = :product_id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':product_id' => $productId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Đảm bảo các giá trị không null
+        $result['total_reviews'] = (int)$result['total_reviews'];
+        $result['average_rating'] = (float)$result['average_rating'];
+        
+        // Tính phần trăm chỉ khi có đánh giá
+        if ($result['total_reviews'] > 0) {
+            $result['five_star_percent'] = round(($result['five_star'] / $result['total_reviews']) * 100);
+            $result['four_star_percent'] = round(($result['four_star'] / $result['total_reviews']) * 100);
+            $result['three_star_percent'] = round(($result['three_star'] / $result['total_reviews']) * 100);
+            $result['two_star_percent'] = round(($result['two_star'] / $result['total_reviews']) * 100);
+            $result['one_star_percent'] = round(($result['one_star'] / $result['total_reviews']) * 100);
+        } else {
+            // Gán giá trị mặc định khi không có đánh giá
+            $result['five_star_percent'] = 0;
+            $result['four_star_percent'] = 0;
+            $result['three_star_percent'] = 0;
+            $result['two_star_percent'] = 0;
+            $result['one_star_percent'] = 0;
+        }
+
+        return $result;
+
+    } catch (PDOException $e) {
+        error_log("Error getting rating summary: " . $e->getMessage());
+        // Trả về mảng với giá trị mặc định khi có lỗi
+        return [
+            'total_reviews' => 0,
+            'average_rating' => 0,
+            'five_star' => 0,
+            'four_star' => 0,
+            'three_star' => 0,
+            'two_star' => 0,
+            'one_star' => 0,
+            'five_star_percent' => 0,
+            'four_star_percent' => 0,
+            'three_star_percent' => 0,
+            'two_star_percent' => 0,
+            'one_star_percent' => 0
+        ];
+    }
+}
+
+public function getProductAverageRating($productId) {
+    try {
+        $sql = "SELECT ROUND(AVG(rating), 1) as average_rating 
+                FROM comments 
+                WHERE product_id = :product_id";
+                
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':product_id' => $productId]);
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['average_rating'] ?? 0;
+        
+    } catch (PDOException $e) {
+        error_log("Error getting average rating: " . $e->getMessage());
         return 0;
     }
 }

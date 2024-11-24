@@ -13,715 +13,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" type="text/css" href="./assets/css/home_fe.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/productDetail.css">
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-    }
-
-    .breadcrumb {
-        list-style: none;
-        display: flex;
-        padding: 0;
-        margin: 20px 0;
-        background-color: #f8f9fa;
-        max-width: 130rem;
-        margin: 0 auto;
-        border-radius: 1rem;
-        padding: 10px;
-    }
-
-
-    .breadcrumb li {
-        margin-right: 10px;
-    }
-
-    .breadcrumb li a {
-        text-decoration: none;
-        color: #007bff;
-    }
-
-    .breadcrumb li a:hover {
-        text-decoration: underline;
-    }
-
-    .breadcrumb li::after {
-        content: ">";
-        margin-left: 10px;
-        color: #6c757d;
-    }
-
-    .breadcrumb li:last-child::after {
-        content: "";
-    }
-
-    .breadcrumb li:last-child a {
-        color: #6c757d;
-        pointer-events: none;
-        cursor: default;
-    }
-
-    /* ---------------------------------------- */
-
-    .box-detail-product {
-        max-width: 130rem;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 65% 1fr;
-        margin-bottom: 2rem;
-    }
-
-    .box-detail-product-left {
-        flex: 2;
-        margin-right: 20px;
-    }
-
-    .box-detail-product-right {
-        flex: 1;
-    }
-
-    .box-detail-product-left-Gallery {
-        align-items: center;
-        background-image: linear-gradient(90deg, rgb(221, 94, 137), rgb(247, 187, 151));
-        border-radius: 1rem;
-        color: #4a4a4a;
-        display: flex;
-        justify-content: center;
-        line-height: 24px;
-        text-align: center;
-        height: 400px;
-    }
-
-    .box-detail-product-left-Gallery .box-proview {
-        align-items: center;
-        color: #fff;
-        display: grid;
-        grid-template-columns: 40% 1fr;
-        font-size: 14px;
-        overflow: hidden;
-        position: relative;
-        margin-bottom: auto 0;
-        gap: 2em;
-
-    }
-
-    .box-proview .tilte-desktop {
-        bottom: 5px;
-        color: #fff;
-        font-size: 18px;
-        font-weight: 600;
-        padding: 10px;
-        position: relative;
-        text-transform: uppercase;
-        text-align: center;
-    }
-
-    .box-detail-product-left-Gallery .box-proview img {
-        background: #fff;
-        border-radius: 1rem;
-        width: 270px;
-        padding: 10px;
-        margin-left: 10px;
-    }
-
-    .box-title p {
-        font-weight: bold;
-        font-size: 18px;
-    }
-
-    .columns-mt1 {
-        display: flex;
-        margin-top: 0.25rem !important;
-        margin-left: 5px;
-        border-bottom: 1px solid #3333331b;
-        border-radius: 1rem;
-
-    }
-
-    .box-warranty-info {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 1rem;
-        display: inline-block;
-        padding: 5px;
-        width: 95%;
-    }
-
-    .box-warranty-info .box-title {
-        color: #444;
-        font-size: 16px;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    .box-warranty-info .box-content {
-        font-size: 12px;
-    }
-
-    .box-warranty-info .box-content .items-info {
-        display: flex;
-        font-size: inherit;
-        margin-bottom: 10px;
-    }
-
-    .box-warranty-info .box-content .items-info .icon img {
-        margin-right: 10px;
-        width: 20px;
-    }
-
-
-
-    .box-warranty-info .box-content .items-info .description {
-        font-size: 14px;
-        margin-top: 2px;
-        max-width: calc(100% - 50px);
-    }
-
-    .block-box-price {
-        text-align: left !important;
-    }
-
-    .box-detail-product-right {
-        margin-top: 40px;
-    }
-
-    .product__price--show {
-        font-size: 34px;
-        color: #d9534f;
-
-    }
-
-    .product__price--through {
-        text-decoration: line-through;
-        color: #6c757d;
-        font-size: 24px;
-        /* Strikethrough color */
-    }
-
-    .box-detail-product-right .list-box-variant .list-variant {
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-        gap: 20px;
-    }
-
-    .box-detail-product-right .list-box-variant .list-variant .item-variant {
-        align-items: center;
-        background: #fff;
-        border: 1px solid #d1d5db;
-        border-radius: 1rem;
-        color: #444;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        font-size: 12px;
-        gap: 3px;
-        justify-content: center;
-        margin: 0 0 10px;
-        overflow: hidden;
-        padding: 5px 4px;
-        position: relative;
-        -webkit-text-decoration: none;
-        text-decoration: none;
-        width: calc(33.33333% - 6.66667px);
-    }
-
-    .box-detail-product-right .list-box-variant .list-variant .item-variant .button__change-color {
-        display: flex !important;
-    }
-
-    .box-detail-product-right .list-box-variant .list-variant .item-variant a img {
-        height: 30px;
-        position: relative;
-        width: 30px;
-    }
-
-    .box-detail-product-right .list-box-variant .list-variant .item-variant a .flex {
-        display: flex !important;
-        flex-direction: column;
-        color: #444;
-        text-align: left;
-    }
-
-    .box-detail-product-right .list-box-variant .list-variant .item-variant strong {
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        display: -webkit-box;
-        overflow: hidden;
-        text-align: center;
-        width: 100%;
-    }
-
-    .banner-block-right-promotion {
-        margin-top: 1rem;
-    }
-
-    .box-product-promotion {
-        display: grid;
-        grid-template-columns: 1fr 20%;
-        gap: 10px;
-        margin: auto 0;
-    }
-
-    .box-product-promotion .pay-left {
-        background-image:
-            linear-gradient(rgb(245, 47, 50), rgb(225, 27, 30));
-        border-radius: 1rem;
-        font-size: 18px;
-        margin-right: 10px;
-        margin: auto 0;
-        padding: 1px 6px;
-    }
-
-    .box-product-promotion .pay-left .p1 {
-        color: #fff;
-        font-size: 20px;
-        text-align: center;
-        padding-top: 20px;
-    }
-
-    .box-product-promotion .pay-left .p2 {
-        color: #fff;
-        font-size: 13px;
-        text-align: center;
-
-        padding-bottom: 15px;
-    }
-
-    .box-product-promotion .add-to-card {
-        margin: auto 0;
-    }
-
-    .box-product-promotion .add-to-card .box-pay-to-card {
-        border: 1px solid #e04040;
-        border-radius: 1rem;
-        text-align: center;
-
-    }
-
-
-    .products_byParentCategory,
-    .box_sale_products_byParentCategory {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        max-width: 130rem;
-        margin: 0 auto;
-        margin-bottom: 2rem;
-    }
-
-    .product {
-        min-height: 250px;
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin: 10px;
-        border-radius: 1rem;
-        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: transparent;
-        position: relative;
-        justify-content: space-between;
-    }
-
-    .product__info {
-        text-align: center;
-    }
-
-    .product__link {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .product__price--percent {
-        background-image: url(./admin/assets/images/rating/detail_discount.png);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: contain;
-        height: 34px;
-        left: -8px;
-        position: absolute;
-        top: -6px;
-        width: 80px;
-    }
-
-    .product__price--percent-detail {
-
-        color: #fff;
-        font-size: 12px;
-        font-weight: 700;
-        margin: 5px 0 0;
-        text-align: center;
-        width: 100%;
-    }
-
-    .product__image img {
-        width: 100%;
-        max-width: 15em;
-        height: auto;
-        object-fit: cover;
-        border-radius: 1rem;
-        font-family: Roboto, sans-serif;
-    }
-
-    .product__name h3 {
-        font-size: 1.2em;
-        margin: 1rem 0;
-        text-align: center;
-        height: 4em;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .block-box-price {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .product__price--show {
-        font-size: 1.7em;
-        color: #e74c3c;
-        font-weight: bold;
-    }
-
-    .product__price--through {
-        font-size: 1.2em;
-        color: #999;
-        text-decoration: line-through;
-        font-weight: bold;
-    }
-
-    .product_Detail .Detail-price {
-        align-items: flex-start;
-        background: #f3f4f6;
-        border: 1px solid #e5e7eb;
-        border-radius: 5px;
-        display: flex;
-        font-size: 12px;
-        line-height: 1.5;
-        margin-left: 0;
-        overflow: hidden;
-        padding: 5px;
-        text-transform: none;
-        width: auto;
-    }
-
-    .rating-items {
-        /* display: flex;
-        justify-content: space-around;
-        align-items: center;
-        gap: 3em; */
-    }
-
-    .bottom-div {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 3.5em;
-        margin-top: auto;
-    }
-
-    .star-icon {
-        display: flex;
-    }
-
-    .heart-content {
-        display: flex;
-        align-items: center;
-
-
-    }
-
-
-
-
-
-
-
-
-
-    .technicalInfo {
-        max-width: 130rem;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 65% 1fr;
-        margin-bottom: 2rem;
-        gap: 1rem;
-        margin-top: 2rem;
-    }
-
-    .box-Des,
-    .boxFAQ,
-    .technicalInfo_left,
-    .technicalInfo_right {
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-    }
-
-    .technical-content-item {
-        font-size: 14px;
-        width: 100%;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        /* padding: 0.5rem; */
-    }
-
-    .technical-content li:nth-child(odd) {
-        background-color: #f2f2f2;
-    }
-
-    .technical-content .technical-content-item p:first-child {
-        width: 40%;
-    }
-
-    .technical-content .technical-content-item div {
-        width: 50%;
-    }
-
-    .accordion {
-        border: 1px solid #e5e7eb;
-        border-radius: 1rem;
-        padding: 1rem;
-        background-color: #f9f9f9;
-    }
-
-    .b-button {
-        padding: 10px;
-        border: 1px solid #d1d5db;
-        border-radius: 0.5rem;
-        margin-bottom: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .b-button:hover {
-        background-color: #da8e8e;
-    }
-
-    .boxFAQ_title,
-    .box-Des h2 {
-        color: #d02c35;
-        font-size: 24px;
-        font-weight: 700;
-        margin: 0;
-        text-align: center;
-        text-transform: uppercase;
-    }
-
-    .content-top {
-        margin-bottom: 15px;
-    }
-
-    .content-top h2 {
-        color: #363636;
-        ;
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin: 0;
-        text-align: center;
-        text-transform: uppercase;
-    }
-
-    .title-m-b-3 {
-        font-size: 24px;
-        color: #333;
-    }
-
-    .technical-content {
-        list-style: none;
-        padding: 0;
-    }
-
-    .technical-content-item {
-        margin-bottom: 10px;
-    }
-
-    .technical-content-item p {
-        font-weight: bold;
-        margin: 0;
-    }
-
-    .technical-content-item div {
-        margin-top: 5px;
-        color: #555;
-    }
-
-    .box_comment {
-        max-width: 130rem;
-        margin: 0 auto;
-        padding: 1.5rem;
-        border-radius: 1rem;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        background-color: #f9f9f9;
-    }
-
-    .comment h2 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        color: #333;
-    }
-
-    .comment form div {
-        margin-bottom: 1rem;
-    }
-
-    .comment label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
-
-    .comment input[type="text"],
-    .comment textarea {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 0.5rem;
-        box-sizing: border-box;
-    }
-
-    .comment button {
-        padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: 0.5rem;
-        background-color: #007bff;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-    }
-
-    .comment button:hover {
-        background-color: #0056b3;
-    }
-
-    .comment p {
-        font-size: 1rem;
-        color: #555;
-    }
-
-    .comment a {
-        color: #007bff;
-        text-decoration: none;
-    }
-
-    .comment a:hover {
-        text-decoration: underline;
-    }
-    /* Kiểu cho phần hộp chứa bình luận */
-.box_comment {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-/* Kiểu cho phần tiêu đề của danh sách bình luận */
-.box_comment h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-/* Kiểu cho từng mục bình luận */
-.comment-item {
-    background-color: #fff;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Kiểu cho tên người dùng và thời gian bình luận */
-.comment-item p {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-}
-
-.comment-item p strong {
-    font-weight: bold;
-    color: #333;
-}
-
-.comment-item p span {
-    font-size: 12px;
-    color: #999;
-    margin-left: 10px;
-}
-
-/* Kiểu cho nội dung bình luận */
-.comment-item p:nth-child(2) {
-    margin-top: 10px;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #444;
-}
-
-/* Kiểu cho form nhập bình luận */
-.form2 {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.form2 label {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.form2 textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: vertical;
-    font-size: 14px;
-    color: #333;
-}
-
-.form2 .button2 {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.form2 .button2:hover {
-    background-color: #45a049;
-}
-
-/* Kiểu cho phần thông báo khi chưa có bình luận */
-.comment-item p {
-    font-size: 16px;
-    color: #888;
-}
-
-/* Kiểu cho phần yêu cầu đăng nhập để bình luận */
-.comment-item p a {
-    color: #4CAF50;
-    text-decoration: none;
-}
-
-.comment-item p a:hover {
-    text-decoration: underline;
-}
-
-    </style>
+    <link rel="stylesheet" href="./assets/css/product.css">
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const breadcrumb = document.querySelector('.breadcrumb');
@@ -1101,37 +393,72 @@
     </section>
     <section>
     <section>
+    <div class="rating-summary-container">
+        <h2>Đánh giá & Bình luận</h2>
+        
+        <?php if (isset($ratingSummary) && is_array($ratingSummary)): ?>
+        <div class="rating-summary">
+            <div class="rating-average-column">
+                <div class="average-score">
+                    <?php 
+                        $averageRating = isset($ratingSummary['average_rating']) ? 
+                            number_format($ratingSummary['average_rating'], 1) : '0.0';
+                        echo $averageRating;
+                    ?>
+                </div>
+                <div class="star-display">
+                    <?php 
+                        $avgRating = floatval($ratingSummary['average_rating'] ?? 0);
+                        for($i = 1; $i <= 5; $i++): 
+                    ?>
+                        <i class="fas fa-star <?php echo $i <= $avgRating ? 'active' : ''; ?>"></i>
+                    <?php endfor; ?>
+                </div>
+                <div class="total-ratings">
+                    <?php echo isset($ratingSummary['total_reviews']) ? 
+                        $ratingSummary['total_reviews'] : 0; ?> đánh giá
+                </div>
+            </div>
+
+            <div class="rating-bars-column">
+                <?php 
+                $ratings = [
+                    ['label' => '5 sao', 'count' => $ratingSummary['five_star'] ?? 0, 'percent' => $ratingSummary['five_star_percent'] ?? 0],
+                    ['label' => '4 sao', 'count' => $ratingSummary['four_star'] ?? 0, 'percent' => $ratingSummary['four_star_percent'] ?? 0],
+                    ['label' => '3 sao', 'count' => $ratingSummary['three_star'] ?? 0, 'percent' => $ratingSummary['three_star_percent'] ?? 0],
+                    ['label' => '2 sao', 'count' => $ratingSummary['two_star'] ?? 0, 'percent' => $ratingSummary['two_star_percent'] ?? 0],
+                    ['label' => '1 sao', 'count' => $ratingSummary['one_star'] ?? 0, 'percent' => $ratingSummary['one_star_percent'] ?? 0]
+                ];
+                foreach ($ratings as $rating): ?>
+                <div class="rating-bar-row">
+                    <div class="star-label"><?php echo $rating['label']; ?></div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: <?php echo $rating['percent']; ?>%"></div>
+                    </div>
+                    <div class="rating-count"><?php echo $rating['count']; ?></div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php else: ?>
+            <p>Chưa có đánh giá nào cho sản phẩm này</p>
+        <?php endif; ?>
+    </div>
+
     <div class="box_comment">
-    <?php
-   
-   if (isset($_SESSION['flash_message'])) {
-       $messageClass = strpos($_SESSION['flash_message'], 'thành công') !== false ? 'success' : 'error';
-       echo '<div class="alert alert-' . $messageClass . '">' . $_SESSION['flash_message'] . '</div>';
-       unset($_SESSION['flash_message']);
-   }
-   ?>
-    
-    <div class="comment">
-        <!-- Phần hiển thị danh sách bình luận -->
-        <h2>Bình luận</h2>
         <?php if (is_array($comments) && count($comments) > 0): ?>
             <?php foreach ($comments as $comment): ?>
                 <div class="comment-item">
-                    <!-- Hiển thị tên người dùng và thời gian bình luận -->
-                    <p><strong><?= htmlspecialchars($comment['username']) ?></strong>
-                    <?php 
-                        if (isset($comment['comment_time']) && !empty($comment['comment_time'])) {
-                            // Nếu comment_time không rỗng và tồn tại, chuyển đổi nó thành đối tượng DateTime
-                            $commentTime = new DateTime($comment['comment_time']);
-                            echo $commentTime->format('d/m/Y, H:i'); // Định dạng ngày tháng năm và giờ phút
-                        } else {
-                            // Nếu không có thời gian, hiển thị thông báo hoặc giá trị mặc định
-                            echo 'Thời gian không xác định';
-                        }
-                    ?></p>
-
-                    <!-- Hiển thị nội dung bình luận -->
-                    <p><?= nl2br(htmlspecialchars($comment['comment_content'])) ?></p>
+                    <div class="comment-header">
+                        <strong><?= htmlspecialchars($comment['username']) ?></strong>
+                        <div class="comment-rating">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <i class="fas fa-star <?= $i <= $comment['rating'] ? 'active' : '' ?>"></i>
+                            <?php endfor; ?>
+                        </div>
+                        <span class="comment-time"><?= date('d/m/Y H:i', strtotime($comment['comment_time'])) ?></span>
+                    </div>
+                    <p class="comment-content"><?= htmlspecialchars($comment['comment_content']) ?></p>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
@@ -1139,12 +466,25 @@
         <?php endif; ?>
     </div>
 
-    <!-- Phần form để lại bình luận -->
+    <!-- Form bình luận -->
     <?php if (isset($_SESSION['user'])): ?>
-        <form class="form2" action="?act=submit-comment" method="POST">            
+        <form class="form2" action="?act=submit-comment" method="POST" onsubmit="return validateForm()">            
             <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+            <div class="rating-input">
+                <p>Đánh giá của bạn: <span class="required">*</span></p>
+                <div class="star-rating">
+                    <i class="fas fa-star" data-rating="1"></i>
+                    <i class="fas fa-star" data-rating="2"></i>
+                    <i class="fas fa-star" data-rating="3"></i>
+                    <i class="fas fa-star" data-rating="4"></i>
+                    <i class="fas fa-star" data-rating="5"></i>
+                    <input type="hidden" name="rating" id="rating-value" value="" required>
+                </div>
+                <span id="rating-error" class="error-message"></span>
+            </div>
             <div>
-                <textarea name="comment_content" id="comment_content" required></textarea>
+                <textarea name="comment_content" id="comment_content" placeholder="Nhập đánh giá của bạn..." required></textarea>
+                <span id="comment-error" class="error-message"></span>
             </div>
             <button class="button2" type="submit">Gửi bình luận</button>
         </form>
@@ -1153,11 +493,81 @@
     <?php endif; ?>
 </div>
 
-</div>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star-rating .fas');
+            const ratingInput = document.getElementById('rating-value');
+            const ratingError = document.getElementById('rating-error');
+            const commentError = document.getElementById('comment-error');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    ratingInput.value = rating;
+                    
+                    // Reset error message khi người dùng chọn sao
+                    ratingError.textContent = '';
+                    document.querySelector('.star-rating').classList.remove('error');
+                    
+                    // Reset tất cả các sao
+                    stars.forEach(s => s.classList.remove('active'));
+                    
+                    // Đổi màu các sao được chọn
+                    stars.forEach(s => {
+                        if (parseInt(s.dataset.rating) <= rating) {
+                            s.classList.add('active');
+                        }
+                    });
+                });
+            });
+        });
 
-</section>
+    // Hàm validate form trước khi submit
+        function validateForm() {
+            let isValid = true;
+            const ratingInput = document.getElementById('rating-value');
+            const commentInput = document.getElementById('comment_content');
+            const ratingError = document.getElementById('rating-error');
+            const commentError = document.getElementById('comment-error');
+            
+            // Reset error messages
+            ratingError.textContent = '';
+            commentError.textContent = '';
+            document.querySelector('.star-rating').classList.remove('error');
+            commentInput.classList.remove('error');
+            
+            // Kiểm tra đánh giá sao
+            if (!ratingInput.value) {
+                ratingError.textContent = 'Vui lòng chọn số sao đánh giá';
+                document.querySelector('.star-rating').classList.add('error');
+                isValid = false;
+            }
+            
+            // Kiểm tra nội dung bình luận
+            if (!commentInput.value.trim()) {
+                commentError.textContent = 'Vui lòng nhập nội dung bình luận';
+                commentInput.classList.add('error');
+                isValid = false;
+            } else if (commentInput.value.trim().length < 10) {
+                commentError.textContent = 'Nội dung bình luận phải có ít nhất 10 ký tự';
+                commentInput.classList.add('error');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                // Nếu có lỗi, hiển thị thông báo tổng quát
+                Swal.fire({
+                    title: 'Lỗi!',
+                    text: 'Vui lòng kiểm tra lại thông tin đánh giá',
+                    icon: 'error',
+                    confirmButtonText: 'Đóng'
+                });
+            }
+            
+            return isValid;
+        }
+</script>
 
-    </section>
 </body>
 
 </html>

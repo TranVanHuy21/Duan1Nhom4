@@ -39,14 +39,8 @@
             </div>
             <div class="listItem-super-cart">
                 <div class="top">
-                    <div>
-                        <input type="checkbox" class="rounded-checkbox">
-
-                    </div>
-                    
-                    <div class="check-box-title">
-                        Chọn tất cả
-                    </div>
+                    <input type="checkbox" class="rounded-checkbox">
+                    <div class="check-box-title">Chọn tất cả</div>
                 </div>
                  <div class="list-cart">
                 <?php
@@ -103,10 +97,10 @@
         <div class="cart-summary">
             
             <div class="cart-total">Tổng tiền: <span>0đ</span></div>
-                    <button class="checkout-btn" onclick="handleCheckout()">Mua ngay</button>
+                    <button type="button" id="checkoutBtn" class="checkout-btn">Mua ngay</button>
             </div>
                 
-                <script>
+    <!-- <script>
     // ... existing code ...
 
                 // Thêm hàm xử lý thanh toán
@@ -126,16 +120,53 @@
                     // Chuyển thẳng đến trang checkout với nhiều cart_id
                     window.location.href = 'index.php?act=checkout&cart_ids=' + cartIds.join(',');
                 }
-            </script>
+    </script> -->
 
                 <!-- Thêm vào cuối file, trước </body> -->
                 <!-- <script src="./assets/js/cart.js"></script> -->
                 
-         <script>
-                    // Chạy khi trang load xong
-                    document.addEventListener('DOMContentLoaded', function() {
-                        displayCart();
+     <script>
+                    
+                function processCheckout() {
+                    const checkedItems = document.querySelectorAll('.cart-item .checkbox-wrapper .rounded-checkbox:checked');
+                    
+                    if (checkedItems.length === 0) {
+                        alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
+                        return;
+                    }
+
+                    const cartIds = [];
+                    checkedItems.forEach(checkbox => {
+                        const cartItem = checkbox.closest('.cart-item');
+                        if (cartItem && cartItem.dataset.id) {
+                            cartIds.push(cartItem.dataset.id);
+                        }
                     });
+
+                    if (cartIds.length > 0) {
+                        window.location.href = 'index.php?act=checkout&cart_ids=' + cartIds.join(',');
+                    } else {
+                        alert('Có lỗi xảy ra khi lấy thông tin sản phẩm');
+                    }
+                }
+
+                // Thêm event listener khi trang đã load
+                document.addEventListener('DOMContentLoaded', function() {
+                    const checkoutBtn = document.getElementById('checkoutBtn');
+                    if (checkoutBtn) {
+                        checkoutBtn.addEventListener('click', processCheckout);
+                    }
+                });
+
+
+
+
+
+
+                    // Chạy khi trang load xong
+                    // document.addEventListener('DOMContentLoaded', function() {
+                    //     displayCart();
+                    // });
 
                     // Thêm function để xử lý tăng/giảm số lượng
                     function updateQuantity(button, change) {
@@ -153,22 +184,22 @@
                     }
 
                     // Hàm cập nhật tổng tiền
-                    function updateTotalPrice() {
-                        const checkedItems = document.querySelectorAll('.rounded-checkbox:checked');
-                        let total = 0;
+                    // function updateTotalPrice() {
+                    //     const checkedItems = document.querySelectorAll('.rounded-checkbox:checked');
+                    //     let total = 0;
                         
-                        checkedItems.forEach(checkbox => {
-                            const price = parseFloat(checkbox.getAttribute('data-price'));
-                            const quantityInput = checkbox.closest('.cart-item').querySelector('.quantity-input');
-                            const quantity = parseInt(quantityInput.value);
-                            total += price * quantity;
-                        });
+                    //     checkedItems.forEach(checkbox => {
+                    //         const price = parseFloat(checkbox.getAttribute('data-price'));
+                    //         const quantityInput = checkbox.closest('.cart-item').querySelector('.quantity-input');
+                    //         const quantity = parseInt(quantityInput.value);
+                    //         total += price * quantity;
+                    //     });
                         
-                        document.querySelector('.cart-total span').textContent = new Intl.NumberFormat('vi-VN', {
-                            style: 'currency',
-                            currency: 'VND'
-                        }).format(total);
-                    }
+                    //     document.querySelector('.cart-total span').textContent = new Intl.NumberFormat('vi-VN', {
+                    //         style: 'currency',
+                    //         currency: 'VND'
+                    //     }).format(total);
+                    // }
         </script>
         </div>
 

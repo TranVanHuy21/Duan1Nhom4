@@ -20,7 +20,7 @@ if (!isset($_SESSION['user'])) {
     <div class="container-checkout">
         <!-- Đơn hàng - Chỉ hiển thị sản phẩm -->
         <div class="cart-header">
-            <a href="index.php">
+            <a href="index.php?act=viewCart">
                 <ion-icon name="arrow-back-outline"></ion-icon>
             </a>
             <div class="title">Thông tin</div>

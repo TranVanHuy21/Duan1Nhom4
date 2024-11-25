@@ -487,6 +487,10 @@ class ClientController
             echo "Có lỗi xảy ra: " . $e->getMessage();
         }
     }
+    public function account(){
+        include './views/account.php';
+    }
+    
     
 
   

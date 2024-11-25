@@ -111,6 +111,9 @@ switch ($act) {
         } else {
             header("Location: index.php?act=viewCart");
         }
+    case 'account':
+        $clientController->account();
+        break;
 
     default:
         // Hành động mặc định là hiển thị trang chủ

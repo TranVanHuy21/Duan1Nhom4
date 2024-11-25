@@ -651,7 +651,10 @@ background-color: #f9f9f9;
 padding: 20px;
 border-radius: 8px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-margin-top: 20px;
+margin: 0 auto;
+max-width: 130rem;
+margin-top: 2rem;
+margin-bottom: 2rem;
 
 }
 
@@ -914,7 +917,8 @@ text-decoration: underline;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    margin: 20px 0;
+    margin: 0 auto;
+    max-width: 130rem;
 }
 
 .rating-summary-container h2 {

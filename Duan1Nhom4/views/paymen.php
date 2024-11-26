@@ -319,7 +319,7 @@
         sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
         
         // Chuyển hướng với thông tin thanh toán
-        window.location.href = `index.php?act=payment_qr&method=${selectedPaymentMethod}&amount=<?= $totalAmount ?>`;
+        window.location.href = `?act=payment_qr&method=${selectedPaymentMethod}&amount=<?= $totalAmount ?>`;
     }
     </script>
 </body>

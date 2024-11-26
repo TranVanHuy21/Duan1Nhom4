@@ -3,6 +3,7 @@ session_start();
 ob_start();
 require_once '../commons/function.php';
 require_once 'controllers/DashboardController.php';
+require_once 'models/DashboardModel.php';
 require_once 'controllers/ProductController.php';
 require_once 'models/ProductModel.php';
 require_once 'controllers/CategoryController.php';
@@ -15,7 +16,9 @@ require_once 'controllers/accController.php';
 require_once 'models/accModel.php';
 require_once 'models/SlideModel.php';
 require_once 'controllers/SlideController.php';
-// require_once 'controllers/ParentCategoryController.php';
+require_once 'controllers/commentController.php';
+require_once 'models/commentModel.php';
+// require_once 'controllers/ParentCategoryController.php'; 
 
 
 
@@ -25,9 +28,10 @@ $parentCategoryController = new CategoryController();
 $userAdminController = new UserAdminController();
 $userController = new UserController();
 $accController = new accController();
-$DashboardController = new DashboardController();
+$dashboardController = new DashboardController();
 $slideModel = new SlideModel();
 $slideController = new SlideController();
+$commentController = new CommentController();
 
 // Kiểm tra xem người dùng đã đăng nhập chưa
 if (!isset($_SESSION['user_admin']) && (!isset($_GET['act']) || $_GET['act'] != 'login')) {
@@ -153,7 +157,29 @@ switch ($act) {
         $slideController->deleteSlide($id);
         break;
 
+    case 'listComments':
+        $productId = isset($_GET['product_id']) ? $_GET['product_id'] : 0;
+        $commentController->listComments($productId);
+        break;
 
+    case 'addComment':
+        $commentController->addComment();
+        break;
+
+    case 'showAddCommentForm':
+        $productId = isset($_GET['product_id']) ? $_GET['product_id'] : 0;
+        $commentController->showAddCommentForm($productId);
+        break;
+
+    case 'editComment':
+        $commentId = isset($_GET['id']) ? $_GET['id'] : 0;
+        $commentController->editComment($commentId);
+        break;
+
+    case 'deleteComment':
+        $commentId = isset($_GET['id']) ? $_GET['id'] : 0;
+        $commentController->deleteComment($commentId);
+        break;
     case 'header':
         $productController->header();
         break;
@@ -161,7 +187,7 @@ switch ($act) {
     //     $accController->checkAcc($user, $pass);
     //     break;
     case 'dashboard':
-        $DashboardController->showDashboard();
+        $dashboardController->showDashboard();
         break;
 }
 

@@ -1,20 +1,22 @@
 <?php
-require_once 'models/ProductModel.php';
-
 class DashboardController
 {
-    private $productModel;
+    private $dashboardModel;
 
     public function __construct()
     {
-        $pdo = connectDB();
-        $this->productModel = new ProductModel($pdo);
+
+        $this->dashboardModel = new DashboardModel();
     }
 
     public function showDashboard()
     {
-        require_once '../admin/views/dashBoard.php';
+        $totalUsers = $this->dashboardModel->getTotalUsers();
+        $totalComments = $this->dashboardModel->getTotalComments();
+        $totalProducts = $this->dashboardModel->getTotalProducts();
+        $totalCategories = $this->dashboardModel->getTotalCategories();
+
+        include './views/dashBoard.php'; // Tải view cho Dashboard
     }
 }
-
 ?>

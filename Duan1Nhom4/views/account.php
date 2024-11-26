@@ -4,8 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/account.css">
-   
+    <link rel="stylesheet" href="./assets/css/contacts.css">
+    <style>
+        .value-container {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .display-value {
+            flex: 1;
+        }
+
+        .edit-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: inherit;
+            background: transparent;
+        }
+
+        textarea.edit-input {
+            min-height: 60px;
+        }
+
+        .text-value {
+            display: inline-block;
+            min-height: 20px;
+        }
+
+        .edit-icon {
+            color: #666;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        label {
+            color: #ff0000;  /* Màu đỏ cho label */
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            color: white;
+            z-index: 1000;
+        }
+
+        .notification.success {
+            background-color: #4CAF50;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+        }
+
+        .cap-nhat {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .update-button {
+            background-color: #d21e1e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .update-button:hover {
+            background-color: #45a049;
+        }
+
+        .notification.info {
+            background-color: #2196F3;
+        }
+    </style>
 </head>
 <body>
     <div class="account-container">

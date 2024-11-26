@@ -134,8 +134,8 @@
                 $qrImage = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=momo://pay?phone=0967008222&amount=$totalAmount";
                 $bankInfo = "<h3>Quét mã bằng ứng dụng MoMo<br>Chủ tài khoản: Phạm Tiến Dũng</h3>";
             } else if ($paymentMethod === 'bank') {
-                $accountNumber = "1019462766";
-                $bankId = "970436";
+                $accountNumber = "8860626752";
+                $bankId = "970418";
                 $qrImage = "https://api.vietqr.io/image/{$bankId}-{$accountNumber}-compact.jpg?amount=$totalAmount&addInfo=Thanh%20toan%20don%20hang";
                 $bankInfo = "Quét mã bằng ứng dụng Vietcombank Mobile Banking<br>Chủ tài khoản: Phạm Tiến Dũng<br>Số tài khoản: {$accountNumber}";
             }

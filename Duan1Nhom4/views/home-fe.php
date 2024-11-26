@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="./assets/css/home_fe.css">
+
     <link rel="stylesheet" type="text/javascript" href="./assets/js/script.js">
     <script>
         // Lấy thời gian kết thúc từ PHP

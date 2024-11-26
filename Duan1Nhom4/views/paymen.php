@@ -277,14 +277,13 @@
                 <span>Tổng tiền tạm tính:</span>
                 <span><?= number_format($totalAmount, 0, ',', '.') ?>₫</span>
             </div>
-            <button class="checkout-button" onclick="processPayment()">Thanh toán</button>
+            <button class="checkout-button" type="submit" onclick="processPayment()">Thanh toán</button>
             <div class="product-check">
                 Kiểm tra danh sách sản phẩm (1)
             </div>            
         </div>
 
 
-        
 
        
     </div>
@@ -319,7 +318,7 @@
         sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
         
         // Chuyển hướng với thông tin thanh toán
-        window.location.href = `?act=payment_qr&method=${selectedPaymentMethod}&amount=<?= $totalAmount ?>`;
+        window.location.href = `index.php?act=payment_qr&method=${selectedPaymentMethod}&amount=<?= $totalAmount ?>`;
     }
     </script>
 </body>

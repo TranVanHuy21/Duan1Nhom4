@@ -124,3 +124,82 @@
     border: none; /* Loại bỏ viền của iframe */
     margin-bottom: 30px;
 }
+.cap-nhat{
+    text-align: center;
+    padding-top: 20px;
+}
+.update-button{
+text-align: center;
+width: 50%;
+background-color: #c91b1b;
+color: white;
+font-weight: bold;
+font-size: 16px;
+border-radius: 5px;
+
+}
+.account-container {
+max-width: 800px;
+margin: 0 auto;
+padding: 20px;
+background: #fff;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0,0,0,0.1);
+margin-bottom: 20px;
+}
+
+.account-header {
+text-align: center;
+margin-bottom: 30px;
+}
+
+.avatar {
+width: 100px;
+height: 100px;
+border-radius: 50%;
+margin-bottom: 10px;
+}
+
+.account-info {
+border-top: 1px solid #eee;
+padding-top: 20px;
+}
+
+.info-item {
+display: flex;
+padding: 15px 0;
+border-bottom: 1px solid #eee;
+}
+
+.info-item label {
+width: 250px;
+color: #666;
+font-weight: 500;
+font-size: 20px;
+}
+
+.value-container {
+flex: 1;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.fa-edit {
+color: #666;
+cursor: pointer;
+font-size: 16px;
+}
+
+.fa-edit:hover {
+color: #333;
+}
+label{
+font-size: 15px;
+padding-right: 50px;
+}
+
+span {
+color: #333;
+font-size: 16px;
+}

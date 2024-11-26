@@ -480,4 +480,139 @@ h1 {
     margin: 5px 0 0;
     text-align: center;
     width: 100%;
+    
+}
+
+.product__image img {
+    width: 100%;
+    max-width: 15em;
+    height: auto;
+    object-fit: cover;
+    border-radius: 1rem;
+    font-family: Roboto, sans-serif;
+}
+
+.product__name h3 {
+    font-size: 1.2em;
+    margin: 1rem 0;
+    text-align: center;
+    height: 4em;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.block-box-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.product__price--show {
+    font-size: 1.7em;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.product__price--through {
+    font-size: 1.2em;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: bold;
+}
+
+.product_Detail .Detail-price {
+    align-items: flex-start;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    display: flex;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-left: 0;
+    overflow: hidden;
+    padding: 5px;
+    text-transform: none;
+    width: auto;
+}
+.rating-items {
+    /* display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 3em; */
+}
+
+.bottom-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3.5em;
+    margin-top: auto;
+}
+
+.star-icon {
+    display: flex;
+}
+
+.heart-content {
+    display: flex;
+    align-items: center;
+
+
+}
+
+/* --------------------------------------------------------------- */
+
+.box_slides_bottom {
+
+    max-width: 130rem;
+    margin: 0 auto;
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
+
+.slides_bottom {
+    display: flex;
+    gap: 1rem;
+
+}
+
+.slide_image {
+    flex: 0 0 calc(25% - 1rem);
+
+}
+
+.slide_image img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+}
+
+.box_slides_bottom .news_title {
+    color: #444;
+    font-size: 16px;
+    font-weight: 600;
+    height: 48px;
+
+}
+.box-login {
+    text-align: center;
+}
+
+.about-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.about-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-contact p {
+    margin: 0;
 }

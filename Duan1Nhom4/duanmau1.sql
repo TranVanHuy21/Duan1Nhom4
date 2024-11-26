@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 26, 2024 at 05:24 AM
+-- Generation Time: Nov 24, 2024 at 02:04 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -219,15 +219,7 @@ INSERT INTO `order_detail` (`Order_detail_id`, `Order_id`, `Product_id`, `Price`
 (67, 149, 19, 34990000, 1),
 (68, 150, 20, 33990000, 1),
 (69, 150, 24, 43990000, 1),
-(70, 151, 23, 28990000, 1),
-(71, 152, 32, 9990000, 1),
-(72, 153, 19, 34990000, 1),
-(73, 154, 20, 33990000, 1),
-(74, 155, 21, 31990000, 1),
-(75, 156, 20, 33990000, 1),
-(76, 156, 23, 28990000, 1),
-(77, 157, 19, 34990000, 2),
-(78, 158, 21, 31990000, 1);
+(70, 151, 23, 28990000, 1);
 
 -- --------------------------------------------------------
 
@@ -264,14 +256,7 @@ INSERT INTO `order_pro` (`Order_id`, `user_id`, `Status_id`, `Deliverer`, `Creat
 (148, 6, 1, NULL, '2024-11-24 07:40:20', 31990000, 'CellphoneS 123 Xuân Thủy, Cầu Giấy, Huyện Tam Đảo, Tỉnh Vĩnh Phúc', ''),
 (149, 6, 1, NULL, '2024-11-24 07:57:13', 34990000, '07,  202, Xã Tân Lập, Huyện Thanh Sơn, Tỉnh Phú Thọ', ''),
 (150, 6, 1, NULL, '2024-11-24 08:25:38', 77980000, '27, ngõ 101, Xã Đông Phong, Huyện Yên Phong, Tỉnh Bắc Ninh', ''),
-(151, 6, 1, NULL, '2024-11-24 08:29:03', 28990000, 'Số 07, ngõ 101, Phường Châu Khê, Thị xã Từ Sơn, Tỉnh Bắc Ninh', ''),
-(152, 6, 1, NULL, '2024-11-24 09:06:06', 9990000, 'CellphoneS 123 Xuân Thủy, Cầu Giấy, Thành phố Vĩnh Yên, Tỉnh Vĩnh Phúc', ''),
-(153, 6, 1, NULL, '2024-11-24 11:39:17', 34990000, 'CellphoneS 456 Trần Duy Hưng, Cầu Giấy, Thành phố Thái Nguyên, Tỉnh Thái Nguyên', ''),
-(154, 6, 1, NULL, '2024-11-24 11:43:27', 33990000, 'CellphoneS 123 Xuân Thủy, Cầu Giấy, Quận Long Biên, Thành phố Hà Nội', ''),
-(155, 6, 1, NULL, '2024-11-24 13:10:00', 31990000, 'Số 07, ngõ 101, Xã Phùng Nguyên, Huyện Lâm Thao, Tỉnh Phú Thọ', ''),
-(156, 6, 1, NULL, '2024-11-24 13:22:59', 62980000, 'Số 07, ngõ 101, Xã Đường Hoa, Huyện Hải Hà, Tỉnh Quảng Ninh', ''),
-(157, 15, 1, NULL, '2024-11-25 10:11:10', 69980000, 'CellphoneS 123 Xuân Thủy, Cầu Giấy, Huyện Định Hóa, Tỉnh Thái Nguyên', ''),
-(158, 15, 1, NULL, '2024-11-25 10:12:57', 31990000, 'CellphoneS 123 Xuân Thủy, Cầu Giấy, Huyện Hữu Lũng, Tỉnh Lạng Sơn', '');
+(151, 6, 1, NULL, '2024-11-24 08:29:03', 28990000, 'Số 07, ngõ 101, Phường Châu Khê, Thị xã Từ Sơn, Tỉnh Bắc Ninh', '');
 
 -- --------------------------------------------------------
 
@@ -341,19 +326,19 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `Name_product`, `Title`, `Description`, `Price`, `Quanlity`, `parent_cate`, `Size`, `Weight`, `Color`, `Image`, `Memory`, `Os`, `Cpu_speed`, `Camera_primary`, `Camera_secondary`, `Battery`, `Warranty`, `Bluetooth`, `Promotion_price`, `Start_promotion`, `End_promotion`, `Wlan`, `Id_cat`, `Detail`, `Screen`, `discount`, `clicks`) VALUES
-(19, 'iPhone 15 Pro Max 256GB | Chính hãng VN/A', 'iPhone 15 Pro Max 256GB | Chính hãng VN/A', 'Thiết kế khung viền từ titan chuẩn hàng không vũ trụ - Cực nhẹ', 34990000, 2, 3, '159,9 x 76,7 x 8,25 mm', '221 g', 'Titan Tự Nhiên', 'iphone-15-pro-max_3 (1).webp', '8 GB', 'IOS 18', 'Apple A17 Pro 6 nhân', 'Camera chính: 48MP, 24 mm, ƒ/1.78 Camera góc siêu rộng: 12 MP, 13 mm, ƒ/2.2 Camera Tele: 12 MP', '12MP, ƒ/1.9', '4422 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 29390000, '2024-07-01 00:00:00', '2024-07-31 00:00:00', 'không', 20, 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', '6.67', 16, 185),
-(20, 'Samsung Galaxy S24 Ultra 12GB 256GB', 'Samsung Galaxy S24 Ultra 12GB 256GB', 'Máy mới 100% , chính hãng Apple Việt Nam.', 33990000, 2, 3, '', '2', 'Xám', 'ss-s24-ultra-xam-222.webp', '', '', '', '', '', '', '', '', 29390000, NULL, NULL, '', 21, 'Trải nghiệm đỉnh cao với hiệu năng mạnh mẽ từ vi xử lý tân tiến, kết hợp cùng RAM 12GB cho khả năng đa nhiệm mượt mà.', '', 14, 139),
-(21, 'IPhone 15 Pro 256GB | Chính hãng VN/A', 'IPhone 15 Pro 256GB | Chính hãng VN/A', 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', 31990000, 10, 3, '', '', '', 'iphone-15-pro-256gb.webp', '', '', '', '', '', '', '', '', 27990000, NULL, NULL, 'không', 20, 'Thiết kế khung viền từ titan chuẩn hàng không vũ trụ - Cực nhẹ', '6.1 inches', 15, 181),
-(23, 'Samsung Galaxy Z Flip6', 'Samsung Galaxy Z Flip6', 'Samsung Z Flip 6 là chiếc điện thoại gập vỏ sò chạy chip Snapdragon 8 Gen 3 for Galaxy mạnh mẽ bậc nhất hiện nay. ', 28990000, 100, 3, 'Kích thước: 165.1 x 71.9 x 6.9 mm Kích thước gập: 85.1 x 71.9 x 14.9 mm', '187 g', 'Xanh', 'samsung-galaxy-z-flip-6-xanh-duong-6_2.webp', '12 GB', 'Android 14', 'Snapdragon 8 Gen 3 for Galaxy Tăng lên 42% AI', 'Camera chính: 48MP, 24 mm, ƒ/1.78 Camera góc siêu rộng: 12 MP, 13 mm, ƒ/2.2 Camera Tele: 12 MP', 'Camera góc chụp rộng: 50.0 MP, f/1.8, thu phóng quang học 2x Góc chụp siêu rộng: 12.0 MP, f/2.2', '4000mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 28990000, '2024-08-10 00:00:00', '2024-07-08 00:00:00', 'không', 21, 'Chip Snapdragon 8 Gen 2 8 nhân mang đến hiệu năng mạnh mẽ, cho phép bạn xử lý các tác vụ hàng ngày một cách mượt mà. ', '6.7 inches', 1, 40),
-(24, 'Samsung Galaxy Z Fold6', 'Samsung Galaxy Z Fold6', 'Samsung Z Fold 6 là siêu phẩm điện thoại gập được ra mắt ngày 10/7,', 43990000, 100, 3, ' Kích thước: 153.5 x 132.6 x 5.6 mm Kích thước gập: 153.5 x 68.1 x 12.1 mm', '239 g', 'Xanh Dương', 'samsung-galaxy-z-fold-6-xanh_5_.webp', '12 GB', 'Android 14', 'Snapdragon 8 Gen 3 for Galaxy Tăng lên 42% AI', 'Camera bên ngoài:10 MP, f/2.2 Camera bên trong: 4 MP, F1.8', 'Camera góc rộng: 50.0 MP, f/1.8, Thu phóng quang học 2x Camera chụp góc siêu rộng: 12.0 MP, f/2.2 Camera ống kính tele: 10.0 MP, f/2.4, Thu phóng Quang học 3x', '4400 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 43990000, '2024-07-02 00:00:00', '2024-08-10 00:00:00', 'không', 21, 'Chip Snapdragon 8 Gen 2 8 nhân mang đến hiệu năng mạnh mẽ', '7.6 inches', 1, 39),
-(25, 'iPhone 15 128GB | Chính hãng VN/A', 'iPhone 15 128GB | Chính hãng VN/A', 'iPhone 15 128GB | Chính hãng VN/A', 22990000, 200, 3, '6.1 inches', '6.1 inches', 'Hồng', 'iphone-15-plus_1__1.webp', '6 GB', 'IOS 18', 'Apple A16 Bionic 6 nhân', 'Chính 48 MP & Phụ 12 MP', 'Apple A16 Bionic 6 nhân', '3349 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 19990000, '2024-07-01 00:00:00', '2024-09-27 00:00:00', 'không', 20, 'iPhone 15 128GB được trang bị màn hình Dynamic Island kích thước 6.1 inch với công nghệ hiển thị Super Retina XDR', '6.1 inches', 18, 50),
+(19, 'iPhone 15 Pro Max 256GB | Chính hãng VN/A', 'iPhone 15 Pro Max 256GB | Chính hãng VN/A', 'Thiết kế khung viền từ titan chuẩn hàng không vũ trụ - Cực nhẹ', 34990000, 2, 3, '159,9 x 76,7 x 8,25 mm', '221 g', 'Titan Tự Nhiên', 'iphone-15-pro-max_3 (1).webp', '8 GB', 'IOS 18', 'Apple A17 Pro 6 nhân', 'Camera chính: 48MP, 24 mm, ƒ/1.78 Camera góc siêu rộng: 12 MP, 13 mm, ƒ/2.2 Camera Tele: 12 MP', '12MP, ƒ/1.9', '4422 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 29390000, '2024-07-01 00:00:00', '2024-07-31 00:00:00', 'không', 20, 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', '6.67', 16, 163),
+(20, 'Samsung Galaxy S24 Ultra 12GB 256GB', 'Samsung Galaxy S24 Ultra 12GB 256GB', 'Máy mới 100% , chính hãng Apple Việt Nam.', 33990000, 2, 3, '', '2', 'Xám', 'ss-s24-ultra-xam-222.webp', '', '', '', '', '', '', '', '', 29390000, NULL, NULL, '', 21, 'Trải nghiệm đỉnh cao với hiệu năng mạnh mẽ từ vi xử lý tân tiến, kết hợp cùng RAM 12GB cho khả năng đa nhiệm mượt mà.', '', 14, 130),
+(21, 'IPhone 15 Pro 256GB | Chính hãng VN/A', 'IPhone 15 Pro 256GB | Chính hãng VN/A', 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', 31990000, 10, 3, '', '', '', 'iphone-15-pro-256gb.webp', '', '', '', '', '', '', '', '', 27990000, NULL, NULL, 'không', 20, 'Thiết kế khung viền từ titan chuẩn hàng không vũ trụ - Cực nhẹ', '6.1 inches', 15, 172),
+(23, 'Samsung Galaxy Z Flip6', 'Samsung Galaxy Z Flip6', 'Samsung Z Flip 6 là chiếc điện thoại gập vỏ sò chạy chip Snapdragon 8 Gen 3 for Galaxy mạnh mẽ bậc nhất hiện nay. ', 28990000, 100, 3, 'Kích thước: 165.1 x 71.9 x 6.9 mm Kích thước gập: 85.1 x 71.9 x 14.9 mm', '187 g', 'Xanh', 'samsung-galaxy-z-flip-6-xanh-duong-6_2.webp', '12 GB', 'Android 14', 'Snapdragon 8 Gen 3 for Galaxy Tăng lên 42% AI', 'Camera chính: 48MP, 24 mm, ƒ/1.78 Camera góc siêu rộng: 12 MP, 13 mm, ƒ/2.2 Camera Tele: 12 MP', 'Camera góc chụp rộng: 50.0 MP, f/1.8, thu phóng quang học 2x Góc chụp siêu rộng: 12.0 MP, f/2.2', '4000mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 28990000, '2024-08-10 00:00:00', '2024-07-08 00:00:00', 'không', 21, 'Chip Snapdragon 8 Gen 2 8 nhân mang đến hiệu năng mạnh mẽ, cho phép bạn xử lý các tác vụ hàng ngày một cách mượt mà. ', '6.7 inches', 1, 38),
+(24, 'Samsung Galaxy Z Fold6', 'Samsung Galaxy Z Fold6', 'Samsung Z Fold 6 là siêu phẩm điện thoại gập được ra mắt ngày 10/7,', 43990000, 100, 3, ' Kích thước: 153.5 x 132.6 x 5.6 mm Kích thước gập: 153.5 x 68.1 x 12.1 mm', '239 g', 'Xanh Dương', 'samsung-galaxy-z-fold-6-xanh_5_.webp', '12 GB', 'Android 14', 'Snapdragon 8 Gen 3 for Galaxy Tăng lên 42% AI', 'Camera bên ngoài:10 MP, f/2.2 Camera bên trong: 4 MP, F1.8', 'Camera góc rộng: 50.0 MP, f/1.8, Thu phóng quang học 2x Camera chụp góc siêu rộng: 12.0 MP, f/2.2 Camera ống kính tele: 10.0 MP, f/2.4, Thu phóng Quang học 3x', '4400 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 43990000, '2024-07-02 00:00:00', '2024-08-10 00:00:00', 'không', 21, 'Chip Snapdragon 8 Gen 2 8 nhân mang đến hiệu năng mạnh mẽ', '7.6 inches', 1, 38),
+(25, 'iPhone 15 128GB | Chính hãng VN/A', 'iPhone 15 128GB | Chính hãng VN/A', 'iPhone 15 128GB | Chính hãng VN/A', 22990000, 200, 3, '6.1 inches', '6.1 inches', 'Hồng', 'iphone-15-plus_1__1.webp', '6 GB', 'IOS 18', 'Apple A16 Bionic 6 nhân', 'Chính 48 MP & Phụ 12 MP', 'Apple A16 Bionic 6 nhân', '3349 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 19990000, '2024-07-01 00:00:00', '2024-09-27 00:00:00', 'không', 20, 'iPhone 15 128GB được trang bị màn hình Dynamic Island kích thước 6.1 inch với công nghệ hiển thị Super Retina XDR', '6.1 inches', 18, 48),
 (26, 'Apple MacBook Air M1 256GB 2020 I Chính hãng Apple Việt Nam', 'Apple MacBook Air M1 256GB 2020 I Chính hãng Apple Việt Nam', 'Hiệu năng vượt trội - Cân mọi tác vụ từ word, exel đến chỉnh sửa ảnh trên các phần mềm như AI, PTS', 22990000, 100, 4, ' 1.61 cm x 30.41 cm x 21.24 cm', '1.29 kg', '', 'air_m2.webp', '8GB', '', '8 nhân với 4 nhân hiệu năng cao và 4 nhân tiết kiệm điện', '8mp', 'Không', '49.9-watt lithium-polymer, củ sạc công suất 30W', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 18790000, '2024-07-01 00:00:00', '2024-09-07 00:00:00', 'không', 31, 'Macbook Air M1 2020 - Sang trọng, tinh tế, hiệu năng khủng', '13.3 inches', 17, 63),
 (27, 'MacBook Air M3 13 inch 2024 8GB - 256GB | Chính hãng Apple Việt Nam', 'MacBook Air M3 13 inch 2024 8GB - 256GB | Chính hãng Apple Việt Nam', 'Sức mạnh xử lý hàng đầu trên chip Apple M3 - Cân tốt mọi tác vụ từ đồ hoạ đến lập trình Màn hình Liquid Retina 13,6 inch - Màu sắc hiển thị rực rỡ, sắc nét Camera FaceTime HD 1080p - Đàm thoại, hội họp mọi lúc mọi nơi Hỗ trợ sạc 30W - Nhanh chóng nạp đầy pin khi bạn cần', 27990000, 120, 4, '304.1 x 215.4 x 11.3 mm (13.6 inch) và 350.5 x 240.1 x 11.3 mm (15.3 inch)', '	1.24 kg', 'Đen', 'apple_m3_slot.webp', '8GB', 'MacOS', 'Chip Apple M3  CPU 8 lõi với 4 lõi hiệu năng và 4 lõi tiết kiệm điện GPU 8 lõi', 'Camera FaceTime HD 1080p  Bộ xử lý tín hiệu hình ảnh tiên tiến với video điện toán', 'Không', 'Bộ Tiếp Hợp Nguồn USB-C 30W (M2 và M3 với GPU 8 lõi) hoặc', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 27290000, NULL, NULL, 'không', 31, 'Apple Macbook Air 13 M3 với con chip Apple M3 mạnh mẽ cùng công nghệ dò tia tốc độ cao mang lại trải nghiệm dùng mượt mà.', 'Màn hình có đèn nền LED 13,6 inch (theo đường chéo) với công nghệ IPS;1 độ phân giải gốc 2560x1664 với mật độ 224 pixel mỗi inch Độ sáng 500 nit', 3, 34),
 (28, 'TECNO SPARK Go 2024 4GB 64GB', 'TECNO SPARK Go 2024 4GB 64GB', 'Hiệu năng ổn định, đáp ứng tốt nhu cầu cơ bản với Unisoc T606. Camera chính 13MP chụp ảnh sắc nét, màu sắc chân thực. Pin trâu 5.000 mAh - Sử dụng cả ngày dài mà không lo hết pin. Thiết kế vuông vức sang trọng, trẻ trung, phù hợp mọi đối tượng.', 2190000, 200, 3, '163.69x75.6x8.55mm', '186g', 'Trắng', 'tecno-spark-go-2024._3_.webp', '64 GB', ' Android 13', 'Unisoc T606', '8MP, f/2.0', '13MP, f/1.8 + AI-CAM', '', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 1950000, NULL, NULL, 'không ', 65, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '6.6 inches', 11, 1),
 (29, 'OPPO Find X5 Pro 12GB 256GB - Giá mới chỉ có tại CellphoneS', 'OPPO Find X5 Pro 12GB 256GB - Giá mới chỉ có tại CellphoneS', 'Chip Snapdragon 8 Gen 1 cho hiệu suất mạnh mẽ, cân mọi tác vụ từ giải trí đến làm việc Màn hình AMOLED 120 Hz mang đến cho bạn trải nghiệm mượt mà, màu sắc sống động Dùng thoải mái cả ngày với dung lượng pin 5.000 mAh, tích hợp sạc nhanh 80W hiện đại RAM 12GB đảm bảo khả năng xử lý đa nhiệm không giật lag, ROM 256GB giúp lưu trữ tốt', 19990000, 300, 3, '163.7 x 73.9 x 8.5 mm', '218 g', 'Trắng', 'finx5.webp', '12 GB - 256 GB', 'Android 14', 'Qualcomm Snapdragon 8 Gen 1', 'Camera chính 32MP: f/2.4; FOV 90°, ống kính: 5P, lấy nét cố định', 'Camera chính: 50MP, f/1.7 Camera góc rộng: 50MP, f/2.2; FOV 112° Camera tele: 13MP, f/2.4', '5.000 mAh - Sạc siêu nhanh 80W Sạc không dây', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 15990000, NULL, NULL, 'không', 23, ' Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '6.7 inches', 20, 9),
 (30, 'iPhone 15 Plus 128GB | Chính hãng VN/A', 'iPhone 15 Plus 128GB | Chính hãng VN/A', 'Thiết kế dẫn đầu xu hướng - Nhiều màu sắc trendy cùng chất liệu kính pha màu và khung nhôm vô cùng bền bỉ Nắm bắt và tương tác mọi thông tin dễ dàng hơn với Dynamic Island mở rộng Chụp ảnh chân dung xuất sắc mọi khoảnh khắc - Camera chính 48MP với tele 2X và chế độ chỉnh sửa đa dạng Hiệu năng cân mọi tác vụ - A16 Bionic mạnh mẽ cho mọi thao tác mượt mà và nhanh chóng', 25990000, 1000, 3, ' 160,9 x 77,8 x 7,80 mm', '201 g', 'Hồng', 'iphone-15-plus_1_.webp', '6 GB', 'IOS 18', 'Apple A16 Bionic', '12MP, ƒ/1.9', 'Chính 48 MP & Phụ 12 MP', '4383 mAh - Sạc nhanh Sạc không dây MagSafe lên đến 15W Sạc không dây Qi lên đến 7,5W', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 22690000, '2024-09-01 00:00:00', '2024-09-07 00:00:00', 'không', 20, 'Máy mới 100% , chính hãng Apple Việt Nam. CellphoneS hiện là đại lý bán lẻ uỷ quyền iPhone chính hãng VN/A của Apple Việt Nam', '6.7 inches', 13, 2),
 (31, 'Samsung Galaxy M55 (12GB 256GB)', 'Samsung Galaxy M55 (12GB 256GB)', 'ĐẶC ĐIỂM NỔI BẬT Trải nghiệm hình ảnh sống động và sắc nét với màn hình AMOLED 6.7 inch, độ phân giải Super AMOLED+. Ghi lại những bức ảnh tuyệt đẹp với camera chính 50MP, khẩu độ f/1.8, cùng nhiều tính năng chụp ảnh thông minh. Qualcomm Snapdragon 7 Gen 1 nhân kết hợp với RAM 8GB mang đến hiệu suất mạnh mẽ cho mọi tác vụ, từ chơi game đến chỉnh sửa video. Pin khủng 5000mAh - Sử dụng điện thoại cả ngày dài mà không lo hết pin nhờ viên pin.', 12690000, 1000, 3, '163.9 x 76.5 x 7.8 mm', '180 g', 'Xanh', 'dien-thoai-samsung-galaxy-m55.webp', '12 GB - 256GB', 'Android 14', 'Qualcomm Snapdragon 7 Gen 1 (4 nm)', 'Camera góc rộng: 50 MP, f/2.4', 'Camera góc rộng: 50 MP, f/1.8, 1/1.56\", 1.0µm, PDAF, OIS Camera góc siêu rộng: 8 MP, f/2.2, 123˚ Camera macro: 2 MP, f/2.4', '5000 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 10750000, '2024-07-29 00:00:00', '2024-09-07 00:00:00', 'không', 21, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '6.7 inches', 15, 24),
-(32, 'Samsung Galaxy A55 5G 8GB 128GB', 'Samsung Galaxy A55 5G 8GB 128GB', 'Chip Exynos 1480 4nm - Sử dụng mượt mà, linh hoạt với các tác vụ nặng nề mà không gặp trở ngại. Với camera góc rộng 12MP mang đến khả năng thu trọn mọi khung cảnh vào khung hình. Tần số quét 120Hz - Mỗi hành động trên màn hình đều trở nên mượt mà đáng kinh ngạc. Pin 5000 mAh kết hợp cùng sạc nhanh 25W - Sử dụng thoải mái trong mọi hoạt động hằng ngày.', 9990000, 10000, 3, '161.1 x 77.4 x 8.2 mm', '213g', 'Tím', 'sm-a556_galaxy_a55_awesome_lilac_ui.webp', '8 GB - 128GB', 'Android 14', 'Exynos 1480 4nm 2.4GHz', '32 MP', 'Camera chính: 50 MP OIS+HDR Camera góc rộng: 12MP Camera macro: 5MP', '5000 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 9690000, '2024-07-28 00:00:00', '2024-09-07 00:00:00', 'không', 21, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', ' 6.6 inches', 3, 101),
+(32, 'Samsung Galaxy A55 5G 8GB 128GB', 'Samsung Galaxy A55 5G 8GB 128GB', 'Chip Exynos 1480 4nm - Sử dụng mượt mà, linh hoạt với các tác vụ nặng nề mà không gặp trở ngại. Với camera góc rộng 12MP mang đến khả năng thu trọn mọi khung cảnh vào khung hình. Tần số quét 120Hz - Mỗi hành động trên màn hình đều trở nên mượt mà đáng kinh ngạc. Pin 5000 mAh kết hợp cùng sạc nhanh 25W - Sử dụng thoải mái trong mọi hoạt động hằng ngày.', 9990000, 10000, 3, '161.1 x 77.4 x 8.2 mm', '213g', 'Tím', 'sm-a556_galaxy_a55_awesome_lilac_ui.webp', '8 GB - 128GB', 'Android 14', 'Exynos 1480 4nm 2.4GHz', '32 MP', 'Camera chính: 50 MP OIS+HDR Camera góc rộng: 12MP Camera macro: 5MP', '5000 mAh', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 9690000, '2024-07-28 00:00:00', '2024-09-07 00:00:00', 'không', 21, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', ' 6.6 inches', 3, 99),
 (33, 'iPad Pro M4 11 inch 5G 2TB  ', 'iPad Pro M4 11 inch 5G 2TB', 'Chip Apple M4. Hiệu năng như mơ, đồ họa thay đổi cuộc chơi và năng lực AI mạnh mẽ.', 62990000, 100, 5, '24.97 x 17.75 x 5.3 mm', '446gram', 'Đen', 'ipad pro 11 m4 den.webp', '16 GB', 'iPadOS 17', 'Apple M4', 'Camera góc rộng: 12MP, ƒ/1.8', 'Camera góc siêu rộng 12MP, ƒ/2.4', 'Sạc tối đa 20 W', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 60990000, '2024-08-05 00:00:00', '2024-08-30 00:00:00', 'không', 39, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '11 inches', 3, 21),
 (34, 'Tai nghe Bluetooth Apple AirPods Pro 2 2023 USB-C | Chính hãng Apple Việt Nam', 'Tai nghe Bluetooth Apple AirPods Pro 2 2023 USB-C | Chính hãng Apple Việt Nam', 'Tích hợp chip Apple H2 mang đến chất âm sống động cùng khả năng tái tạo âm thanh 3 chiều vượt trội Công nghệ Bluetooth 5.3 kết nối ổn định, mượt mà, tiêu thụ năng lượng thấp, giúp tiết kiệm pin đáng kể Chống ồn chủ động loại bỏ tiếng ồn hiệu quả gấp đôi thế hệ trước, giúp nâng cao trải nghiệm nghe nhạc Chống nước chuẩn IP54 trên tai nghe và hộp sạc, giúp bạn thỏa sức tập luyện không cần lo thấm mồ hôi', 6190000, 999, 6, 'Tai nghe: 30.9 x 21.8 x 24 mm Hộp sạc: 45.2 x 60.6 x 21.7mm', 'Tai nghe: 5.3g Hộp sạc: 50.8g', 'Trắng', 'apple-airpods-pro-2-usb-c_1_.webp', 'none', 'none', 'none', 'none', 'none', 'Tai nghe: Dùng 6 giờ Hộp sạc: Dùng 30 giờ', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 5690000, '2024-07-31 00:00:00', '2024-09-07 00:00:00', 'không', 44, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', 'Màn hình', 8, 2),
 (35, ' Apple Watch Series 9 45mm (GPS) viền nhôm dây cao su | Chính hãng Apple Việt Nam', ' Apple Watch Series 9 45mm (GPS) viền nhôm dây cao su | Chính hãng Apple Việt Nam', 'Trang bị chip S9 SiP mạnh mẽ hỗ trợ xử lý mọi tác vụ nhanh chóng với nhiều tiện ích Dễ dàng kết nối, nghe gọi, trả lời tin nhắn ngay trên cổ tay Trang bị nhiều tính năng sức khỏe như: Đo nhịp tim, điện tâm đồ, đo chu kỳ kinh nguyệt,... Độ sáng tối đa lên tới 2000 nit, dễ xem màn hình ngay dưới ánh nắng gắt Tích hợp nhiều chế độ tập luyện với các môn thể thao như: Bơi lội, chạy bộ, đạp xe,...', 11290000, 999, 7, ' 45 x 38 x 10.7 mm', '38.7 gram', 'Trắng vàng', 'apple_lte_3__1.webp', 'none -  64GB', ' WatchOS', 'S9 SiP', 'none', 'none', 'Chế độ thông minh: 18 giờ Chế độ tiết kiệm pin: 36 giờ', '1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple: CareS.vn(xem chi tiết)', '5.3', 10490000, '2024-08-01 00:00:00', '2024-09-07 00:00:00', 'không', 51, 'Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng', '1.7 inch', 7, 2),
@@ -469,19 +454,20 @@ CREATE TABLE `user` (
   `password` varchar(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `name` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `phone_number` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `birthday` date DEFAULT NULL,
-  `gender` varchar(50) COLLATE utf8mb3_unicode_ci DEFAULT NULL
+  `email` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`User_id`, `username`, `password`, `name`, `phone_number`, `email`, `birthday`, `gender`) VALUES
-(6, 'huy', '123', 'Trần Văn Huy', '0987654321', 'Huy@gmail.com', '2024-11-05', 'Nữ'),
-(15, 'chung', '123456', 'Nguyễn Thành Chung', '0987654321', 'trangtntph51960@gmail.com', NULL, NULL),
-(39, 'Chinhpd5', '1234567', 'Nguyễn Văn C', '0987654321', 'C@gmail.com', '2024-10-29', 'Nam');
+INSERT INTO `user` (`User_id`, `username`, `password`, `name`, `phone_number`, `email`) VALUES
+(6, 'huy', '123', 'Huy', '987654321', 'huy123@gmail.com'),
+(7, 'testuser', '$2y$10$1QrEsRvE6Wfzi/hQNd9GaO/9opxAnWU9rOl83ESSz/F9bUy0kJkN2', 'huy', '0', ''),
+(8, 'TrungND', '$2y$10$KVUvDtdR0iPCmT.VW6fftuZYbmdY3xK3Cbv.sT77oZdi3BrmOcFEy', 'Từ Nữ Thu Trang', '0', ''),
+(9, 'TrungND', '$2y$10$qRTYAUdpP9Z2Qz7weyCbxOMjmytYxKXaNR/tuq6O3k.NQjMkedTx2', 'Từ Nữ Thu Trang', '0', ''),
+(11, 'chung', '$2y$10$NZYTzOVJZYms66.eNKZATuWdB1FoIVgTNQgdAQWtPxKcEOcXnCgHi', 'Nguyễn Thành Chung', '', 'trangtntph51960@gmail.com'),
+(15, 'chung', '$2y$10$xml8faGfQtMm3FBK/JX8WuSy5xE.GFgVqnOKEfpkJbqODzjsbvIja', 'Nguyễn Thành Chung', '0987654321', 'trangtntph51960@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -618,7 +604,7 @@ ALTER TABLE `useradmin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -654,13 +640,13 @@ ALTER TABLE `deliverer`
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `Order_detail_id` int NOT NULL AUTO_INCREMENT COMMENT 'id chi tiết hóa đơn', AUTO_INCREMENT=79;
+  MODIFY `Order_detail_id` int NOT NULL AUTO_INCREMENT COMMENT 'id chi tiết hóa đơn', AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `order_pro`
 --
 ALTER TABLE `order_pro`
-  MODIFY `Order_id` int NOT NULL AUTO_INCREMENT COMMENT 'id hóa đơn', AUTO_INCREMENT=159;
+  MODIFY `Order_id` int NOT NULL AUTO_INCREMENT COMMENT 'id hóa đơn', AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `parentcate`
@@ -696,7 +682,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `User_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `useradmin`

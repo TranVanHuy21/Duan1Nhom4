@@ -536,10 +536,10 @@ h1 {
     width: auto;
 }
 .rating-items {
-    /* display: flex;
+    display: flex;
     justify-content: space-around;
     align-items: center;
-    gap: 3em; */
+    gap: 3em;
 }
 
 .bottom-div {

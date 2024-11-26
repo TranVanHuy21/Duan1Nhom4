@@ -14,12 +14,18 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <style>
-    .main-body-footer {
+    .main-footer {
+        max-width: 500rem;
         margin: 0 auto;
-
-        padding: 2rem 0;
+        width: 100%;
         background-color: #f8f8f8;
         border-top: 1px solid #ddd;
+    }
+
+    .main-body-footer {
+        max-width: 130rem;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
     }
 
     .columns-columns-flex {
@@ -34,7 +40,7 @@
     .columns-one-quarter-desktop-box-four {
         width: 25%;
         display: block;
-        background: #7070700b;
+        background: #f8f8f8;
     }
 
     .box-one-store {
@@ -95,11 +101,15 @@
     .box-four__corp-members {
         padding-left: 10px;
     }
+    .main-footer{
+        max-width: 500rem;
+    }
+
     </style>
 </head>
 
 <body>
-    <footer>
+    <footer class="main-footer">
         <div class="main-body-footer">
             <div class="columns-columns-flex">
                 <div class="columns-one-quarter-desktop-box-one">

@@ -356,21 +356,21 @@ class ClientModel
     
 
     
-     public function register_client($username, $password, $name)
+     public function register_client($username, $password, $name, $phone_number, $email, $birthday, $gender)
     {
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-    try {
-        // Prepare SQL statement for inserting a new user
-        $stmt = $this->pdo->prepare("INSERT INTO user (username, password, name) VALUES (:username, :password, :name)");
-        // Execute the statement with the provided values
-        $stmt->execute([':username' => $username, ':password' => $hashedPassword, ':name' => $name]);
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        try {
+            // Prepare SQL statement for inserting a new user
+            $stmt = $this->pdo->prepare("INSERT INTO user (username, password, name, phone_number, email, birthday, gender) VALUES (:username, :password, :name, :phone_number, :email, :birthday, :gender)");
+            // Execute the statement with the provided values
+            $stmt->execute([':username' => $username, ':password' => $hashedPassword, ':name' => $name, ':phone_number' => $phone_number, ':email' => $email, ':birthday' => $birthday, ':gender' => $gender]);
 
-        return true; // Registration successful
-    } catch (PDOException $e) {
-        // Handle any database connection or query errors
-        echo "Error: " . $e->getMessage();
-        return false; // Registration failed
-    }
+            return true; // Registration successful
+        } catch (PDOException $e) {
+            // Handle any database connection or query errors
+            echo "Error: " . $e->getMessage();
+            return false; // Registration failed
+        }
 }
 
 public function addToCart($userId, $productId, $quantity) {
@@ -852,5 +852,97 @@ public function getProductAverageRating($productId) {
         return 0;
     }
 }
+
+public function getUserAccount($userId) {
+    try {
+        $sql = "SELECT username, name, email, phone_number, birthday, gender
+                FROM user 
+                WHERE User_id = :User_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':User_id' => $userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Nếu không tìm thấy user, trả về mảng mặc định
+        return $user ?: [
+            'username' => 'Chưa cập nhật',
+            'name' => 'Chưa cập nhật',
+            'email' => 'Chưa cập nhật',
+            'phone_number' => 'Chưa cập nhật',
+            'birthday' => 'Chưa cập nhật',
+            'gender' => 'Chưa cập nhật',
+        ];
+    } catch (PDOException $e) {
+        error_log("Error getting user account: " . $e->getMessage());
+        return [
+            'username' => 'Chưa cập nhật',
+            'name' => 'Chưa cập nhật',
+            'email' => 'Chưa cập nhật',
+            'phone_number' => 'Chưa cập nhật',
+            'birthday' => 'Chưa cập nhật',
+            'gender' => 'Chưa cập nhật'
+        ];
+    }
+}
+
+public function updateAccount($userId, $field, $value) {
+    error_log("Starting updateAccount - userId: $userId, field: $field, value: $value");
+    
+    // Danh sách các trường được phép cập nhật
+    $allowedFields = ['name', 'email', 'phone_number', 'address', 'birthday', ];
+    
+    if (!in_array($field, $allowedFields)) {
+        error_log("Invalid field attempted to update: $field");
+        return [
+            'success' => false, 
+            'message' => 'Trường không hợp lệ'
+        ];
+    }
+    
+    try {
+        // Tạo câu SQL an toàn với prepared statement
+        $sql = "UPDATE user SET $field = :value WHERE User_id = :userId";
+        $stmt = $this->pdo->prepare($sql);
+        
+        // Bind các giá trị
+        $stmt->bindValue(':value', $value);
+        $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+        
+        error_log("Executing SQL: $sql with value: $value and userId: $userId");
+        
+        // Thực thi câu lệnh
+        $result = $stmt->execute();
+        
+        if ($result) {
+            // Kiểm tra xem có row nào được update không
+            if ($stmt->rowCount() > 0) {
+                error_log("Update successful - rows affected: " . $stmt->rowCount());
+                return [
+                    'success' => true,
+                    'message' => 'Cập nhật thành công'
+                ];
+            } else {
+                error_log("No rows were updated");
+                return [
+                    'success' => false,
+                    'message' => 'Không có thay đổi nào được thực hiện'
+                ];
+            }
+        } else {
+            error_log("Update failed - " . print_r($stmt->errorInfo(), true));
+            return [
+                'success' => false,
+                'message' => 'Cập nhật thất bại'
+            ];
+        }
+        
+    } catch (PDOException $e) {
+        error_log("Database error in updateAccount: " . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Lỗi cập nhật dữ liệu: ' . $e->getMessage()
+        ];
+    }
+}
+
 }
 ?>

@@ -114,6 +114,9 @@ switch ($act) {
     case 'account':
         $clientController->account();
         break;
+    case 'updateUserAccount':
+        $clientController->updateUserAccount();
+        break;
 
     default:
         // Hành động mặc định là hiển thị trang chủ

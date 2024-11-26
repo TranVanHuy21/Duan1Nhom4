@@ -195,8 +195,12 @@ class ClientController
             $username = $_POST['username'];
             $password = $_POST['password'];
             $name = $_POST['name'];
+            $phone_number = trim($_POST['phone_number']);
+            $email = $_POST['email'];
+            $birthday = !empty($_POST['birthday']) ? $_POST['birthday'] : null; // Thêm xử lý birthday
+            $gender = !empty($_POST['gender']) ? $_POST['gender'] : null;
 
-            if ($this->clientModel->register_client($username, $password, $name)) {
+            if ($this->clientModel->register_client($username, $password, $name, $phone_number, $email, $birthday, $gender)) {
                 // header('Location: index.php?action=login-client');
                 include 'views/login-fe.php';
                 exit();
@@ -487,8 +491,62 @@ class ClientController
             echo "Có lỗi xảy ra: " . $e->getMessage();
         }
     }
-    public function account(){
+    public function account() {
+        if (!isset($_SESSION['user'])) {
+            $message = "Vui lòng đăng nhập để xem thông tin tài khoản";
+            include './views/login-fe.php';
+            return;
+        }
+    
+        $userId = $_SESSION['user']['User_id'];
+        $userProfile = $this->clientModel->getUserAccount($userId);
+    
+        if (!$userProfile) {
+            $message = "Không tìm thấy thông tin tài khoản!";
+            // include './views/error.php'; // Tạo một trang lỗi thân thiện
+            return;
+        }
+    
         include './views/account.php';
+    }
+
+    public function updateUserAccount() {
+        header('Content-Type: application/json');
+        
+        try {
+            if (!isset($_SESSION['user'])) {
+                throw new Exception('Vui lòng đăng nhập');
+            }
+
+            if (!isset($_POST['field']) || !isset($_POST['value'])) {
+                throw new Exception('Thiếu thông tin');
+            }
+
+            $userId = $_SESSION['user']['User_id'];
+            $field = trim($_POST['field']);
+            $value = trim($_POST['value']);
+
+            $result = $this->clientModel->updateAccount($userId, $field, $value);
+
+            if ($result) {
+                // Cập nhật session ngay lập tức
+                $_SESSION['user'][$field] = $value;
+                
+                echo json_encode([
+                    'success' => true,
+                    'value' => $value
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false
+            ]);
+        }
+        exit();
     }
     
     

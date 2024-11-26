@@ -138,15 +138,28 @@
                 </div>
                 <div class="form-group">
                     <label for="phone">Nhập số điện thoại</label>
-                    <input type="text" id="phone" name="phone" required>
+                    <input type="text" id="phone" name="phone_number" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Nhập email (không bắt buộc)</label>
                     <input type="email" id="email" name="email">
                 </div>
                 <div class="form-group">
+                    <label>Giới tính</label>
+                    <div class="gender" style="display: flex;">
+                    <div style="padding-right: 20px;">
+                        <input type="radio" id="Nam" name="gender" value="Nam">
+                        <label for="male">Nam</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="Nữ" name="gender" value="Nữ">
+                        <label for="female">Nữ</label>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="dob">Ngày sinh</label>
-                    <input type="date" id="dob" name="dob" required>
+                    <input type="date" id="birthday" name="birthday" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Nhập mật khẩu</label>

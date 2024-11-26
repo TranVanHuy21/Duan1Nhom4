@@ -4,77 +4,222 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/contacts.css">
+    <link rel="stylesheet" href="./assets/css/account.css">
+   
 </head>
 <body>
     <div class="account-container">
         <div class="account-header">
-            <img src="./assets/image/poly.png" alt="Avatar" class="avatar">
-            <h2>Trangtnt</h2>
+        <img src="./assets/image/poly.png" alt="Avatar" class="avatar">
+        <h2><?php echo htmlspecialchars($userProfile['username'] ?? ''); ?></h2>
         </div>
         
         <div class="account-info">
+        
             <div class="info-item">
                 <label>Họ và tên:</label>
                 <div class="value-container">
-                    <span>Trangtnt</span>
-                    <i class="fas fa-edit"></i>
+                    <div class="display-value">
+                        <span class="text-value"><?php echo htmlspecialchars($userProfile['name'] ?? ''); ?></span>
+                        <input type="text" class="edit-input" data-field="name" style="display: none;" 
+                               value="<?php echo htmlspecialchars($userProfile['name'] ?? ''); ?>">
+                    </div>
+                    <i class="fas fa-edit edit-icon"></i>
                 </div>
             </div>
 
             <div class="info-item">
                 <label>Email:</label>
-                <span>trangtntph51960@gmail.com</span>
+                <div class="value-container">
+                    <div class="display-value">
+                        <span class="text-value"><?php echo htmlspecialchars($userProfile['email'] ?? ''); ?></span>
+                        <input type="email" class="edit-input" data-field="email" style="display: none;" 
+                        value="<?php echo htmlspecialchars($userProfile['email'] ?? ''); ?>">
+                    </div>                
+                    <i class="fas fa-edit edit-icon"></i>
+                </div>
+
             </div>
 
             <div class="info-item">
                 <label>Giới tính:</label>
                 <div class="value-container">
-                    <span>Chưa cập nhật</span>
-                    <i class="fas fa-edit"></i>
+                    <div class="display-value">
+                        <span class="text-value"><?php echo htmlspecialchars($userProfile['gender'] ?? 'Chưa cập nhật'); ?></span>
+                        
+                    </div>
                 </div>
             </div>
 
             <div class="info-item">
                 <label>Số điện thoại:</label>
-                <span>0973724506</span>
+                <div class="value-container">
+                    <div class="display-value">
+                        <span class="text-value"><?php echo htmlspecialchars($userProfile['phone_number'] ?? ''); ?></span>
+                        <input type="tel" class="edit-input" data-field="phone_number" style="display: none;" 
+                        value="<?php echo htmlspecialchars($userProfile['phone_number'] ?? ''); ?>">
+                    </div> 
+                 <i class="fas fa-edit edit-icon"></i>
+                </div>
+
             </div>
 
             <div class="info-item">
                 <label>Sinh nhật:</label>
-                <span>21/2/2003</span>
+                <div class="value-container">
+                   
+                        <span class="text-value">
+                            <?php 
+                                echo !empty($userProfile['birthday']) 
+                                    ? date('d/m/Y', strtotime($userProfile['birthday'])) 
+                                    : 'Chưa cập nhật'; 
+                            ?>
+                        </span>
+                        
+                 
+                   
+                </div>
+
             </div>
 
-            <div class="info-item">
-                <label>Ngày tham gia Smember:</label>
-                <span>1/8/2024</span>
-            </div>
-
-            <div class="info-item">
-                <label>Tổng tiền tích lũy từ 01/01/2023:</label>
-                <span>0đ</span>
-            </div>
-
-            <div class="info-item">
-                <label>Tổng tiền đã mua sắm:</label>
-                <span>0đ</span>
-            </div>
-
-            <div class="info-item">
+          
+           
+            <!-- <div class="info-item">
                 <label>Địa chỉ:</label>
                 <div class="value-container">
-                    <span>Chưa có địa chỉ mặc định</span>
-                    <i class="fas fa-edit"></i>
+                    <div class="display-value">
+                        <span class="text-value"><?php echo htmlspecialchars($userProfile['address'] ?? 'Chưa có địa chỉ mặc định'); ?></span>
+                        <textarea class="edit-input" data-field="address" style="display: none;">
+                            <?php echo htmlspecialchars($userProfile['address'] ?? ''); ?>
+                        </textarea>
+                    </div>
+                    <i class="fas fa-edit edit-icon"></i>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="cap-nhat">
-            <button class="update-button">Cập nhật thông tin</button>
+            <button type="button" onclick="updateAllInfo()" class="update-button">Cập nhật thông tin</button>
         </div>
     </div>
 
-    <style>
-        
-    </style>
+    <script>
+        // Định nghĩa updateAllInfo ở phạm vi toàn cục
+        function updateAllInfo() {
+            const allInputs = document.querySelectorAll('.edit-input');
+            
+            allInputs.forEach(input => {
+                const container = input.closest('.value-container');
+                const textElement = container.querySelector('.text-value');
+                const field = input.dataset.field;
+                const value = input.value.trim();
+
+                // Cập nhật UI ngay lập tức
+                textElement.textContent = value;
+                // Reset style về mặc định
+                textElement.style.cssText = 'display: inline-block; font-size: 16px;'; // Thêm font-size cố định
+                input.style.display = 'none';
+                
+                fetch('index.php?act=updateUserAccount', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `field=${encodeURIComponent(field)}&value=${encodeURIComponent(value)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification('Cập nhật thành công!', 'success');
+                    } else {
+                        showNotification('Có lỗi xảy ra!', 'error');
+                    }
+                });
+            });
+        }
+
+        // Thêm hàm hiển thị thông báo
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            // Tự động ẩn sau 3 giây
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Xử lý sự kiện click cho các icon edit
+            const editIcons = document.querySelectorAll('.edit-icon');
+            editIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const container = this.closest('.value-container');
+                    const textElement = container.querySelector('.text-value');
+                    const inputElement = container.querySelector('.edit-input');
+
+                    textElement.style.display = 'none';
+                    inputElement.style.display = 'block';
+                    inputElement.value = textElement.textContent.trim();
+                    inputElement.focus();
+                });
+            });
+
+            // Xử lý sự kiện cho tất cả các input
+            document.querySelectorAll('.edit-input').forEach(input => {
+                // Xử lý sự kiện Enter
+                input.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        updateValue(this);
+                    }
+                });
+
+                // Xử lý sự kiện blur (click ra ngoài)
+                input.addEventListener('blur', function() {
+                    updateValue(this);
+                });
+            });
+
+            // Hàm cập nhật giá trị
+            function updateValue(input) {
+                const container = input.closest('.value-container');
+                const textElement = container.querySelector('.text-value');
+                const field = input.dataset.field;
+                const value = input.value.trim();
+
+                fetch('index.php?act=updateUserAccount', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `field=${encodeURIComponent(field)}&value=${encodeURIComponent(value)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Cập nhật giá trị và style
+                        textElement.textContent = value;
+                        // Bỏ tất cả style inline
+                        textElement.removeAttribute('style');
+                        // Hiển thị text và ẩn input
+                        textElement.style.display = 'inline-block';
+                        input.style.display = 'none';
+                    }
+                });
+            }
+
+            // Hàm validate email
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            // Hàm validate số điện thoại
+            function isValidPhone(phone) {
+                return /^[0-9]{10,11}$/.test(phone);
+            }
+        });
+    </script>
 </body>
+
 </html>

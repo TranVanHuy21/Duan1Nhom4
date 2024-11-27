@@ -1,5 +1,5 @@
 <?php
-
+// Giả sử $comment được truyền từ controller
 ?>
 <h2>Chỉnh sửa bình luận</h2>
 <form action="index.php?act=editComment&id=<?php echo $comment['Comment_id']; ?>" method="post">

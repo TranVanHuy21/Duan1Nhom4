@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= '?act=listComments' ?>" class="nav-link">
+                    <a href="<?= '?act=listProductsComment' ?>" class="nav-link">
                         <i class="nav-icon fas fa-comment-dots"></i>
                         <p>
                             Quản trị Comments

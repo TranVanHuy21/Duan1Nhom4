@@ -7,6 +7,18 @@ class CommentModel
     {
         $this->pdo = new PDO('mysql:host=localhost;dbname=duanmau1', 'root', '');
     }
+    public function getAllProducts()
+    {
+        $stmt = $this->pdo->query("SELECT * FROM products");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProductById($productId)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM products WHERE id = :id");
+        $stmt->execute(['id' => $productId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     public function getCommentsByProductId($productId)
     {
@@ -25,12 +37,6 @@ class CommentModel
     {
         $stmt = $this->pdo->prepare("UPDATE comments SET Comment_content = :comment_content, rating = :rating WHERE Comment_id = :comment_id");
         return $stmt->execute(['comment_content' => $commentContent, 'rating' => $rating, 'comment_id' => $commentId]);
-    }
-    public function getCommentById($commentId)
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM comments WHERE Comment_id = :comment_id");
-        $stmt->execute(['comment_id' => $commentId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function deleteComment($commentId)

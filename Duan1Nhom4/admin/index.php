@@ -156,7 +156,10 @@ switch ($act) {
         $id = $_GET['id'];
         $slideController->deleteSlide($id);
         break;
-
+    case 'listProductsComment':
+        $commentController->listProductsComment();
+        // $productController->listProducts();
+        break;
     case 'listComments':
         $productId = isset($_GET['product_id']) ? $_GET['product_id'] : 0;
         $commentController->listComments($productId);
@@ -164,11 +167,6 @@ switch ($act) {
 
     case 'addComment':
         $commentController->addComment();
-        break;
-
-    case 'showAddCommentForm':
-        $productId = isset($_GET['product_id']) ? $_GET['product_id'] : 0;
-        $commentController->showAddCommentForm($productId);
         break;
 
     case 'editComment':

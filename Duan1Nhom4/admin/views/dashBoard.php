@@ -37,6 +37,26 @@ include './views/layout/header.php'; ?>
         <div class="container-fluid">
             <!-- Info boxes -->
             <div class="row">
+                <div class="dashboard">
+                    <div class="card">
+                        <h2>Tổng số người dùng</h2>
+                        <p><?php echo $totalUsers; ?></p>
+                    </div>
+                    <div class="card">
+                        <h2>Tổng số bình luận</h2>
+                        <p><?php echo $totalComments; ?></p>
+                    </div>
+                    <div class="card">
+                        <h2>Tổng số sản phẩm</h2>
+                        <p><?php echo $totalProducts; ?></p>
+                    </div>
+                    <div class="card">
+                        <h2>Tổng số danh mục</h2>
+                        <p><?php echo $totalCategories; ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box">
                         <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>

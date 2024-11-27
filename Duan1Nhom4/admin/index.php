@@ -18,10 +18,8 @@ require_once 'models/SlideModel.php';
 require_once 'controllers/SlideController.php';
 require_once 'controllers/commentController.php';
 require_once 'models/commentModel.php';
-// require_once 'controllers/ParentCategoryController.php'; 
 
-
-
+// Khởi tạo các controller
 $productController = new ProductController();
 $categoryController = new CategoryController();
 $parentCategoryController = new CategoryController();
@@ -38,8 +36,8 @@ if (!isset($_SESSION['user_admin']) && (!isset($_GET['act']) || $_GET['act'] != 
     header("Location: ../admin/index.php?act=login");
     exit();
 }
-$act = isset($_GET['act']) ? $_GET['act'] : 'dashboard';
 
+$act = $_GET['act'] ?? 'dashboard'; // Sử dụng toán tử null coalescing
 
 switch ($act) {
     case 'login':
@@ -47,9 +45,7 @@ switch ($act) {
         break;
     case 'logout':
         $accController->logout();
-    // case 'home':
-    //     $DashboardController->showDashboard();
-    //     break;
+        break;
     case 'listProduct':
         $productController->listProducts();
         break;
@@ -57,16 +53,13 @@ switch ($act) {
         $productController->insertProduct();
         break;
     case 'editProduct':
-        $id = $_GET['id'];
-        $productController->loadViewEditProduct($id);
+        $productController->loadViewEditProduct($_GET['id']);
         break;
     case 'deleteProduct':
-        $id = $_GET['id'];
-        $productController->deleteProduct($id);
+        $productController->deleteProduct($_GET['id']);
         break;
     case 'updateProduct':
-        $id = $_GET['id'];
-        $productController->updateProduct($id);
+        $productController->updateProduct($_GET['id']);
         break;
 
     case 'listCategories':
@@ -79,13 +72,10 @@ switch ($act) {
         $categoryController->formEditCategory();
         break;
     case 'editCategory':
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $categoryController->editCategory($id);
+        $categoryController->editCategory($_GET['id'] ?? null);
         break;
-
     case 'deleteCategory':
-        $id = $_GET['id'];
-        $categoryController->deleteCategory($id);
+        $categoryController->deleteCategory($_GET['id']);
         break;
 
     case 'listParentCategories':
@@ -98,12 +88,10 @@ switch ($act) {
         $categoryController->formEditParentCategory();
         break;
     case 'editParentCategory':
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $parentCategoryController->editParentCategory($id);
+        $parentCategoryController->editParentCategory($_GET['id'] ?? null);
         break;
     case 'deleteParentCategory':
-        $id = $_GET['id'];
-        $parentCategoryController->deleteParentCategory($id);
+        $parentCategoryController->deleteParentCategory($_GET['id']);
         break;
 
     case 'listUserAdmins':
@@ -113,12 +101,10 @@ switch ($act) {
         $userAdminController->insertUserAdmin();
         break;
     case 'editUserAdmin':
-        $id = $_GET['id'];
-        $userAdminController->editUserAdmin($id);
+        $userAdminController->editUserAdmin($_GET['id']);
         break;
     case 'deleteUserAdmin':
-        $id = $_GET['id'];
-        $userAdminController->deleteUserAdmin($id);
+        $userAdminController->deleteUserAdmin($_GET['id']);
         break;
 
     case 'listUsers':
@@ -128,12 +114,10 @@ switch ($act) {
         $userController->insertUser();
         break;
     case 'editUser':
-        $id = $_GET['id'];
-        $userController->editUser($id);
+        $userController->editUser($_GET['id']);
         break;
     case 'deleteUser':
-        $id = $_GET['id'];
-        $userController->deleteUser($id);
+        $userController->deleteUser($_GET['id']);
         break;
 
     case 'listSlides':
@@ -146,48 +130,48 @@ switch ($act) {
         $slideController->insertSlide();
         break;
     case 'showEditForm':
-        $id = $_GET['id'];
-        $slideController->showEditForm($id);
+        $slideController->showEditForm($_GET['id']);
         break;
     case 'updateSlide':
         $slideController->updateSlide();
         break;
     case 'deleteSlide':
-        $id = $_GET['id'];
-        $slideController->deleteSlide($id);
+        $slideController->deleteSlide($_GET['id']);
         break;
+
     case 'listProductsComment':
         $commentController->listProductsComment();
-        // $productController->listProducts();
         break;
     case 'listComments':
-        $productId = isset($_GET['product_id']) ? $_GET['product_id'] : 0;
-        $commentController->listComments($productId);
+        $commentController->listComments($_GET['product_id'] ?? 0);
         break;
 
     case 'addComment':
         $commentController->addComment();
         break;
+    case 'formEditComment':
+        $commentController->formEditComment($_GET['id'] ?? 0);
+        break;
 
     case 'editComment':
-        $commentId = isset($_GET['id']) ? $_GET['id'] : 0;
-        $commentController->editComment($commentId);
+        $commentController->editComment($_GET['id']);
         break;
 
     case 'deleteComment':
-        $commentId = isset($_GET['id']) ? $_GET['id'] : 0;
-        $commentController->deleteComment($commentId);
+        $commentController->deleteComment($_GET['id'] ?? 0);
         break;
+
     case 'header':
         $productController->header();
         break;
-    // case 'checkLogin':
-    //     $accController->checkAcc($user, $pass);
-    //     break;
+
     case 'dashboard':
         $dashboardController->showDashboard();
         break;
+
+    default:
+        // Xử lý trường hợp không hợp lệ
+        header("Location: ../admin/index.php?act=dashboard");
+        exit();
 }
-
-
 ?>

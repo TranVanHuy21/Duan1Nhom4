@@ -1,97 +1,81 @@
 <!-- header -->
 <?php include './views/layout/header.php'; ?>
-<!-- header -->
-<!-- <nav>
-    <?php include './views/layout/navbar.php'; ?>
-  </nav> -->
-
-
 
 <!-- Main Sidebar Container -->
 <?php include './views/layout/sidebar.php'; ?>
 
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Quản Lý Danh Mục</h1>
+                    <h1>Danh Sách Bình Luận</h1>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
 
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary" style="padding: 10px">
+                    <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Danh sách bình luận cho sản phẩm ID:
-                                <?php echo htmlspecialchars($productId); ?>
-                            </h3>
+                                <?php echo htmlspecialchars($productId); ?></h3>
                         </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <?php if (!empty($this->errorMessage)): ?>
-                        <div class="error-message" style="color: red;">
-                            <?php echo $this->errorMessage; ?>
-                        </div>
-                        <?php endif; ?>
-
-                        <table style="padding: 10px">
-                            <tr>
-                                <th>ID Bình luận</th>
-                                <th>Nội dung</th>
-                                <th>Đánh giá</th>
-                                <th>Thao tác</th>
-                            </tr>
-                            <?php if (empty($comments)): ?>
-                            <tr>
-                                <td colspan="4">Không có bình luận nào.</td>
-                            </tr>
-                            <?php else: ?>
-                            <?php foreach ($comments as $comment): ?>
-                            <tr>
-                                <td><?php echo $comment['Comment_id']; ?></td>
-                                <td><?php echo htmlspecialchars($comment['Comment_content']); ?></td>
-                                <td><?php echo $comment['rating']; ?></td>
-                                <td>
-                                    <form action="index.php?act=editComment&id=<?php echo $comment['Comment_id']; ?>"
-                                        method="post">
-                                        <input type="hidden" name="product_id"
-                                            value="<?php echo $comment['product_id']; ?>">
-                                        <button type="submit">Chỉnh sửa</button>
-                                    </form>
-                                    <form action="index.php?act=deleteComment&id=<?php echo $comment['Comment_id']; ?>"
-                                        method="post">
-                                        <input type="hidden" name="product_id"
-                                            value="<?php echo $comment['product_id']; ?>">
-                                        <button type="submit">Xóa</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
+                        <div class="card-body">
+                            <?php if (isset($this->errorMessage)): ?>
+                            <div class="error-message"><?php echo htmlspecialchars($this->errorMessage); ?></div>
                             <?php endif; ?>
-                        </table>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Comment ID</th>
+                                        <th>Product ID</th>
+                                        <th>User ID</th>
+                                        <th>Comment Time</th>
+                                        <th>Comment Content</th>
+                                        <th>Rating</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (!empty($comments)): ?>
+                                    <?php foreach ($comments as $comment): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($comment['Comment_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['product_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['User_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['Comment_time']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['Comment_content']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['rating']); ?></td>
+                                        <td>
+                                        <td>
+                                            <a
+                                                href="index.php?act=formEditComment&id=<?php echo htmlspecialchars($comment['Comment_id']); ?>">Chỉnh
+                                                sửa Bình luận</a>
+                                            <a href="index.php?act=deleteComment&id=<?php echo htmlspecialchars($comment['Comment_id']); ?>&product_id=<?php echo htmlspecialchars($comment['product_id']); ?>"
+                                                onclick="return confirm('Are you sure you want to delete this comment?');">Xóa</a>
+                                        </td>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                    <?php else: ?>
+                                    <tr>
+                                        <td colspan="7">Không có bình luận nào.</td>
+                                    </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
+
 <?php include './views/layout/footer.php'; ?>
-
-
-</body>
-
-</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/checkout.css">
     <style>
-       
         .container-pay {
             max-width: 600px;
             margin: 0 auto;
@@ -94,15 +94,18 @@
             justify-content: space-between;
             color: #333;
         }
+
         .summary-row span:first-child {
             font-size: 15px;
             color: #7c8691;
         }
+
         .summary-row span:last-child {
             font-size: 16px;
             color: #212b36;
         }
-        .total-row span:first-child{
+
+        .total-row span:first-child {
             font-weight: 600;
             color: #111;
         }
@@ -191,16 +194,17 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container-pay">
-    <div class="cart-header">
+        <div class="cart-header">
             <a href="index.php?act=viewCart">
                 <ion-icon name="arrow-back-outline"></ion-icon>
             </a>
             <div class="title">Thanh toán</div>
         </div>
 
-       
+
 
         <div class="section">
             <!-- <div class="coupon-input">
@@ -219,13 +223,13 @@
                     <span>Tiền hàng (tạm tính)</span>
                     <span><?= number_format($totalAmount, 0, ',', '.') ?>₫</span>
                 </div>
-                
+
                 <div class="summary-row total-row">
                     <span>Tổng tiền (đã gồm VAT)</span>
                     <span><?= number_format($totalAmount, 0, ',', '.') ?>₫</span>
                 </div>
             </div>
-          
+
 
         </div>
 
@@ -270,56 +274,57 @@
                 </div>
             </div>
 
-            
+
         </div>
         <div class="section">
-        <div class="summary-row total-row">
+            <div class="summary-row total-row">
                 <span>Tổng tiền tạm tính:</span>
                 <span><?= number_format($totalAmount, 0, ',', '.') ?>₫</span>
             </div>
             <button class="checkout-button" type="submit" onclick="processPayment()">Thanh toán</button>
             <div class="product-check">
                 Kiểm tra danh sách sản phẩm (1)
-            </div>            
+            </div>
         </div>
 
 
 
-       
+
     </div>
 
     <script>
-    let selectedPaymentMethod = '';
+        let selectedPaymentMethod = '';
 
-    document.querySelectorAll('.payment-option').forEach(option => {
-        option.addEventListener('click', function() {
-            selectedPaymentMethod = this.dataset.method;
-            // Xóa active class từ tất cả options
-            document.querySelectorAll('.payment-option').forEach(opt => {
-                opt.classList.remove('active');
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function () {
+                selectedPaymentMethod = this.dataset.method;
+                // Xóa active class từ tất cả options
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                // Thêm active class cho option được chọn
+                this.classList.add('active');
             });
-            // Thêm active class cho option được chọn
-            this.classList.add('active');
         });
-    });
 
-    function processPayment() {
-        if (!selectedPaymentMethod) {
-            alert('Vui lòng chọn phương thức thanh toán');
-            return;
+        function processPayment() {
+            if (!selectedPaymentMethod) {
+                alert('Vui lòng chọn phương thức thanh toán');
+                return;
+            }
+
+            // Lưu thông tin đơn hàng vào session trước khi chuyển trang
+            const orderData = {
+                method: selectedPaymentMethod,
+                amount: <?= $totalAmount ?>,
+                timestamp: new Date().getTime()
+            };
+            sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
+
+            // Chuyển hướng với thông tin thanh toán
+            window.location.href = `index.php?act=payment_qr&method=${selectedPaymentMethod}&amount=<?= $totalAmount ?>`;
         }
-        
-        // Lưu thông tin đơn hàng vào session trước khi chuyển trang
-        const orderData = {
-            method: selectedPaymentMethod,
-            amount: <?= $totalAmount ?>,
-            timestamp: new Date().getTime()
-        };
-        sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
-        
-        // Chuyển hướng với thông tin thanh toán
-        window.location.href = `index.php?act=payment_qr&method=${selectedPaymentMethod}&amount=<?= $totalAmount ?>`;
-    }
     </script>
 </body>
+
 </html>

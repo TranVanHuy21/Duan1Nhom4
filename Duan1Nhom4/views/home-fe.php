@@ -102,9 +102,12 @@
     </script>
     <style>
         .product__price--percent {
-            background-color: red; /* Màu nền để nổi bật */
-            color: white; /* Màu chữ */
-            font-size: 18px; /* Kích thước chữ */
+            background-color: red;
+            /* Màu nền để nổi bật */
+            color: white;
+            /* Màu chữ */
+            font-size: 18px;
+            /* Kích thước chữ */
             padding: 5px 10px;
             border-radius: 5px;
             position: absolute;
@@ -112,7 +115,6 @@
             left: 10px;
             z-index: 10;
         }
-
     </style>
 
 </head>
@@ -203,52 +205,56 @@
                 </div>
             </div>
             <div class="box_sale_products_byParentCategory">
-            <?php if (isset($productsMaxDiscount) && is_array($productsMaxDiscount)): ?>
-    <?php foreach ($productsMaxDiscount as $product): ?>
-        <!-- Hiển thị thông tin sản phẩm -->
-        <div class="product">
-            <div class="product__info">
-                <a href="?act=showProductDetail&id=<?= $product['id'] ?>" class="product__link">
-                    <!-- <div class="product__price--percent">
+                <?php if (isset($productsMaxDiscount) && is_array($productsMaxDiscount)): ?>
+                    <?php foreach ($productsMaxDiscount as $product): ?>
+                        <!-- Hiển thị thông tin sản phẩm -->
+                        <div class="product">
+                            <div class="product__info">
+                                <a href="?act=showProductDetail&id=<?= $product['id'] ?>" class="product__link">
+                                    <!-- <div class="product__price--percent">
                         <p class=""><?= htmlspecialchars($product['discount'] ?? '0') ?>%</p>
                     </div> -->
-                    <div class="product__image">
-                        <img style="width: 160px; height: 160px;" src="./admin/assets/images/uploads/<?= htmlspecialchars($product['Image']) ?>" alt="" loading="lazy">
-                    </div>
-                    <div class="product__name">
-                        <h3><?= htmlspecialchars($product['Name_product']) ?></h3>
-                    </div>
-                    <div class="block-box-price">
-                        <p class="product__price--show"><?= htmlspecialchars($product['Promotion_price']) ?></p>
-                        <p class="product__price--through"><?= htmlspecialchars($product['Price']) ?></p>
-                    </div>
-                    <div class="product_Detail">
-                        <div class="Detail">
-                            <p class="Detail-price"><?= htmlspecialchars($product['Detail']) ?></p>
+                                    <div class="product__image">
+                                        <img style="width: 160px; height: 160px;"
+                                            src="./admin/assets/images/uploads/<?= htmlspecialchars($product['Image']) ?>"
+                                            alt="" loading="lazy">
+                                    </div>
+                                    <div class="product__name">
+                                        <h3><?= htmlspecialchars($product['Name_product']) ?></h3>
+                                    </div>
+                                    <div class="block-box-price">
+                                        <p class="product__price--show"><?= htmlspecialchars($product['Promotion_price']) ?></p>
+                                        <p class="product__price--through"><?= htmlspecialchars($product['Price']) ?></p>
+                                    </div>
+                                    <div class="product_Detail">
+                                        <div class="Detail">
+                                            <p class="Detail-price"><?= htmlspecialchars($product['Detail']) ?></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="rating-items">
+                                <div class="bottom-div">
+                                    <div class="star-icon">
+                                        <?php for ($i = 0; $i < 5; $i++): ?>
+                                            <div><img style="height: 20px; width: 20px;" src="./admin/assets/images/rating/star.png"
+                                                    alt=""></div>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <div class="heart-content">
+                                        <p>Yêu Thích</p>
+                                        <a class="heat-icon" href="#">
+                                            <img class="heat-icon-first" style="height: 20px; width: 20px;"
+                                                src="./admin/assets/images/rating/heart.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="rating-items">
-                <div class="bottom-div">
-                    <div class="star-icon">
-                        <?php for ($i = 0; $i < 5; $i++): ?>
-                            <div><img style="height: 20px; width: 20px;" src="./admin/assets/images/rating/star.png" alt=""></div>
-                        <?php endfor; ?>
-                    </div>
-                    <div class="heart-content">
-                        <p>Yêu Thích</p>
-                        <a class="heat-icon" href="#">
-                            <img class="heat-icon-first" style="height: 20px; width: 20px;" src="./admin/assets/images/rating/heart.png" alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endforeach; ?>
-<?php else: ?>
-    <p>Không có sản phẩm nào với mức giảm giá lớn nhất.</p>
-<?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>Không có sản phẩm nào với mức giảm giá lớn nhất.</p>
+                <?php endif; ?>
 
             </div>
         </div>
@@ -510,7 +516,7 @@
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
-                    </div>
+                    </div>x
                     <div class="categories_right">
                         <?php if (isset($categories[6]) && is_array($categories[6])): ?>
                             <?php foreach ($categories[6] as $category): ?><a
@@ -594,7 +600,8 @@
                     </div>
                     <div class="categories_right">
                         <?php if (isset($categories[7]) && is_array($categories[7])): ?>
-                            <?php foreach ($categories[7] as $category): ?><a href="#">
+                            <?php foreach ($categories[7] as $category): ?><a
+                                    href="?act=productByCategory&id=<?php echo htmlspecialchars($category['id']) ?>">
                                     <?= htmlspecialchars($category['Category_name']) ?>
                                 </a>
                             <?php endforeach; ?>

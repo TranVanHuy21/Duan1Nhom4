@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-body">
                             <?php if (isset($this->errorMessage)): ?>
-                                <div class="error-message"><?php echo htmlspecialchars($this->errorMessage); ?></div>
+                            <div class="error-message"><?php echo htmlspecialchars($this->errorMessage); ?></div>
                             <?php endif; ?>
                             <div class="card-body">
                                 <a href="index.php?act=formAddComment&product_id=<?php echo htmlspecialchars($productId); ?>"
@@ -49,29 +49,30 @@
                                 </thead>
                                 <tbody>
                                     <?php if (!empty($comments)): ?>
-                                        <?php foreach ($comments as $comment): ?>
-                                            <tr>
-                                                <td><?php echo htmlspecialchars($comment['Comment_id']); ?></td>
-                                                <td><?php echo htmlspecialchars($comment['product_id']); ?></td>
-                                                <td><?php echo htmlspecialchars($comment['User_id']); ?></td>
-                                                <td><?php echo htmlspecialchars($comment['Comment_time']); ?></td>
-                                                <td><?php echo htmlspecialchars($comment['Comment_content']); ?></td>
-                                                <td><?php echo htmlspecialchars($comment['rating']); ?></td>
-                                                <td>
-                                                <td>
-                                                    <a
-                                                        href="index.php?act=formEditComment&id=<?php echo htmlspecialchars($comment['Comment_id']); ?>">Chỉnh
-                                                        sửa Bình luận</a>
-                                                    <a href="index.php?act=deleteComment&id=<?php echo htmlspecialchars($comment['Comment_id']); ?>&product_id=<?php echo htmlspecialchars($comment['product_id']); ?>"
-                                                        onclick="return confirm('Are you sure you want to delete this comment?');">Xóa</a>
-                                                </td>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                    <?php foreach ($comments as $comment): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($comment['Comment_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['product_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['User_id']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['Comment_time']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['Comment_content']); ?></td>
+                                        <td><?php echo htmlspecialchars($comment['rating']); ?></td>
+                                        <td>
+                                        <td>
+                                            <a href="index.php?act=formEditComment&id=<?php echo htmlspecialchars($comment['Comment_id']); ?>"
+                                                class="btn btn-warning">Chỉnh
+                                                sửa Bình luận</a>
+                                            <a href="index.php?act=deleteComment&id=<?php echo htmlspecialchars($comment['Comment_id']); ?>&product_id=<?php echo htmlspecialchars($comment['product_id']); ?>"
+                                                onclick="return confirm('Bạn có chắc chắn muốn comment?');"
+                                                class="btn btn-danger">Xóa</a>
+                                        </td>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
                                     <?php else: ?>
-                                        <tr>
-                                            <td colspan="7">Không có bình luận nào.</td>
-                                        </tr>
+                                    <tr>
+                                        <td colspan="7">Không có bình luận nào.</td>
+                                    </tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>

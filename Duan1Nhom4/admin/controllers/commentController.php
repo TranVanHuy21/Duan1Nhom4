@@ -7,12 +7,24 @@ class CommentController
     public function __construct()
     {
         $this->commentModel = new CommentModel();
+        // Khởi tạo UserModel
+        // $this->commentModel = new UserModel();
+
     }
 
     public function listProductsComment()
     {
         $productsComment = $this->commentModel->getAllProducts();
         include './views/products/list.php'; // Tải view để liệt kê sản phẩm
+    }
+
+    public function formAddComment($productId)
+    {
+        $userModel = new UserModel();
+
+        // Lấy danh sách người dùng từ cơ sở dữ liệu
+        $users = $this->commentModel->getAllUsers();
+        include './views/comments/add.php';
     }
 
     public function listComments($productId)
@@ -32,20 +44,24 @@ class CommentController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $productId = $_POST['product_id'];
-            $userId = $_SESSION['user']['User_id']; // Giả sử bạn đã lưu thông tin người dùng trong session
+            $userId = $_POST['user_id']; // Lấy User_id từ form
             $commentContent = $_POST['comment_content'] ?? null;
             $rating = $_POST['rating'] ?? null;
 
             // Xác thực dữ liệu
-            if ($commentContent === null || $rating === null) {
-                $this->errorMessage = "Nội dung bình luận và đánh giá là bắt buộc.";
+            if ($userId === null || $commentContent === null || $rating === null) {
+                $this->errorMessage = "Người dùng, nội dung bình luận và đánh giá là bắt buộc.";
                 return;
             }
 
+            // Thêm bình luận vào cơ sở dữ liệu
             $this->commentModel->addComment($productId, $userId, $commentContent, $rating);
             header("Location: index.php?act=listComments&product_id=" . urlencode($productId));
             exit();
         }
+
+        // Nếu không phải là POST, hiển thị form thêm bình luận
+        include './views/comments/add.php'; // Tải view để thêm bình luận
     }
 
     public function formEditComment($commentId)

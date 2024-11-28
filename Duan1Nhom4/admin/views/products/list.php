@@ -35,7 +35,7 @@ function toggleColumn(columnClass) {
 }
 
 function sortByCategory(categoryId) {
-    window.location.href = '?act=listProduct&categoryId=' + categoryId; // Redirect to filter by category
+    window.location.href = '?act=listProduct&categoryId=' + categoryId;
 }
 </script>
 <!-- js -->
@@ -46,12 +46,20 @@ function sortByCategory(categoryId) {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Quản Lý Sản Phẩm</h1>
+                    <h1>Quản Lý Bình Luận</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
+    <div class="sort-options">
+        <label for="category-select">Sắp xếp theo danh mục:</label>
+        <select id="category-select" onchange="sortByCategory(this.value)">
+            <option value="">Tất cả Danh Mục</option>
+            <?php foreach ($categories as $category): ?>
+            <option value="<?= $category['id'] ?>"><?= $category['Category_name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">

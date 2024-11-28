@@ -40,28 +40,28 @@ class UserModel
     // Phương thức thêm người dùng
     public function insertUser($data)
     {
-        try {
-            $sql = "INSERT INTO user (username, password, name) VALUES (:username, :password, :name)";
-            $stmt = $this->pdo->prepare($sql);
-            return $stmt->execute($data);
-        } catch (PDOException $e) {
-            echo "Lỗi truy vấn: " . $e->getMessage();
-            return false;
-        }
+        $stmt = $this->pdo->prepare("INSERT INTO user (username, password, name, phone_number, email) VALUES (:username, :password, :name, :phone_number, :email)");
+        return $stmt->execute([
+            'username' => $data['username'],
+            'password' => $data['password'],
+            'name' => $data['name'],
+            'phone_number' => $data['phone_number'],
+            'email' => $data['email']
+        ]);
     }
 
     // Phương thức cập nhật người dùng
-    public function updateUser($id, $data)
+    public function updateUser($userId, $data)
     {
-        try {
-            $sql = "UPDATE user SET username = :username, password = :password, name = :name WHERE User_id = :id";
-            $stmt = $this->pdo->prepare($sql);
-            $data['id'] = $id;
-            return $stmt->execute($data);
-        } catch (PDOException $e) {
-            echo "Lỗi truy vấn: " . $e->getMessage();
-            return false;
-        }
+        $stmt = $this->pdo->prepare("UPDATE user SET username = :username, password = :password, name = :name, phone_number = :phone_number, email = :email WHERE User_id = :user_id");
+        return $stmt->execute([
+            'username' => $data['username'],
+            'password' => $data['password'],
+            'name' => $data['name'],
+            'phone_number' => $data['phone_number'],
+            'email' => $data['email'],
+            'user_id' => $userId
+        ]);
     }
 
     // Phương thức xóa người dùng

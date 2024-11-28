@@ -145,7 +145,10 @@ switch ($act) {
     case 'listComments':
         $commentController->listComments($_GET['product_id'] ?? 0);
         break;
-
+    case 'formAddComment': {
+        $commentController->formAddComment($_GET['product_id'] ?? 0);
+        break;
+    }
     case 'addComment':
         $commentController->addComment();
         break;

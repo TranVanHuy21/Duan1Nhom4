@@ -8,7 +8,11 @@ class CommentModel
         $this->pdo = new PDO('mysql:host=localhost;dbname=duanmau1', 'root', '');
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Thiết lập chế độ báo lỗi
     }
-
+    public function getAllUsers()
+    {
+        $stmt = $this->pdo->query("SELECT User_id, username FROM user");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getAllProducts()
     {
         $stmt = $this->pdo->query("SELECT * FROM products");

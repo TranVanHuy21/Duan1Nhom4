@@ -1,64 +1,66 @@
-
 <!-- header -->
 <?php include './views/layout/header.php'; ?>
- <!-- header -->
-  <!-- <nav>
-    <?php include './views/layout/navbar.php';  ?>
-  </nav> -->
 
-  
+<!-- Main Sidebar Container -->
+<?php include './views/layout/sidebar.php'; ?>
 
-  <!-- Main Sidebar Container -->
-  <?php include './views/layout/sidebar.php';  ?>
-  
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Quản Lý Admin</h1>
-          </div>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Sửa Người Dùng</h1>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-          <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Sửa Admin</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <h1>Edit User</h1>
-                <form style="padding: 30px;" action="?act=editUser&id=<?= $user['User_id'] ?>" method="post">
-                    <p>Username</p><input type="text" name="username"
-                        value="<?= htmlspecialchars($user['username']) ?>">
-                    <p>Password</p><input type="text" name="password" value="<?= htmlspecialchars($user['password']) ?>" >
-                    <p>Name</p><input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>">
-                    <br> <br>
-                    
-                    <input type="submit" value="Update User" name="btn_update">
-                </form>
-            </div>
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
       </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-    <?php include './views/layout/footer.php'; ?>
- 
+    </div>
+  </section>
 
-</body>
-</html>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Thông tin người dùng</h3>
+            </div>
+            <form method="POST" action="">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="username">Tên người dùng:</label>
+                  <input type="text" name="username" id="username" class="form-control"
+                    value="<?= htmlspecialchars($user['username']) ?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="password">Mật khẩu:</label>
+                  <input type="password" name="password" id="password" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="name">Tên:</label>
+                  <input type="text" name="name" id="name" class="form-control"
+                    value="<?= htmlspecialchars($user['name']) ?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="phone_number">Số điện thoại:</label>
+                  <input type="text" name="phone_number" id="phone_number" class="form-control"
+                    value="<?= htmlspecialchars($user['phone_number']) ?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" name="email" id="email" class="form-control"
+                    value="<?= htmlspecialchars($user['email']) ?>" required>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="submit" name="btn_update" class="btn btn-primary">Cập nhật Người
+                  Dùng</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<?php include './views/layout/footer.php'; ?>

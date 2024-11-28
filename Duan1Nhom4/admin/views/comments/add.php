@@ -44,6 +44,17 @@
 
                         <form action="index.php?act=addComment" method="post">
                             <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
+                            <div class="form-group">
+                                <label for="user_id">Người dùng:</label>
+                                <select name="user_id" id="user_id" class="form-control" required>
+                                    <option value="">Chọn người dùng</option>
+                                    <?php foreach ($users as $user): ?>
+                                    <option value="<?php echo htmlspecialchars($user['User_id']); ?>">
+                                        <?php echo htmlspecialchars($user['username']); ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                             <label for="comment_content">Nội dung bình luận:</label>
                             <textarea name="comment_content" required></textarea>
 

@@ -133,8 +133,7 @@ p {
                             <i class="fa-solid fa-phone"></i>
                         </div>
                         <div class="about-box-content">
-                            <p class="head">Mua hàng</p>
-                            <p class="head">18002097</p>
+                           
                             <p class="head">Mua hàng</p>
                             <p class="head">18002097</p>
                         </div>
@@ -145,8 +144,7 @@ p {
                             <i class="fa-solid fa-location-dot"></i>
                         </div>
                         <div class="header-box-about-content">
-                            <p class="head">Cửa hàng</p>
-                            <p class="head">gần bạn</p>
+                        
                             <p class="head">Cửa hàng</p>
                             <p class="head">gần bạn</p>
                         </div>
@@ -158,8 +156,8 @@ p {
                             <i class="fa-solid fa-truck-fast"></i>
                         </div>
                         <div class="header-box-about-content">
-                            <p class="head">Lịch sửa</p>
-                            <p class="head">Đơn hàng</p>
+                            
+                           
                             <p class="head">Lịch sửa</p>
                             <p class="head">Đơn hàng</p>
                         </div>

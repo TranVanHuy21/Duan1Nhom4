@@ -190,7 +190,13 @@ class ClientModel
     }
 
 
-
+    public function getAverageRating($productId)
+    {
+        $query = "SELECT AVG(rating) as rating FROM comments WHERE product_id = ?";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$productId]);
+        return $stmt->fetchColumn();
+    }
 
 
     public function getAllSlidesId_1()
@@ -304,39 +310,40 @@ class ClientModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function addComment($product_id, $user_id, $content, $rating){ //$phone_number) {
+    public function addComment($product_id, $user_id, $content, $rating)
+    { //$phone_number) {
         try {
             // Validate input
             if (empty($product_id) || empty($user_id) || empty($content)) {
                 throw new Exception("Invalid input data");
             }
-    
+
             // Ensure user_id is an integer
             if (is_array($user_id)) {
-                $user_id = (int)$user_id;
+                $user_id = (int) $user_id;
             }
-            
+
             // Check if user exists
             $userCheck = $this->pdo->prepare("SELECT User_id FROM user WHERE User_id = ?");
             $userCheck->execute([$user_id]);
             //var_dump($user_id);
-            
+
             if ($userCheck->rowCount() == 0) {
-                throw new Exception("User does not exist".$user_id);
+                throw new Exception("User does not exist" . $user_id);
             }
-            
+
             // Prepare SQL statement with Phone_number
             $stmt = $this->pdo->prepare("INSERT INTO comments (product_id, user_id, comment_content, rating) VALUES (?, ?, ?, ?)");
             $stmt->execute([$product_id, $user_id, $content, $rating]);//$phone_number]);
-        
+
             return true;
         } catch (PDOException $e) {
             echo "Error adding comment: " . $e->getMessage();
             return false;
-        
+
+        }
     }
-}
-    
+
     public function getCommentsByProductId($productId)
     {
         $sql = "
@@ -346,17 +353,17 @@ class ClientModel
             WHERE c.product_id = :product_id
             ORDER BY c.comment_time DESC
         ";
-    
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['product_id' => $productId]);
         $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $comments ?: [];  // Nếu không có bình luận, trả về mảng rỗng
     }
-    
 
-    
-     public function register_client($username, $password, $name, $phone_number, $email, $birthday, $gender)
+
+
+    public function register_client($username, $password, $name, $phone_number, $email, $birthday, $gender)
     {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         try {
@@ -371,414 +378,434 @@ class ClientModel
             echo "Error: " . $e->getMessage();
             return false; // Registration failed
         }
-}
-
-public function addToCart($userId, $productId, $quantity) {
-    try {
-        // Kiểm tra sản phẩm trong giỏ hàng
-        $stmt = $this->pdo->prepare("SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?");
-        $stmt->execute([$userId, $productId]);
-        $existingItem = $stmt->fetch();
-
-        if ($existingItem) {
-            // Cập nhật số lượng nếu sản phẩm đã tồn tại
-            $newQuantity = $existingItem['quantity'] + $quantity;
-            $stmt = $this->pdo->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?");
-            return $stmt->execute([$newQuantity, $userId, $productId]);
-        } else {
-            // Thêm mới nếu sản phẩm chưa có trong giỏ hàng
-            $stmt = $this->pdo->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)");
-            return $stmt->execute([$userId, $productId, $quantity]);
-        }
-    } catch (PDOException $e) {
-        error_log("Error in addToCart: " . $e->getMessage());
-        return false;
     }
-}
 
-public function getCartItems() {
-    try {
-        // Kiểm tra xem có user_id trong session không
-        if(isset($_SESSION['user_id'])) {
-            $sql = "SELECT c.*, sp.name_product, sp.price, sp.image 
+    public function addToCart($userId, $productId, $quantity)
+    {
+        try {
+            // Kiểm tra sản phẩm trong giỏ hàng
+            $stmt = $this->pdo->prepare("SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?");
+            $stmt->execute([$userId, $productId]);
+            $existingItem = $stmt->fetch();
+
+            if ($existingItem) {
+                // Cập nhật số lượng nếu sản phẩm đã tồn tại
+                $newQuantity = $existingItem['quantity'] + $quantity;
+                $stmt = $this->pdo->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?");
+                return $stmt->execute([$newQuantity, $userId, $productId]);
+            } else {
+                // Thêm mới nếu sản phẩm chưa có trong giỏ hàng
+                $stmt = $this->pdo->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)");
+                return $stmt->execute([$userId, $productId, $quantity]);
+            }
+        } catch (PDOException $e) {
+            error_log("Error in addToCart: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getCartItems()
+    {
+        try {
+            // Kiểm tra xem có user_id trong session không
+            if (isset($_SESSION['user_id'])) {
+                $sql = "SELECT c.*, sp.name_product, sp.price, sp.image 
                     FROM cart c 
                     JOIN products sp ON c.product_id = sp.id 
                     WHERE c.user_id = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$_SESSION['user_id']]);
-        } else {
-            // Nếu không có user_id, lấy tất cả sản phẩm
-            $sql = "SELECT c.*, sp.name_product, sp.price, sp.image 
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$_SESSION['user_id']]);
+            } else {
+                // Nếu không có user_id, lấy tất cả sản phẩm
+                $sql = "SELECT c.*, sp.name_product, sp.price, sp.image 
                     FROM cart c 
                     JOIN products sp ON c.product_id = sp.id";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+            }
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
         }
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        return [];
     }
-}
 
 
 
-public function deleteCartItem($id) {
-    try {
-        // Debug trước khi xóa
-        error_log("Executing delete query for ID: " . $id);
-        
-        $sql = "DELETE FROM cart WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        
-        $result = $stmt->execute();
-        
-        // Debug sau khi xóa
-        error_log("Rows affected: " . $stmt->rowCount());
-        
-        return $result && $stmt->rowCount() > 0;
-        
-    } catch (PDOException $e) {
-        error_log("Error deleting cart item: " . $e->getMessage());
-        return false;
+    public function deleteCartItem($id)
+    {
+        try {
+            // Debug trước khi xóa
+            error_log("Executing delete query for ID: " . $id);
+
+            $sql = "DELETE FROM cart WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+            $result = $stmt->execute();
+
+            // Debug sau khi xóa
+            error_log("Rows affected: " . $stmt->rowCount());
+
+            return $result && $stmt->rowCount() > 0;
+
+        } catch (PDOException $e) {
+            error_log("Error deleting cart item: " . $e->getMessage());
+            return false;
+        }
     }
-}
-public function getCartItemByUserIdAndProductId($userId, $productId) {
-    try {
-        $stmt = $this->pdo->prepare("SELECT c.*, sp.name_product, sp.price, sp.image 
+    public function getCartItemByUserIdAndProductId($userId, $productId)
+    {
+        try {
+            $stmt = $this->pdo->prepare("SELECT c.*, sp.name_product, sp.price, sp.image 
                                       FROM cart c 
                                       JOIN products sp ON c.product_id = sp.id 
                                       WHERE c.user_id = ? AND c.product_id = ?");
-        $stmt->execute([$userId, $productId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        return null; // Trả về null nếu có lỗi
+            $stmt->execute([$userId, $productId]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return null; // Trả về null nếu có lỗi
+        }
     }
-}
 
-public function getUserById($userId) {
-    try {
-        $stmt = $this->pdo->prepare("SELECT * FROM user WHERE User_id = ?");
-        $stmt->execute([$userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        return null; // Trả về null nếu có lỗi
+    public function getUserById($userId)
+    {
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM user WHERE User_id = ?");
+            $stmt->execute([$userId]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return null; // Trả về null nếu có lỗi
+        }
     }
-}
 
-public function getCartItemsByUserId($userId) {
-    try {
-        $sql = "SELECT c.*, p.price, p.id as product_id 
+    public function getCartItemsByUserId($userId)
+    {
+        try {
+            $sql = "SELECT c.*, p.price, p.id as product_id 
                 FROM cart c 
                 JOIN products p ON c.product_id = p.id 
                 WHERE c.user_id = :user_id";
-        
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':user_id' => $userId]);
-        
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        error_log("Cart items found for user $userId: " . print_r($result, true));
-        return $result;
-        
-    } catch (PDOException $e) {
-        error_log("Error getting cart items: " . $e->getMessage());
-        return [];
-    }
-}
 
-public function getCartItemByUserIdAndCartId($userId, $cartId) {
-    try {
-        $stmt = $this->pdo->prepare("SELECT c.*, p.name_product, p.price, p.image 
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':user_id' => $userId]);
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            error_log("Cart items found for user $userId: " . print_r($result, true));
+            return $result;
+
+        } catch (PDOException $e) {
+            error_log("Error getting cart items: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getCartItemByUserIdAndCartId($userId, $cartId)
+    {
+        try {
+            $stmt = $this->pdo->prepare("SELECT c.*, p.name_product, p.price, p.image 
                                       FROM cart c 
                                       JOIN products p ON c.product_id = p.id 
                                       WHERE c.user_id = ? AND c.id = ?");
-        $stmt->execute([$userId, $cartId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log("Error getting cart item: " . $e->getMessage());
-        return null;
-    }
-}
-public function createOrder($userId, $status_id, $totalPrice, $fullAddress, $notes) {
-    try {
-        // Debug input values
-        error_log("createOrder input values: " . 
-                  "userId: $userId, " . 
-                  "status_id: $status_id, " . 
-                  "totalPrice: $totalPrice, " . 
-                  "address: $fullAddress, " . 
-                  "notes: $notes");
-
-        // Kiểm tra giá trị đầu vào
-        if (!$userId || !$status_id || !$totalPrice) {
-            error_log("Missing required values for order creation");
-            return false;
+            $stmt->execute([$userId, $cartId]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting cart item: " . $e->getMessage());
+            return null;
         }
+    }
+    public function createOrder($userId, $status_id, $totalPrice, $fullAddress, $notes)
+    {
+        try {
+            // Debug input values
+            error_log("createOrder input values: " .
+                "userId: $userId, " .
+                "status_id: $status_id, " .
+                "totalPrice: $totalPrice, " .
+                "address: $fullAddress, " .
+                "notes: $notes");
 
-        $sql = "INSERT INTO order_pro (user_id, status_id, Total_Price, delivery_address, note, Create_date) 
+            // Kiểm tra giá trị đầu vào
+            if (!$userId || !$status_id || !$totalPrice) {
+                error_log("Missing required values for order creation");
+                return false;
+            }
+
+            $sql = "INSERT INTO order_pro (user_id, status_id, Total_Price, delivery_address, note, Create_date) 
                 VALUES (:user_id, :status_id, :total_price, :address, :notes, NOW())";
-        
-        $stmt = $this->pdo->prepare($sql);
-        
-        // Bind values
-        $params = [
-            ':user_id' => $userId,
-            ':status_id' => $status_id,
-            ':total_price' => $totalPrice,
-            ':address' => $fullAddress,
-            ':notes' => $notes
-        ];
-        
-        // Debug SQL và parameters
-        error_log("SQL Query: " . $sql);
-        error_log("Parameters: " . print_r($params, true));
-        
-        $result = $stmt->execute($params);
 
-        if (!$result) {
-            error_log("SQL Error: " . print_r($stmt->errorInfo(), true));
+            $stmt = $this->pdo->prepare($sql);
+
+            // Bind values
+            $params = [
+                ':user_id' => $userId,
+                ':status_id' => $status_id,
+                ':total_price' => $totalPrice,
+                ':address' => $fullAddress,
+                ':notes' => $notes
+            ];
+
+            // Debug SQL và parameters
+            error_log("SQL Query: " . $sql);
+            error_log("Parameters: " . print_r($params, true));
+
+            $result = $stmt->execute($params);
+
+            if (!$result) {
+                error_log("SQL Error: " . print_r($stmt->errorInfo(), true));
+                return false;
+            }
+
+            $orderId = $this->pdo->lastInsertId();
+            error_log("Order created successfully with ID: " . $orderId);
+
+            return [
+                'Order_id' => $orderId,
+                'success' => true
+            ];
+
+        } catch (PDOException $e) {
+            error_log("Database Error in createOrder: " . $e->getMessage());
+            error_log("SQL State: " . $e->getCode());
             return false;
         }
-
-        $orderId = $this->pdo->lastInsertId();
-        error_log("Order created successfully with ID: " . $orderId);
-        
-        return [
-            'Order_id' => $orderId,
-            'success' => true
-        ];
-
-    } catch (PDOException $e) {
-        error_log("Database Error in createOrder: " . $e->getMessage());
-        error_log("SQL State: " . $e->getCode());
-        return false;
     }
-}
 
 
-public function getLatestOrderWithoutUser() {
-    try {
-        // Lấy đơn hàng mới nhất từ bảng order_pro
-        $sql = "SELECT * FROM order_pro 
+    public function getLatestOrderWithoutUser()
+    {
+        try {
+            // Lấy đơn hàng mới nhất từ bảng order_pro
+            $sql = "SELECT * FROM order_pro 
                 ORDER BY Create_date DESC 
                 LIMIT 1";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch(PDOException $e) {
-        error_log("Error getting latest order: " . $e->getMessage());
-        return false;
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting latest order: " . $e->getMessage());
+            return false;
+        }
     }
-}
 
-public function getOrderDetails($orderId) {
-    try {
-        $sql = "SELECT op.*, p.name, p.image, p.price 
+    public function getOrderDetails($orderId)
+    {
+        try {
+            $sql = "SELECT op.*, p.name, p.image, p.price 
                 FROM order_pro_detail op
                 JOIN products p ON op.product_id = p.id 
                 WHERE op.order_id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$orderId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch(PDOException $e) {
-        error_log("Error getting order details: " . $e->getMessage());
-        return [];
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$orderId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting order details: " . $e->getMessage());
+            return [];
+        }
     }
-}
 
-public function processPayment($orderId, $paymentMethod) {
-    try {
-        $sql = "UPDATE order_pro 
+    public function processPayment($orderId, $paymentMethod)
+    {
+        try {
+            $sql = "UPDATE order_pro 
                 SET status_id = 2, 
                     payment_method = ?,
                     payment_status = 'Completed',
                     updated_at = NOW() 
                 WHERE id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$paymentMethod, $orderId]);
-    } catch(PDOException $e) {
-        error_log("Error processing payment: " . $e->getMessage());
-        return false;
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$paymentMethod, $orderId]);
+        } catch (PDOException $e) {
+            error_log("Error processing payment: " . $e->getMessage());
+            return false;
+        }
     }
-}
 
 
-public function updateOrderPayment($orderId, $paymentMethod) {
-    try {
-        $sql = "UPDATE order_pro 
+    public function updateOrderPayment($orderId, $paymentMethod)
+    {
+        try {
+            $sql = "UPDATE order_pro 
                 SET payment_method = ?,
                     status_id = 2,
                     updated_at = NOW() 
                 WHERE id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$paymentMethod, $orderId]);
-    } catch(PDOException $e) {
-        error_log("Error updating order payment: " . $e->getMessage());
-        return false;
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$paymentMethod, $orderId]);
+        } catch (PDOException $e) {
+            error_log("Error updating order payment: " . $e->getMessage());
+            return false;
+        }
     }
-}
 
 
 
-public function getSelectedCartItems() {
-    try {
-        $sql = "SELECT * FROM cart WHERE user_id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$_SESSION['user']['User_id']]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch(PDOException $e) {
-        error_log("Error getting cart items: " . $e->getMessage());
-        return [];
+    public function getSelectedCartItems()
+    {
+        try {
+            $sql = "SELECT * FROM cart WHERE user_id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$_SESSION['user']['User_id']]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting cart items: " . $e->getMessage());
+            return [];
+        }
     }
-}
 
-public function getUserInfoForOrder($userId) {
-    try {
-        $sql = "SELECT u.username, u.phone_number, u.email 
+    public function getUserInfoForOrder($userId)
+    {
+        try {
+            $sql = "SELECT u.username, u.phone_number, u.email 
                 FROM user u 
                 WHERE u.User_id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch(PDOException $e) {
-        error_log("Error getting user info: " . $e->getMessage());
-        return false;
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$userId]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting user info: " . $e->getMessage());
+            return false;
+        }
     }
-}
 
 
 
-public function getCartQuantity() {
-    try {
-        // Lấy số lượng từ cart dựa vào id giỏ hàng mới nhất
-        $sql = "SELECT quantity FROM cart ORDER BY id DESC LIMIT 1";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        return $result ? (int)$result['quantity'] : 0;
-    } catch(PDOException $e) {
-        error_log("Error getting cart quantity: " . $e->getMessage());
-        return 0;
+    public function getCartQuantity()
+    {
+        try {
+            // Lấy số lượng từ cart dựa vào id giỏ hàng mới nhất
+            $sql = "SELECT quantity FROM cart ORDER BY id DESC LIMIT 1";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result ? (int) $result['quantity'] : 0;
+        } catch (PDOException $e) {
+            error_log("Error getting cart quantity: " . $e->getMessage());
+            return 0;
+        }
     }
-}
 
-public function saveOrderDetail($orderId, $productId, $quantity, $price) {
-    try {
-        // Debug input values
-        error_log("saveOrderDetail input: " . 
+    public function saveOrderDetail($orderId, $productId, $quantity, $price)
+    {
+        try {
+            // Debug input values
+            error_log("saveOrderDetail input: " .
                 "orderId=$orderId, " .
                 "productId=$productId, " .
                 "quantity=$quantity, " .
                 "price=$price");
 
-        // Kiểm tra giá trị đầu vào
-        if (!$orderId || !$productId || !$quantity || !$price) {
-            error_log("Invalid input parameters");
-            return false;
-        }
+            // Kiểm tra giá trị đầu vào
+            if (!$orderId || !$productId || !$quantity || !$price) {
+                error_log("Invalid input parameters");
+                return false;
+            }
 
-        $sql = "INSERT INTO order_detail 
+            $sql = "INSERT INTO order_detail 
                 (order_id, product_id, sale_quantity, price) 
                 VALUES 
                 (:order_id, :product_id, :quantity, :price)";
-        
-        $stmt = $this->pdo->prepare($sql);
-        
-        // Bind parameters với kiểu dữ liệu cụ thể
-        $stmt->bindValue(':order_id', $orderId, PDO::PARAM_INT);
-        $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
-        $stmt->bindValue(':quantity', $quantity, PDO::PARAM_INT);
-        $stmt->bindValue(':price', $price);
-        
-        // Debug SQL
-        error_log("SQL Query: " . $sql);
-        error_log("Params: " . print_r([
-            ':order_id' => $orderId,
-            ':product_id' => $productId,
-            ':quantity' => $quantity,
-            ':price' => $price
-        ], true));
-        
-        $result = $stmt->execute();
-        
-        if (!$result) {
-            error_log("SQL Error: " . print_r($stmt->errorInfo(), true));
+
+            $stmt = $this->pdo->prepare($sql);
+
+            // Bind parameters với kiểu dữ liệu cụ thể
+            $stmt->bindValue(':order_id', $orderId, PDO::PARAM_INT);
+            $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
+            $stmt->bindValue(':quantity', $quantity, PDO::PARAM_INT);
+            $stmt->bindValue(':price', $price);
+
+            // Debug SQL
+            error_log("SQL Query: " . $sql);
+            error_log("Params: " . print_r([
+                ':order_id' => $orderId,
+                ':product_id' => $productId,
+                ':quantity' => $quantity,
+                ':price' => $price
+            ], true));
+
+            $result = $stmt->execute();
+
+            if (!$result) {
+                error_log("SQL Error: " . print_r($stmt->errorInfo(), true));
+                return false;
+            }
+
+            error_log("Order detail saved successfully");
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error: " . $e->getMessage());
+            error_log("SQL State: " . $e->getCode());
             return false;
         }
-        
-        error_log("Order detail saved successfully");
-        return true;
-        
-    } catch (PDOException $e) {
-        error_log("Database Error: " . $e->getMessage());
-        error_log("SQL State: " . $e->getCode());
-        return false;
     }
-}
 
 
 
-public function getOrderDetailsByOrderId($orderId) {
-    try {
-        $sql = "SELECT od.*, p.Name_product, p.Image 
+    public function getOrderDetailsByOrderId($orderId)
+    {
+        try {
+            $sql = "SELECT od.*, p.Name_product, p.Image 
                 FROM order_detail od
                 JOIN products p ON od.product_id = p.id
                 WHERE od.order_id = :order_id";
-                
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':order_id' => $orderId]);
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-    } catch (PDOException $e) {
-        error_log("Error getting order details: " . $e->getMessage());
-        return [];
-    }
-}
 
-public function getOrderTotalQuantity($orderId) {
-    try {
-        $sql = "SELECT SUM(sale_quantity) as total_quantity 
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':order_id' => $orderId]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            error_log("Error getting order details: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getOrderTotalQuantity($orderId)
+    {
+        try {
+            $sql = "SELECT SUM(sale_quantity) as total_quantity 
                 FROM order_detail 
                 WHERE order_id = :order_id";
-                
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':order_id' => $orderId]);
-        
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['total_quantity'] ?? 0;
-        
-    } catch (PDOException $e) {
-        error_log("Error getting order total quantity: " . $e->getMessage());
-        return 0;
-    }
-}
 
-public function getOrderTotal($orderId) {
-    try {
-        $sql = "SELECT SUM(od.sale_quantity * od.price) as total_amount 
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':order_id' => $orderId]);
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total_quantity'] ?? 0;
+
+        } catch (PDOException $e) {
+            error_log("Error getting order total quantity: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public function getOrderTotal($orderId)
+    {
+        try {
+            $sql = "SELECT SUM(od.sale_quantity * od.price) as total_amount 
                 FROM order_detail od 
                 WHERE od.order_id = :order_id";
-                
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':order_id' => $orderId]);
-        
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['total_amount'] ?? 0;
-        
-    } catch (PDOException $e) {
-        error_log("Error calculating order total: " . $e->getMessage());
-        return 0;
-    }
-}
 
-public function getProductRatingSummary($productId) {
-    try {
-        $sql = "SELECT 
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':order_id' => $orderId]);
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total_amount'] ?? 0;
+
+        } catch (PDOException $e) {
+            error_log("Error calculating order total: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public function getProductRatingSummary($productId)
+    {
+        try {
+            $sql = "SELECT 
             COUNT(*) as total_reviews,
             COALESCE(ROUND(AVG(rating), 1), 0) as average_rating,
             COALESCE(SUM(CASE WHEN rating = 5 THEN 1 ELSE 0 END), 0) as five_star,
@@ -789,160 +816,163 @@ public function getProductRatingSummary($productId) {
         FROM comments 
         WHERE product_id = :product_id";
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':product_id' => $productId]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':product_id' => $productId]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Đảm bảo các giá trị không null
-        $result['total_reviews'] = (int)$result['total_reviews'];
-        $result['average_rating'] = (float)$result['average_rating'];
-        
-        // Tính phần trăm chỉ khi có đánh giá
-        if ($result['total_reviews'] > 0) {
-            $result['five_star_percent'] = round(($result['five_star'] / $result['total_reviews']) * 100);
-            $result['four_star_percent'] = round(($result['four_star'] / $result['total_reviews']) * 100);
-            $result['three_star_percent'] = round(($result['three_star'] / $result['total_reviews']) * 100);
-            $result['two_star_percent'] = round(($result['two_star'] / $result['total_reviews']) * 100);
-            $result['one_star_percent'] = round(($result['one_star'] / $result['total_reviews']) * 100);
-        } else {
-            // Gán giá trị mặc định khi không có đánh giá
-            $result['five_star_percent'] = 0;
-            $result['four_star_percent'] = 0;
-            $result['three_star_percent'] = 0;
-            $result['two_star_percent'] = 0;
-            $result['one_star_percent'] = 0;
-        }
+            // Đảm bảo các giá trị không null
+            $result['total_reviews'] = (int) $result['total_reviews'];
+            $result['average_rating'] = (float) $result['average_rating'];
 
-        return $result;
-
-    } catch (PDOException $e) {
-        error_log("Error getting rating summary: " . $e->getMessage());
-        // Trả về mảng với giá trị mặc định khi có lỗi
-        return [
-            'total_reviews' => 0,
-            'average_rating' => 0,
-            'five_star' => 0,
-            'four_star' => 0,
-            'three_star' => 0,
-            'two_star' => 0,
-            'one_star' => 0,
-            'five_star_percent' => 0,
-            'four_star_percent' => 0,
-            'three_star_percent' => 0,
-            'two_star_percent' => 0,
-            'one_star_percent' => 0
-        ];
-    }
-}
-
-public function getProductAverageRating($productId) {
-    try {
-        $sql = "SELECT ROUND(AVG(rating), 1) as average_rating 
-                FROM comments 
-                WHERE product_id = :product_id";
-                
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':product_id' => $productId]);
-        
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['average_rating'] ?? 0;
-        
-    } catch (PDOException $e) {
-        error_log("Error getting average rating: " . $e->getMessage());
-        return 0;
-    }
-}
-
-public function getUserAccount($userId) {
-    try {
-        $sql = "SELECT username, name, email, phone_number, birthday, gender
-                FROM user 
-                WHERE User_id = :User_id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':User_id' => $userId]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Nếu không tìm thấy user, trả về mảng mặc định
-        return $user ?: [
-            'username' => 'Chưa cập nhật',
-            'name' => 'Chưa cập nhật',
-            'email' => 'Chưa cập nhật',
-            'phone_number' => 'Chưa cập nhật',
-            'birthday' => 'Chưa cập nhật',
-            'gender' => 'Chưa cập nhật',
-        ];
-    } catch (PDOException $e) {
-        error_log("Error getting user account: " . $e->getMessage());
-        return [
-            'username' => 'Chưa cập nhật',
-            'name' => 'Chưa cập nhật',
-            'email' => 'Chưa cập nhật',
-            'phone_number' => 'Chưa cập nhật',
-            'birthday' => 'Chưa cập nhật',
-            'gender' => 'Chưa cập nhật'
-        ];
-    }
-}
-
-public function updateAccount($userId, $field, $value) {
-    error_log("Starting updateAccount - userId: $userId, field: $field, value: $value");
-    
-    // Danh sách các trường được phép cập nhật
-    $allowedFields = ['name', 'email', 'phone_number', 'address', 'birthday', ];
-    
-    if (!in_array($field, $allowedFields)) {
-        error_log("Invalid field attempted to update: $field");
-        return [
-            'success' => false, 
-            'message' => 'Trường không hợp lệ'
-        ];
-    }
-    
-    try {
-        // Tạo câu SQL an toàn với prepared statement
-        $sql = "UPDATE user SET $field = :value WHERE User_id = :userId";
-        $stmt = $this->pdo->prepare($sql);
-        
-        // Bind các giá trị
-        $stmt->bindValue(':value', $value);
-        $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
-        
-        error_log("Executing SQL: $sql with value: $value and userId: $userId");
-        
-        // Thực thi câu lệnh
-        $result = $stmt->execute();
-        
-        if ($result) {
-            // Kiểm tra xem có row nào được update không
-            if ($stmt->rowCount() > 0) {
-                error_log("Update successful - rows affected: " . $stmt->rowCount());
-                return [
-                    'success' => true,
-                    'message' => 'Cập nhật thành công'
-                ];
+            // Tính phần trăm chỉ khi có đánh giá
+            if ($result['total_reviews'] > 0) {
+                $result['five_star_percent'] = round(($result['five_star'] / $result['total_reviews']) * 100);
+                $result['four_star_percent'] = round(($result['four_star'] / $result['total_reviews']) * 100);
+                $result['three_star_percent'] = round(($result['three_star'] / $result['total_reviews']) * 100);
+                $result['two_star_percent'] = round(($result['two_star'] / $result['total_reviews']) * 100);
+                $result['one_star_percent'] = round(($result['one_star'] / $result['total_reviews']) * 100);
             } else {
-                error_log("No rows were updated");
-                return [
-                    'success' => false,
-                    'message' => 'Không có thay đổi nào được thực hiện'
-                ];
+                // Gán giá trị mặc định khi không có đánh giá
+                $result['five_star_percent'] = 0;
+                $result['four_star_percent'] = 0;
+                $result['three_star_percent'] = 0;
+                $result['two_star_percent'] = 0;
+                $result['one_star_percent'] = 0;
             }
-        } else {
-            error_log("Update failed - " . print_r($stmt->errorInfo(), true));
+
+            return $result;
+
+        } catch (PDOException $e) {
+            error_log("Error getting rating summary: " . $e->getMessage());
+            // Trả về mảng với giá trị mặc định khi có lỗi
             return [
-                'success' => false,
-                'message' => 'Cập nhật thất bại'
+                'total_reviews' => 0,
+                'average_rating' => 0,
+                'five_star' => 0,
+                'four_star' => 0,
+                'three_star' => 0,
+                'two_star' => 0,
+                'one_star' => 0,
+                'five_star_percent' => 0,
+                'four_star_percent' => 0,
+                'three_star_percent' => 0,
+                'two_star_percent' => 0,
+                'one_star_percent' => 0
             ];
         }
-        
-    } catch (PDOException $e) {
-        error_log("Database error in updateAccount: " . $e->getMessage());
-        return [
-            'success' => false,
-            'message' => 'Lỗi cập nhật dữ liệu: ' . $e->getMessage()
-        ];
     }
-}
+
+    public function getProductAverageRating($productId)
+    {
+        try {
+            $sql = "SELECT ROUND(AVG(rating), 1) as average_rating 
+                FROM comments 
+                WHERE product_id = :product_id";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':product_id' => $productId]);
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['average_rating'] ?? 0;
+
+        } catch (PDOException $e) {
+            error_log("Error getting average rating: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public function getUserAccount($userId)
+    {
+        try {
+            $sql = "SELECT username, name, email, phone_number, birthday, gender
+                FROM user 
+                WHERE User_id = :User_id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':User_id' => $userId]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Nếu không tìm thấy user, trả về mảng mặc định
+            return $user ?: [
+                'username' => 'Chưa cập nhật',
+                'name' => 'Chưa cập nhật',
+                'email' => 'Chưa cập nhật',
+                'phone_number' => 'Chưa cập nhật',
+                'birthday' => 'Chưa cập nhật',
+                'gender' => 'Chưa cập nhật',
+            ];
+        } catch (PDOException $e) {
+            error_log("Error getting user account: " . $e->getMessage());
+            return [
+                'username' => 'Chưa cập nhật',
+                'name' => 'Chưa cập nhật',
+                'email' => 'Chưa cập nhật',
+                'phone_number' => 'Chưa cập nhật',
+                'birthday' => 'Chưa cập nhật',
+                'gender' => 'Chưa cập nhật'
+            ];
+        }
+    }
+
+    public function updateAccount($userId, $field, $value)
+    {
+        error_log("Starting updateAccount - userId: $userId, field: $field, value: $value");
+
+        // Danh sách các trường được phép cập nhật
+        $allowedFields = ['name', 'email', 'phone_number', 'address', 'birthday',];
+
+        if (!in_array($field, $allowedFields)) {
+            error_log("Invalid field attempted to update: $field");
+            return [
+                'success' => false,
+                'message' => 'Trường không hợp lệ'
+            ];
+        }
+
+        try {
+            // Tạo câu SQL an toàn với prepared statement
+            $sql = "UPDATE user SET $field = :value WHERE User_id = :userId";
+            $stmt = $this->pdo->prepare($sql);
+
+            // Bind các giá trị
+            $stmt->bindValue(':value', $value);
+            $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+
+            error_log("Executing SQL: $sql with value: $value and userId: $userId");
+
+            // Thực thi câu lệnh
+            $result = $stmt->execute();
+
+            if ($result) {
+                // Kiểm tra xem có row nào được update không
+                if ($stmt->rowCount() > 0) {
+                    error_log("Update successful - rows affected: " . $stmt->rowCount());
+                    return [
+                        'success' => true,
+                        'message' => 'Cập nhật thành công'
+                    ];
+                } else {
+                    error_log("No rows were updated");
+                    return [
+                        'success' => false,
+                        'message' => 'Không có thay đổi nào được thực hiện'
+                    ];
+                }
+            } else {
+                error_log("Update failed - " . print_r($stmt->errorInfo(), true));
+                return [
+                    'success' => false,
+                    'message' => 'Cập nhật thất bại'
+                ];
+            }
+
+        } catch (PDOException $e) {
+            error_log("Database error in updateAccount: " . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Lỗi cập nhật dữ liệu: ' . $e->getMessage()
+            ];
+        }
+    }
 
 }
 ?>

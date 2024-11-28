@@ -20,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
-    .p {
+.p {
     margin-top: 0;
     margin-bottom: 1rem;
 }
@@ -35,7 +35,7 @@
     top: 100%;
     right: 0;
     background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     min-width: 150px;
     z-index: 1000;
@@ -68,7 +68,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 py-1 img-fluid">
-                             <img src="./assets/image/top-banner-chinh-sach-bao-hanh-doi-tra.webp" alt="">
+                            <img src="./assets/image/top-banner-chinh-sach-bao-hanh-doi-tra.webp" alt="">
                         </div>
                         <div class="col-md-4 py-1 img-fluid">
                             <img src="./assets/image/top-banner-chinh-hang-xuat-vat-day-du.webp" alt="">
@@ -106,7 +106,7 @@
                             </div>
 
                         </a> -->
-                    <div class="dropdown-region" role="menu" class="dropdown">
+                    <!-- <div class="dropdown-region" role="menu" class="dropdown">
                         <div class="dropdown-trigger">
                             <div class="box_local-store">
                                 <img class="img-local" src="assets/image/local.png" alt="">
@@ -121,7 +121,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="box-search">
                         <form action="?act=search" method="POST">
@@ -173,10 +173,11 @@
                     </a>
 
                     <div class="box-login">
-                    <?php if (isset($_SESSION['user'])) { ?>
+                        <?php if (isset($_SESSION['user'])) { ?>
                         <div class="box-user dropdown">
                             <div class="about-contact">
-                                <i class="fa-regular fa-circle-user" onclick="toggleDropdown()" style="color: white; font-size: 25px; cursor: pointer;"></i>
+                                <i class="fa-regular fa-circle-user" onclick="toggleDropdown()"
+                                    style="color: white; font-size: 25px; cursor: pointer;"></i>
                                 <p style="color: white;">
                                     <?php echo isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Khách' ?>
                                 </p>
@@ -209,22 +210,22 @@
         </div>
     </header>
     <script>
-            function toggleDropdown() {
-                const dropdown = document.getElementById('userDropdown');
-                dropdown.classList.toggle('show');
-            }
+    function toggleDropdown() {
+        const dropdown = document.getElementById('userDropdown');
+        dropdown.classList.toggle('show');
+    }
 
-            // Close dropdown when clicking outside
-            window.onclick = function(event) {
-                if (!event.target.matches('.fa-circle-user')) {
-                    const dropdowns = document.getElementsByClassName('dropdown-menu');
-                    for (let dropdown of dropdowns) {
-                        if (dropdown.classList.contains('show')) {
-                            dropdown.classList.remove('show');
-                        }
-                    }
+    // Close dropdown when clicking outside
+    window.onclick = function(event) {
+        if (!event.target.matches('.fa-circle-user')) {
+            const dropdowns = document.getElementsByClassName('dropdown-menu');
+            for (let dropdown of dropdowns) {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
                 }
             }
+        }
+    }
     </script>
 
 </body>

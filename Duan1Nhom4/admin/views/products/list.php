@@ -109,7 +109,7 @@ function sortByCategory(categoryId) {
                                                 alt="Product Image" height="50"></td>
                                         <td data-label="Actions">
                                             <a href="index.php?act=listComments&product_id=<?php echo $row['id']; ?>"
-                                                class="btn">Xem bình luận</a>
+                                                class="btn btn-danger">Xem bình luận</a>
 
                                         </td>
                                     </tr>

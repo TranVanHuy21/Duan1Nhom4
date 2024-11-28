@@ -20,9 +20,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
-    .p {
+    p {
     margin-top: 0;
     margin-bottom: 1rem;
+    font-size: 13px;
 }
 
 .dropdown {
@@ -58,6 +59,9 @@
 
 .fa-circle-user {
     cursor: pointer;
+}
+.head{
+    font-size: 13px;
 }
 </style>
 
@@ -138,8 +142,8 @@
                             <i class="fa-solid fa-phone"></i>
                         </div>
                         <div class="about-box-content">
-                            <p>Mua hàng</p>
-                            <p>18002097</p>
+                            <p class="head">Mua hàng</p>
+                            <p class="head">18002097</p>
                         </div>
                     </a>
 
@@ -148,18 +152,18 @@
                             <i class="fa-solid fa-location-dot"></i>
                         </div>
                         <div class="header-box-about-content">
-                            <p>Liên hệ</p>
-                            <p>với chúng tôi</p>
+                            <p class="head">Cửa hàng</p>
+                            <p class="head">gần bạn</p>
                         </div>
                     </a>
 
-                    <a href="assets/Gio_hang.html" class="header-box-search-item-product">
+                    <a href="?act=lich-su-mua-hang" class="header-box-search-item-product">
                         <div class="about-box-icon">
                             <i class="fa-solid fa-truck-fast"></i>
                         </div>
                         <div class="header-box-about-content">
-                            <p>Lịch sửa</p>
-                            <p>Đơn hàng</p>
+                            <p class="head">Lịch sửa</p>
+                            <p class="head">Đơn hàng</p>
                         </div>
                     </a>
 

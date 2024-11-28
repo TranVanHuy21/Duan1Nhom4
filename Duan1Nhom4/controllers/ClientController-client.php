@@ -367,23 +367,22 @@ class ClientController
                 header("Location: index.php?act=login-client");
                 exit();
             }
-
-            // Debug POST data
-            error_log("POST data received: " . print_r($_POST, true));
-
+    
             $userId = $_SESSION['user']['User_id'];
-            $status_id = 1; // Đơn hàng mới
-
+    
+            // Lấy trạng thái đơn hàng (linh hoạt)
+            $status_id = isset($_POST['status_id']) ? intval($_POST['status_id']) : 1;
+    
             // Lấy và kiểm tra dữ liệu
             $totalPrice = isset($_POST['total_price']) ? floatval($_POST['total_price']) : 0;
             if ($totalPrice <= 0) {
                 throw new Exception("Tổng tiền không hợp lệ");
             }
-
+    
             // Xử lý địa chỉ
             $deliveryMethod = $_POST['delivery_method'] ?? '';
             $fullAddress = '';
-            
+    
             if ($deliveryMethod === 'store') {
                 $storeCity = $_POST['store_city'] ?? '';
                 $storeDistrict = $_POST['store_district'] ?? '';
@@ -396,37 +395,47 @@ class ClientController
                 $address = $_POST['delivery_address'] ?? '';
                 $fullAddress = "$address, $ward, $district, $city";
             }
-
+    
             $notes = $_POST['note'] ?? '';
+    
+            // Debug giá trị trước khi gọi createOrder
+            // var_dump([
+            //     'userId' => $userId,
+            //     'totalPrice' => $totalPrice,
+            //     'fullAddress' => $fullAddress,
+            //     'notes' => $notes,
+            //     'status_id' => $status_id,
 
-            // Debug order data
-            error_log("Creating order with: " . 
-                      "userId: $userId, " .
-                      "status: $status_id, " .
-                      "total: $totalPrice, " .
-                      "address: $fullAddress");
+            // ]);  
 
             // Tạo đơn hàng
             $orderResult = $this->clientModel->createOrder(
                 $userId, 
-                $status_id,
                 $totalPrice,
                 $fullAddress, 
-                $notes
+                $notes,
+                $status_id
+
             );
+           
+            // var_dump($orderResult);
+            // die;
+
 
             if (!$orderResult || !isset($orderResult['Order_id'])) {
-                throw new Exception("Không thể tạo đơn hàng - Kiểm tra log để biết chi tiết");
-            }
-
-            $orderId = $orderResult['Order_id'];
             
+                 throw new Exception("Không thể tạo đơn hàng - Kiểm tra log để biết chi tiết");
+            }
+            
+           
+            $orderId = $orderResult['Order_id'];
+
             // Lấy sản phẩm từ giỏ hàng
             $cartItems = $this->clientModel->getCartItemsByUserId($userId);
             if (empty($cartItems)) {
                 throw new Exception("Giỏ hàng trống");
             }
-
+    
             // Lưu chi tiết đơn hàng
             foreach ($cartItems as $item) {
                 $saveResult = $this->clientModel->saveOrderDetail(
@@ -435,25 +444,27 @@ class ClientController
                     $item['quantity'],
                     $item['price']
                 );
-
+    
                 if (!$saveResult) {
                     throw new Exception("Lỗi khi lưu chi tiết đơn hàng");
                 }
             }
-
+    
             // Xóa giỏ hàng
             foreach ($cartItems as $item) {
                 $this->clientModel->deleteCartItem($item['id']);
             }
-
+    
             header("Location: index.php?act=paymen");
             exit();
-
+    
         } catch (Exception $e) {
             error_log("Process Order Error: " . $e->getMessage());
             echo "Có lỗi xảy ra: " . $e->getMessage();
         }
     }
+    
+    
 
     public function paymen() {
         try {
@@ -549,6 +560,35 @@ class ClientController
         exit();
     }
     
+    
+
+  
+   
+
+
+    public function lichSuMuaHang(){
+        if(isset($_SESSION['user'])){
+            // Lấy ra thông tin tài khoản đăng nhập
+            $userId = $_SESSION['user']['User_id'];
+
+            $userInfo = $this->clientModel->getUserInfoForOrder($userId);
+
+            // Lấy ra danh sách trạng thái đơn hàng
+
+            // Lấy ra danh sách trạng thái thanh toán
+
+            // Lấy ra danh sách tất cả đơn hàng của tài khoản
+
+            $donHangs = $this->clientModel->getDonHangFromUser($userId);
+            
+            
+            include './views/lichSuMuaHang.php';
+
+        }else{
+           header('Location: index.php?act=login-client');
+           exit();
+        }
+    }
     
 
   

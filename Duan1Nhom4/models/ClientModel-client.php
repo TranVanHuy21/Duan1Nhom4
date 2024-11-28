@@ -502,58 +502,85 @@ public function getCartItemByUserIdAndCartId($userId, $cartId) {
         return null;
     }
 }
-public function createOrder($userId, $status_id, $totalPrice, $fullAddress, $notes) {
+public function createOrder($userId, $totalPrice, $fullAddress, $notes, $status_id) {
     try {
         // Debug input values
         error_log("createOrder input values: " . 
                   "userId: $userId, " . 
-                  "status_id: $status_id, " . 
                   "totalPrice: $totalPrice, " . 
                   "address: $fullAddress, " . 
-                  "notes: $notes");
+                  "notes: $notes,".
+                  "status_id: $status_id " );
+                //  throw new Exception($status_id);
+
+                  
+
 
         // Kiểm tra giá trị đầu vào
         if (!$userId || !$status_id || !$totalPrice) {
+
             error_log("Missing required values for order creation");
+            throw new Exception("1");
+
+           
             return false;
         }
 
-        $sql = "INSERT INTO order_pro (user_id, status_id, Total_Price, delivery_address, note, Create_date) 
-                VALUES (:user_id, :status_id, :total_price, :address, :notes, NOW())";
+        $sql = "INSERT INTO order_pro (user_id, Create_date, Total_Price, delivery_address, note, status_id) 
+        VALUES (:user_id, NOW(), :total_price, :address, :notes, :status_id)";
         
         $stmt = $this->pdo->prepare($sql);
         
         // Bind values
         $params = [
             ':user_id' => $userId,
-            ':status_id' => $status_id,
             ':total_price' => $totalPrice,
             ':address' => $fullAddress,
-            ':notes' => $notes
+            ':notes' => $notes,
+            ':status_id' => $status_id
+
         ];
+        // var_dump($sql, $params);
+        // die;
+
         
         // Debug SQL và parameters
         error_log("SQL Query: " . $sql);
         error_log("Parameters: " . print_r($params, true));
         
         $result = $stmt->execute($params);
+         // Debug kết quả thực thi
+        // var_dump($result, $stmt->errorInfo());
+        // die;
+
 
         if (!$result) {
+           
             error_log("SQL Error: " . print_r($stmt->errorInfo(), true));
+            throw new Exception("2");
+
             return false;
         }
 
         $orderId = $this->pdo->lastInsertId();
         error_log("Order created successfully with ID: " . $orderId);
-        
+
         return [
             'Order_id' => $orderId,
             'success' => true
+            
         ];
 
     } catch (PDOException $e) {
         error_log("Database Error in createOrder: " . $e->getMessage());
+        
         error_log("SQL State: " . $e->getCode());
+        // throw new Exception("Thông báo lỗi". $e->getCode());
+
+
+        // throw new Exception("3");
+
+
         return false;
     }
 }
@@ -589,37 +616,37 @@ public function getOrderDetails($orderId) {
     }
 }
 
-public function processPayment($orderId, $paymentMethod) {
-    try {
-        $sql = "UPDATE order_pro 
-                SET status_id = 2, 
-                    payment_method = ?,
-                    payment_status = 'Completed',
-                    updated_at = NOW() 
-                WHERE id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$paymentMethod, $orderId]);
-    } catch(PDOException $e) {
-        error_log("Error processing payment: " . $e->getMessage());
-        return false;
-    }
-}
+// public function processPayment($orderId, $paymentMethod) {
+//     try {
+//         $sql = "UPDATE order_pro 
+//                 SET status_id = 2, 
+//                     payment_method = ?,
+//                     payment_status = 'Completed',
+//                     updated_at = NOW() 
+//                 WHERE id = ?";
+//         $stmt = $this->pdo->prepare($sql);
+//         return $stmt->execute([$paymentMethod, $orderId]);
+//     } catch(PDOException $e) {
+//         error_log("Error processing payment: " . $e->getMessage());
+//         return false;
+//     }
+// }
 
 
-public function updateOrderPayment($orderId, $paymentMethod) {
-    try {
-        $sql = "UPDATE order_pro 
-                SET payment_method = ?,
-                    status_id = 2,
-                    updated_at = NOW() 
-                WHERE id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$paymentMethod, $orderId]);
-    } catch(PDOException $e) {
-        error_log("Error updating order payment: " . $e->getMessage());
-        return false;
-    }
-}
+// public function updateOrderPayment($orderId, $paymentMethod) {
+//     try {
+//         $sql = "UPDATE order_pro 
+//                 SET payment_method = ?,
+//                     status_id = 2,
+//                     updated_at = NOW() 
+//                 WHERE id = ?";
+//         $stmt = $this->pdo->prepare($sql);
+//         return $stmt->execute([$paymentMethod, $orderId]);
+//     } catch(PDOException $e) {
+//         error_log("Error updating order payment: " . $e->getMessage());
+//         return false;
+//     }
+// }
 
 
 
@@ -943,6 +970,48 @@ public function updateAccount($userId, $field, $value) {
         ];
     }
 }
+
+public function getDonHangFromUser($userId) {
+    try {
+
+                    $sql = "SELECT 
+                    op.order_id,
+                    p.Name_product AS product_name,
+                    p.image,
+                    op.Total_Price,
+                    s.status_name,
+                    op.create_date
+            FROM 
+                order_detail AS od
+            JOIN 
+                order_pro AS op
+            ON 
+                od.order_id = op.order_id
+            JOIN 
+                products AS p
+            ON 
+                od.product_id = p.id
+            JOIN 
+                order_status AS s
+            ON 
+                op.status_id = s.id
+            WHERE 
+                op.user_id = :user_id;
+        ";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':user_id' => $userId]);
+        
+        $data = $stmt->fetchAll();
+        if (!$data) {
+            echo "No data returned. SQL: $sql";
+        }
+        return $data;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
 
 }
 ?>

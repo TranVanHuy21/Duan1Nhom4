@@ -35,7 +35,7 @@ class ClientProductCateController
             $totalProducts = $this->clienProductCatetModel->getTotalProductsByParentId($parentId);
             $totalPages = ceil($totalProducts / $itemsPerPage);
         }
-        include './views/products_byParentId.php';
+        include './views/products_byCategory.php';
     }
 }
 ?>

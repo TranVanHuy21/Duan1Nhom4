@@ -373,11 +373,10 @@ class ClientController
                 exit();
             }
 
-            // Debug POST data
-            error_log("POST data received: " . print_r($_POST, true));
-
             $userId = $_SESSION['user']['User_id'];
-            $status_id = 1; // Đơn hàng mới
+
+            // Lấy trạng thái đơn hàng (linh hoạt)
+            $status_id = isset($_POST['status_id']) ? intval($_POST['status_id']) : 1;
 
             // Lấy và kiểm tra dữ liệu
             $totalPrice = isset($_POST['total_price']) ? floatval($_POST['total_price']) : 0;
@@ -404,6 +403,14 @@ class ClientController
 
             $notes = $_POST['note'] ?? '';
 
+            // Debug giá trị trước khi gọi createOrder
+            // var_dump([
+            //     'userId' => $userId,
+            //     'totalPrice' => $totalPrice,
+            //     'fullAddress' => $fullAddress,
+            //     'notes' => $notes,
+            //     'status_id' => $status_id,
+
             // Debug order data
             error_log("Creating order with: " .
                 "userId: $userId, " .
@@ -418,11 +425,17 @@ class ClientController
                 $totalPrice,
                 $fullAddress,
                 $notes
+
             );
+
+            // var_dump($orderResult);
+            // die;
+
 
             if (!$orderResult || !isset($orderResult['Order_id'])) {
                 throw new Exception("Không thể tạo đơn hàng - Kiểm tra log để biết chi tiết");
             }
+
 
             $orderId = $orderResult['Order_id'];
 
@@ -459,6 +472,8 @@ class ClientController
             echo "Có lỗi xảy ra: " . $e->getMessage();
         }
     }
+
+
 
     public function paymen()
     {
@@ -557,6 +572,31 @@ class ClientController
         exit();
     }
 
+
+    public function lichSuMuaHang()
+    {
+        if (isset($_SESSION['user'])) {
+            // Lấy ra thông tin tài khoản đăng nhập
+            $userId = $_SESSION['user']['User_id'];
+
+            $userInfo = $this->clientModel->getUserInfoForOrder($userId);
+
+            // Lấy ra danh sách trạng thái đơn hàng
+
+            // Lấy ra danh sách trạng thái thanh toán
+
+            // Lấy ra danh sách tất cả đơn hàng của tài khoản
+
+            $donHangs = $this->clientModel->getDonHangFromUser($userId);
+
+
+            include './views/lichSuMuaHang.php';
+
+        } else {
+            header('Location: index.php?act=login-client');
+            exit();
+        }
+    }
 
 
 

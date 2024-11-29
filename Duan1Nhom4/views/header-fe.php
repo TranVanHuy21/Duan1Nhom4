@@ -24,6 +24,7 @@ p {
     margin-top: 0;
     margin-bottom: 1rem;
     font-size: 13px;
+    font-size: 13px;
 }
 
 .dropdown {
@@ -59,6 +60,10 @@ p {
 
 .fa-circle-user {
     cursor: pointer;
+}
+
+.head {
+    font-size: 13px;
 }
 
 .head {
@@ -130,6 +135,8 @@ p {
                         <div class="about-box-content">
                             <p class="head">Mua hàng</p>
                             <p class="head">18002097</p>
+                            <p class="head">Mua hàng</p>
+                            <p class="head">18002097</p>
                         </div>
                     </a>
 
@@ -140,56 +147,61 @@ p {
                         <div class="header-box-about-content">
                             <p class="head">Cửa hàng</p>
                             <p class="head">gần bạn</p>
+                            <p class="head">Cửa hàng</p>
+                            <p class="head">gần bạn</p>
                         </div>
                     </a>
 
                     <a href="?act=lich-su-mua-hang" class="header-box-search-item-product">
-                        <div class="about-box-icon">
-                            <i class="fa-solid fa-truck-fast"></i>
-                        </div>
-                        <div class="header-box-about-content">
-                            <p class="head">Lịch sửa</p>
-                            <p class="head">Đơn hàng</p>
-                        </div>
-                    </a>
-
-                    <a href="?act=viewCart" class="header-box-cart">
-                        <div class="about-box-icon">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-                        <div class="header-box-about-content">
-                            Giỏ hàng
-                        </div>
-                    </a>
-
-                    <div class="box-login">
-                        <?php if (isset($_SESSION['user'])) { ?>
-                        <div class="box-user dropdown">
-                            <div class="about-contact">
-                                <i class="fa-regular fa-circle-user" onclick="toggleDropdown()"
-                                    style="color: white; font-size: 25px; cursor: pointer;"></i>
-                                <p style="color: white;">
-                                    <?php echo isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Khách' ?>
-                                </p>
+                        <a href="?act=lich-su-mua-hang" class="header-box-search-item-product">
+                            <div class="about-box-icon">
+                                <i class="fa-solid fa-truck-fast"></i>
                             </div>
-                            <div class="dropdown-menu" id="userDropdown">
-                                <a href="?act=account" class="dropdown-item">Tài khoản</a>
-                                <a href="?act=logout-client" class="dropdown-item">Đăng xuất</a>
-                            </div>
-                        </div>
-
-
-                        <?php } else { ?>
-                        <a href="?act=login-client">
-                            <div class="about-icon">
-                                <i class="fa-regular fa-circle-user" style="color: white; font-size: 25px;"></i>
-                            </div>
-                            <div class="about-contact">
-                                <p style="color: white;">Đăng nhập</p>
+                            <div class="header-box-about-content">
+                                <p class="head">Lịch sửa</p>
+                                <p class="head">Đơn hàng</p>
+                                <p class="head">Lịch sửa</p>
+                                <p class="head">Đơn hàng</p>
                             </div>
                         </a>
-                        <?php } ?>
-                    </div>
+
+                        <a href="?act=viewCart" class="header-box-cart">
+                            <div class="about-box-icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </div>
+                            <div class="header-box-about-content">
+                                Giỏ hàng
+                            </div>
+                        </a>
+
+                        <div class="box-login">
+                            <?php if (isset($_SESSION['user'])) { ?>
+                            <div class="box-user dropdown">
+                                <div class="about-contact">
+                                    <i class="fa-regular fa-circle-user" onclick="toggleDropdown()"
+                                        style="color: white; font-size: 25px; cursor: pointer;"></i>
+                                    <p style="color: white;">
+                                        <?php echo isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Khách' ?>
+                                    </p>
+                                </div>
+                                <div class="dropdown-menu" id="userDropdown">
+                                    <a href="?act=account" class="dropdown-item">Tài khoản</a>
+                                    <a href="?act=logout-client" class="dropdown-item">Đăng xuất</a>
+                                </div>
+                            </div>
+
+
+                            <?php } else { ?>
+                            <a href="?act=login-client">
+                                <div class="about-icon">
+                                    <i class="fa-regular fa-circle-user" style="color: white; font-size: 25px;"></i>
+                                </div>
+                                <div class="about-contact">
+                                    <p style="color: white;">Đăng nhập</p>
+                                </div>
+                            </a>
+                            <?php } ?>
+                        </div>
 
 
                 </div>

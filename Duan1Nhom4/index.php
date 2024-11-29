@@ -117,6 +117,15 @@ switch ($act) {
     case 'updateUserAccount':
         $clientController->updateUserAccount();
         break;
+    case 'lich-su-mua-hang':
+        $clientController->lichSuMuaHang();
+        break;
+    case 'huy-don-hang':
+        $ClientProductCateController->huyDonHang();
+        break;
+    case 'chi-tiet-mua-hang':
+        $ClientProductCateController->chiTietMuaHang();
+        break;
 
     default:
         // Hành động mặc định là hiển thị trang chủ

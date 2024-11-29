@@ -573,15 +573,8 @@ class ClientController
 
             $userInfo = $this->clientModel->getUserInfoForOrder($userId);
 
-            // Lấy ra danh sách trạng thái đơn hàng
-
-            // Lấy ra danh sách trạng thái thanh toán
-
-            // Lấy ra danh sách tất cả đơn hàng của tài khoản
-
             $donHangs = $this->clientModel->getDonHangFromUser($userId);
-            
-            
+
             include './views/lichSuMuaHang.php';
 
         }else{

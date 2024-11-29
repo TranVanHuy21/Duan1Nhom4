@@ -20,55 +20,55 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
-p {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 13px;
-    font-size: 13px;
-}
+    p {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 13px;
+        font-size: 13px;
+    }
 
-.dropdown {
-    position: relative;
-}
+    .dropdown {
+        position: relative;
+    }
 
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    min-width: 150px;
-    z-index: 1000;
-}
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        min-width: 150px;
+        z-index: 1000;
+    }
 
-.dropdown-menu.show {
-    display: block;
-}
+    .dropdown-menu.show {
+        display: block;
+    }
 
-.dropdown-item {
-    display: block;
-    padding: 8px 16px;
-    color: #333;
-    text-decoration: none;
-}
+    .dropdown-item {
+        display: block;
+        padding: 8px 16px;
+        color: #333;
+        text-decoration: none;
+    }
 
-.dropdown-item:hover {
-    background-color: #f5f5f5;
-}
+    .dropdown-item:hover {
+        background-color: #f5f5f5;
+    }
 
-.fa-circle-user {
-    cursor: pointer;
-}
+    .fa-circle-user {
+        cursor: pointer;
+    }
 
-.head {
-    font-size: 13px;
-}
+    .head {
+        font-size: 13px;
+    }
 
-.head {
-    font-size: 13px;
-}
+    .head {
+        font-size: 13px;
+    }
 </style>
 
 <body>
@@ -133,8 +133,7 @@ p {
                             <i class="fa-solid fa-phone"></i>
                         </div>
                         <div class="about-box-content">
-                            <p class="head">Mua hàng</p>
-                            <p class="head">18002097</p>
+
                             <p class="head">Mua hàng</p>
                             <p class="head">18002097</p>
                         </div>
@@ -145,21 +144,20 @@ p {
                             <i class="fa-solid fa-location-dot"></i>
                         </div>
                         <div class="header-box-about-content">
-                            <p class="head">Cửa hàng</p>
-                            <p class="head">gần bạn</p>
+
                             <p class="head">Cửa hàng</p>
                             <p class="head">gần bạn</p>
                         </div>
                     </a>
 
                     <a href="?act=lich-su-mua-hang" class="header-box-search-item-product">
+
                         <a href="?act=lich-su-mua-hang" class="header-box-search-item-product">
                             <div class="about-box-icon">
                                 <i class="fa-solid fa-truck-fast"></i>
+
                             </div>
                             <div class="header-box-about-content">
-                                <p class="head">Lịch sửa</p>
-                                <p class="head">Đơn hàng</p>
                                 <p class="head">Lịch sửa</p>
                                 <p class="head">Đơn hàng</p>
                             </div>
@@ -176,30 +174,30 @@ p {
 
                         <div class="box-login">
                             <?php if (isset($_SESSION['user'])) { ?>
-                            <div class="box-user dropdown">
-                                <div class="about-contact">
-                                    <i class="fa-regular fa-circle-user" onclick="toggleDropdown()"
-                                        style="color: white; font-size: 25px; cursor: pointer;"></i>
-                                    <p style="color: white;">
-                                        <?php echo isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Khách' ?>
-                                    </p>
+                                <div class="box-user dropdown">
+                                    <div class="about-contact">
+                                        <i class="fa-regular fa-circle-user" onclick="toggleDropdown()"
+                                            style="color: white; font-size: 25px; cursor: pointer;"></i>
+                                        <p style="color: white;">
+                                            <?php echo isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Khách' ?>
+                                        </p>
+                                    </div>
+                                    <div class="dropdown-menu" id="userDropdown">
+                                        <a href="?act=account" class="dropdown-item">Tài khoản</a>
+                                        <a href="?act=logout-client" class="dropdown-item">Đăng xuất</a>
+                                    </div>
                                 </div>
-                                <div class="dropdown-menu" id="userDropdown">
-                                    <a href="?act=account" class="dropdown-item">Tài khoản</a>
-                                    <a href="?act=logout-client" class="dropdown-item">Đăng xuất</a>
-                                </div>
-                            </div>
 
 
                             <?php } else { ?>
-                            <a href="?act=login-client">
-                                <div class="about-icon">
-                                    <i class="fa-regular fa-circle-user" style="color: white; font-size: 25px;"></i>
-                                </div>
-                                <div class="about-contact">
-                                    <p style="color: white;">Đăng nhập</p>
-                                </div>
-                            </a>
+                                <a href="?act=login-client">
+                                    <div class="about-icon">
+                                        <i class="fa-regular fa-circle-user" style="color: white; font-size: 25px;"></i>
+                                    </div>
+                                    <div class="about-contact">
+                                        <p style="color: white;">Đăng nhập</p>
+                                    </div>
+                                </a>
                             <?php } ?>
                         </div>
 
@@ -212,22 +210,22 @@ p {
         </div>
     </header>
     <script>
-    function toggleDropdown() {
-        const dropdown = document.getElementById('userDropdown');
-        dropdown.classList.toggle('show');
-    }
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
 
-    // Close dropdown when clicking outside
-    window.onclick = function(event) {
-        if (!event.target.matches('.fa-circle-user')) {
-            const dropdowns = document.getElementsByClassName('dropdown-menu');
-            for (let dropdown of dropdowns) {
-                if (dropdown.classList.contains('show')) {
-                    dropdown.classList.remove('show');
+        // Close dropdown when clicking outside
+        window.onclick = function (event) {
+            if (!event.target.matches('.fa-circle-user')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let dropdown of dropdowns) {
+                    if (dropdown.classList.contains('show')) {
+                        dropdown.classList.remove('show');
+                    }
                 }
             }
         }
-    }
     </script>
 
 </body>

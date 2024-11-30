@@ -126,7 +126,9 @@ switch ($act) {
     // case 'chi-tiet-mua-hang':
     //     $ClientProductCateController->chiTietMuaHang();
     //     break;
-
+    case 'update_quantity':
+        $clientController->updateCartQuantity();
+        break;
     case 'store-map':
         $clientController->showStoreMap();
         break;

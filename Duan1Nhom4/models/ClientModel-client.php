@@ -601,6 +601,31 @@ public function getLatestOrderWithoutUser() {
     }
 }
 
+public function getCartItemCount($userId) {
+    try {
+        // SQL để lấy tổng số lượng sản phẩm trong giỏ hàng của người dùng từ bảng cart
+        $sql = "SELECT COUNT(id) AS total_quantity
+                FROM cart
+                WHERE user_id = :user_id";
+                
+        // Chuẩn bị câu lệnh SQL và gán giá trị tham số
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        
+        // Thực thi câu lệnh SQL
+        $stmt->execute();
+        
+        // Lấy kết quả và trả về số lượng sản phẩm trong giỏ hàng
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['total_quantity'] : 0; // Nếu không có sản phẩm thì trả về 0
+        
+    } catch(PDOException $e) {
+        // Log lỗi nếu có và trả về false
+        error_log("Error getting cart item count: " . $e->getMessage());
+        return false;
+    }
+}
+
 public function getOrderDetails($orderId) {
     try {
         $sql = "SELECT op.*, p.name, p.image, p.price 
@@ -693,6 +718,7 @@ public function getCartQuantity() {
     }
 }
 
+
 public function saveOrderDetail($orderId, $productId, $quantity, $price) {
     try {
         // Debug input values
@@ -746,6 +772,65 @@ public function saveOrderDetail($orderId, $productId, $quantity, $price) {
         return false;
     }
 }
+
+public function updateCartQuantity($product_id, $isAdd) {
+    try {
+        // Debug input values
+        error_log("updateCartQuantity input: " .
+            "product_id=$product_id, " .
+            "isAdd=" . ($isAdd ? 'true' : 'false'));
+
+        // Kiểm tra giá trị đầu vào
+        if (!$product_id) {
+            error_log("Invalid product_id");
+            return false;
+        }
+
+        // Lấy số lượng hiện tại
+        $sqlSelect = "SELECT quantity FROM cart WHERE product_id = :product_id";
+        $stmtSelect = $this->pdo->prepare($sqlSelect);
+        $stmtSelect->bindValue(':product_id', $product_id, PDO::PARAM_INT);
+        $stmtSelect->execute();
+        $currentQuantity = $stmtSelect->fetchColumn();
+
+        if ($currentQuantity === false) {
+            error_log("Product not found in cart");
+            return false;
+        }
+
+        // Tính toán số lượng mới
+        $newQuantity = $isAdd ? $currentQuantity + 1 : max(0, $currentQuantity - 1);
+
+        // Cập nhật số lượng mới
+        $sqlUpdate = "UPDATE cart SET quantity = :quantity WHERE product_id = :product_id";
+        $stmtUpdate = $this->pdo->prepare($sqlUpdate);
+        $stmtUpdate->bindValue(':quantity', $newQuantity, PDO::PARAM_INT);
+        $stmtUpdate->bindValue(':product_id', $product_id, PDO::PARAM_INT);
+
+        // Debug SQL
+        error_log("SQL Query: " . $sqlUpdate);
+        error_log("Params: " . print_r([
+            ':quantity' => $newQuantity,
+            ':product_id' => $product_id
+        ], true));
+
+        $result = $stmtUpdate->execute();
+
+        if (!$result) {
+            error_log("SQL Error: " . print_r($stmtUpdate->errorInfo(), true));
+            return false;
+        }
+
+        error_log("Cart quantity updated successfully");
+        return true;
+
+    } catch (PDOException $e) {
+        error_log("Database Error: " . $e->getMessage());
+        error_log("SQL State: " . $e->getCode());
+        return false;
+    }
+}
+
 
 
 
@@ -971,14 +1056,6 @@ public function updateAccount($userId, $field, $value) {
     }
 }
 
-
-public function showStoreMap() {
-    $stores = $this->getStores();
-    include './views/header-fe.php';
-    include './views/store-map.php';
-    include './views/footer-fe.php';
-}
-
 public function getDonHangFromUser($userId) {
     try {
 
@@ -1019,12 +1096,12 @@ public function getDonHangFromUser($userId) {
         echo "Error: " . $e->getMessage();
     }
 }
-
 public function getStores() {
     $stmt = $this->pdo->prepare("SELECT * FROM stores");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 }
 ?>

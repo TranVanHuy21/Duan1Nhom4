@@ -13,7 +13,7 @@
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./assets/css/news.css">
-    <link rel="stylesheet" href="./assets/css/gio_hang.css">
+    <link rel="stylesheet" href="./assets/css/gio_hangs.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> 
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
@@ -43,11 +43,12 @@
                     <div class="check-box-title">Chọn tất cả</div>
                 </div>
                  <div class="list-cart">
-                <?php
+                
+        <div class="cart-list-items">
+        <?php
                 if(!empty($cartItems)) {
                     foreach($cartItems as $index => $item) {
                 ?>
-        <div class="cart-list-items">
             <div class="cart-item" data-id="<?= $item['id'] ?>" data-index="<?= $index ?>">
                 <div class="item-top">
                     <div class="checkbox-wrapper">
@@ -74,13 +75,14 @@
                         <div class="item-left-bot">
                         <div class="price-quantity-wrapper">
                         <div class="price"><?= number_format($item['price'] , 0, ',', '.') ?>đ</div>
-                        <div class="action">
-                                    <button type="button" class="decrease-btn" onclick="updateQuantity(this, -1)">-</button>
-                                    <input type="text" style="border:2px solid #00000066" class="quantity-input" value="<?= $item['quantity'] ?>" readonly>
-                                    <button type="button" class="increase-btn" onclick="updateQuantity(this, 1)">+</button>
-                                </div>
+                        <form class="form2" action="index.php?act=update_quantity" method="POST">
+                            <input type="hidden" name="product_id" value="<?= $item['product_id'] ?>"> <!-- ID của sản phẩm -->
+                            <div class="action">
+                                <button type="submit" name="is_add" value="false" class="decrease-btn">-</button>
+                                <input type="text" style="border:2px solid #00000066" class="quantity-input" value="<?= $item['quantity'] ?>" readonly>
+                                <button type="submit" name="is_add" value="true" class="increase-btn">+</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -169,19 +171,34 @@
                     // });
 
                     // Thêm function để xử lý tăng/giảm số lượng
+                    
                     function updateQuantity(button, change) {
+    // Tìm input số lượng trong cùng phần tử cha
                         const quantityInput = button.parentElement.querySelector('.quantity-input');
+                        const productId = button.getAttribute('data-product-id'); // Lấy product_id từ thuộc tính data-product-id
+
+                        // Chuyển giá trị số lượng hiện tại thành số nguyên
                         let currentQuantity = parseInt(quantityInput.value);
-                        
+
                         // Đảm bảo số lượng không nhỏ hơn 1
                         if (currentQuantity + change >= 1) {
+                            // Cập nhật số lượng
                             currentQuantity += change;
                             quantityInput.value = currentQuantity;
-                            
-                            // Cập nhật tổng tiền
-                            updateTotalPrice();
+
+                            // Gửi yêu cầu cập nhật đến server
+                            fetch('index.php?act=update_quantity', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded', // Kiểu dữ liệu gửi đi
+                                },
+                                body: `product_id=${encodeURIComponent(productId)}&is_add=${change > 0}` // Dữ liệu gửi đi
+                            })
+                        } else {
+                            alert('Số lượng phải lớn hơn hoặc bằng 1!');
                         }
                     }
+
 
                     // Hàm cập nhật tổng tiền
                     // function updateTotalPrice() {

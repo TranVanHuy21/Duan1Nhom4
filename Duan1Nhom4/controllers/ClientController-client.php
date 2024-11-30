@@ -242,36 +242,6 @@ class ClientController
 
 
     // Hiển thị sản phẩm trong giỏ hàng
-    
-public function getCartItemCount() {
-    try {
-        // Kiểm tra nếu người dùng chưa đăng nhập
-        if (!isset($_SESSION['user'])) {
-            $_SESSION['flash_message'] = "Vui lòng đăng nhập để thêm vào giỏ hàng!";
-            header("Location: index.php?act=login-client");
-            exit();
-        }
-
-        // Lấy user_id từ session
-        $userId = $_SESSION['user']['User_id'];
-
-        // Kiểm tra user_id hợp lệ
-        if ($userId <= 0) {
-            throw new Exception("Invalid user ID");
-        }
-
-        // Gọi phương thức từ model để lấy số lượng sản phẩm trong giỏ hàng
-        $cartItemCount = $this->clientModel->getCartItemCount($userId);
-
-        // Trả về số lượng sản phẩm trong giỏ hàng
-        return $cartItemCount;
-
-    } catch (Exception $e) {
-        // Xử lý lỗi
-        error_log("Error: " . $e->getMessage());
-        return 0; // Nếu có lỗi, trả về 0
-    }
-}
     public function viewCart() {
         // Kiểm tra session giỏ hàng
         if (!isset($_SESSION['cart'])) {

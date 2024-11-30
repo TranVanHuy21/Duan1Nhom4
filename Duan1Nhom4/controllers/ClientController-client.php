@@ -482,16 +482,9 @@ class ClientController
                 return;
             }
 
-            // Lấy thông tin user
             $userInfo = $this->clientModel->getUserInfoForOrder($order['user_id']);
-            
-            // Lấy chi tiết đơn hàng
             $orderDetails = $this->clientModel->getOrderDetailsByOrderId($order['Order_id']);
-            
-            // Lấy tổng số lượng sản phẩm trong đơn hàng
             $totalQuantity = $this->clientModel->getOrderTotalQuantity($order['Order_id']);
-
-            // Tính tổng tiền từ chi tiết đơn hàng
             $totalAmount = $this->clientModel->getOrderTotal($order['Order_id']);
 
             // Load view payment

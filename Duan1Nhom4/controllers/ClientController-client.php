@@ -313,6 +313,55 @@ class ClientController
         header("Location: index.php?act=viewCart");
         exit();
     }
+    public function updateCartQuantity() {
+        try {
+            
+            // Kiểm tra phương thức request
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new Exception("Invalid request method");
+            }
+    
+            // Kiểm tra đăng nhập
+            if (!isset($_SESSION['user'])) {
+                $_SESSION['flash_message'] = "Vui lòng đăng nhập để cập nhật giỏ hàng!";
+                header("Location: index.php?act=login-client");
+                exit();
+            }
+    
+            // Lấy dữ liệu từ POST
+            $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+            $isAdd = isset($_POST['is_add']) ? filter_var($_POST['is_add'], FILTER_VALIDATE_BOOLEAN) : null;
+    
+            // Validate dữ liệu
+            if ($productId <= 0) {
+                throw new Exception("Invalid product ID");
+            }
+            if ($isAdd === null) {
+                throw new Exception("Invalid isAdd value");
+            }
+    
+            // Gọi hàm updateCartQuantity
+            $success = $this->clientModel->updateCartQuantity($productId, $isAdd);
+    
+            // Chuyển hướng dựa vào kết quả
+            if ($success) {
+                $_SESSION['flash_message'] = "Cập nhật giỏ hàng thành công!";
+                header("Location: index.php?act=viewCart");
+            } else {
+                $_SESSION['flash_message'] = "Cập nhật giỏ hàng thất bại!";
+                header("Location: index.php?act=viewCart");
+            }
+            exit();
+    
+        } catch (Exception $e) {
+            // Ghi log lỗi và chuyển hướng
+            error_log("Error updating cart: " . $e->getMessage());
+            $_SESSION['flash_message'] = "Có lỗi xảy ra khi cập nhật giỏ hàng!";
+            header("Location: index.php?act=viewCart");
+            exit();
+        }
+    }
+    
 
     public function checkout() {
         // Kiểm tra xem người dùng đã đăng nhập chưa

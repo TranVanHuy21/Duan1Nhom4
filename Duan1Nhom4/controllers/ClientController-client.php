@@ -255,8 +255,6 @@ class ClientController
         include './views/Gio_hang-fe.php';
     }
 
-    
-
     // thêm sản phẩm vào giỏ hàng
     public function addToCart() {
         try {
@@ -300,55 +298,6 @@ class ClientController
         }
     }
 
-    public function updateCartQuantity() {
-        try {
-            
-            // Kiểm tra phương thức request
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                throw new Exception("Invalid request method");
-            }
-    
-            // Kiểm tra đăng nhập
-            if (!isset($_SESSION['user'])) {
-                $_SESSION['flash_message'] = "Vui lòng đăng nhập để cập nhật giỏ hàng!";
-                header("Location: index.php?act=login-client");
-                exit();
-            }
-    
-            // Lấy dữ liệu từ POST
-            $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
-            $isAdd = isset($_POST['is_add']) ? filter_var($_POST['is_add'], FILTER_VALIDATE_BOOLEAN) : null;
-    
-            // Validate dữ liệu
-            if ($productId <= 0) {
-                throw new Exception("Invalid product ID");
-            }
-            if ($isAdd === null) {
-                throw new Exception("Invalid isAdd value");
-            }
-    
-            // Gọi hàm updateCartQuantity
-            $success = $this->clientModel->updateCartQuantity($productId, $isAdd);
-    
-            // Chuyển hướng dựa vào kết quả
-            if ($success) {
-                $_SESSION['flash_message'] = "Cập nhật giỏ hàng thành công!";
-                header("Location: index.php?act=viewCart");
-            } else {
-                $_SESSION['flash_message'] = "Cập nhật giỏ hàng thất bại!";
-                header("Location: index.php?act=viewCart");
-            }
-            exit();
-    
-        } catch (Exception $e) {
-            // Ghi log lỗi và chuyển hướng
-            error_log("Error updating cart: " . $e->getMessage());
-            $_SESSION['flash_message'] = "Có lỗi xảy ra khi cập nhật giỏ hàng!";
-            header("Location: index.php?act=viewCart");
-            exit();
-        }
-    }
-    
 
     public function deleteCart() {
         if(isset($_POST['id'])) {
@@ -533,16 +482,9 @@ class ClientController
                 return;
             }
 
-            // Lấy thông tin user
             $userInfo = $this->clientModel->getUserInfoForOrder($order['user_id']);
-            
-            // Lấy chi tiết đơn hàng
             $orderDetails = $this->clientModel->getOrderDetailsByOrderId($order['Order_id']);
-            
-            // Lấy tổng số lượng sản phẩm trong đơn hàng
             $totalQuantity = $this->clientModel->getOrderTotalQuantity($order['Order_id']);
-
-            // Tính tổng tiền từ chi tiết đơn hàng
             $totalAmount = $this->clientModel->getOrderTotal($order['Order_id']);
 
             // Load view payment
@@ -611,6 +553,11 @@ class ClientController
         exit();
     }
     
+    
+
+  
+   
+
 
     public function lichSuMuaHang(){
         if(isset($_SESSION['user'])){
@@ -628,7 +575,7 @@ class ClientController
            exit();
         }
     }
-    
+
     public function showStoreMap() {
         // Có thể thêm logic để lấy danh sách cửa hàng từ database
         $stores = [
@@ -650,9 +597,6 @@ class ClientController
         include './views/store-map.php';
         include './views/footer-fe.php';
     }
-
-  
-   
 }
 
 ob_end_flush();

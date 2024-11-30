@@ -582,10 +582,28 @@ class ClientController
            exit();
         }
     }
-    
 
-  
-   
+    public function showStoreMap() {
+        // Có thể thêm logic để lấy danh sách cửa hàng từ database
+        $stores = [
+            [
+                'name' => 'CellphoneS Hà Nội',
+                'lat' => 21.0285,
+                'lng' => 105.8542,
+                'address' => '123 Đường Láng, Đống Đa, Hà Nội'
+            ],
+            [
+                'name' => 'CellphoneS Hồ Chí Minh', 
+                'lat' => 10.7769,
+                'lng' => 106.7009,
+                'address' => '456 CMT8, Quận 3, TP.HCM'
+            ],
+            // Thêm các cửa hàng khác
+        ];
+
+        include './views/store-map.php';
+        include './views/footer-fe.php';
+    }
 }
 
 ob_end_flush();

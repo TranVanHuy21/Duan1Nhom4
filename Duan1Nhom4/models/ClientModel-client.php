@@ -971,6 +971,14 @@ public function updateAccount($userId, $field, $value) {
     }
 }
 
+
+public function showStoreMap() {
+    $stores = $this->getStores();
+    include './views/header-fe.php';
+    include './views/store-map.php';
+    include './views/footer-fe.php';
+}
+
 public function getDonHangFromUser($userId) {
     try {
 
@@ -1012,6 +1020,11 @@ public function getDonHangFromUser($userId) {
     }
 }
 
+public function getStores() {
+    $stmt = $this->pdo->prepare("SELECT * FROM stores");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 }
 ?>

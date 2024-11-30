@@ -139,12 +139,11 @@
                         </div>
                     </a>
 
-                    <a href="assets/contact.html" class="header-box-about-store">
+                    <a href="?act=store-map" class="header-box-about-store">
                         <div class="about-box-icon">
                             <i class="fa-solid fa-location-dot"></i>
                         </div>
                         <div class="header-box-about-content">
-
                             <p class="head">Cửa hàng</p>
                             <p class="head">gần bạn</p>
                         </div>

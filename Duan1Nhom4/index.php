@@ -127,6 +127,10 @@ switch ($act) {
     //     $ClientProductCateController->chiTietMuaHang();
     //     break;
 
+    case 'store-map':
+        $clientController->showStoreMap();
+        break;
+
     default:
         // Hành động mặc định là hiển thị trang chủ
         $clientController->showHome();

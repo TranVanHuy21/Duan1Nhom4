@@ -100,35 +100,6 @@
     </div>
 
     <script>
-        function processCheckout() {
-            const checkedItems = document.querySelectorAll('.cart-item .checkbox-wrapper .rounded-checkbox:checked');
-            
-            if (checkedItems.length === 0) {
-                alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
-                return;
-            }
-
-            const cartIds = [];
-            checkedItems.forEach(checkbox => {
-                const cartItem = checkbox.closest('.cart-item');
-                if (cartItem && cartItem.dataset.id) {
-                    cartIds.push(cartItem.dataset.id);
-                }
-            });
-
-            if (cartIds.length > 0) {
-                window.location.href = 'index.php?act=checkout&cart_ids=' + cartIds.join(',');
-            } else {
-                alert('Có lỗi xảy ra khi lấy thông tin sản phẩm');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            if (checkoutBtn) {
-                checkoutBtn.addEventListener('click', processCheckout);
-            }
-        });
     </script>
 
     <script src="./assets/js/cart.js"></script>

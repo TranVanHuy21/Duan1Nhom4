@@ -65,11 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const checkedItems = document.querySelectorAll('.cart-item .checkbox-wrapper .rounded-checkbox:checked');
         console.log("Số sản phẩm được chọn:", checkedItems.length);
 
-        if (checkedItems.length === 0) {
-            alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
-            return;
-        }
-
         // Lấy cart IDs
         const cartIds = [];
         checkedItems.forEach(checkbox => {
@@ -88,7 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cartIds.length > 0) {
             window.location.href = 'index.php?act=checkout&cart_ids=' + cartIds.join(',');
         } else {
-            alert('Có lỗi xảy ra khi lấy thông tin sản phẩm');
+            alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
+            return;
         }
     });
 

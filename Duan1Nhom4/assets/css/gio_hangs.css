@@ -287,6 +287,11 @@
     cursor: pointer;
     transition: transform 0.2s ease;
 }
+.checkout-btn:disabled {
+    background: #8f8e8e;
+    color: #c4bfbf;
+    cursor: not-allowed; 
+}
 
 .checkout-btn:hover {
     transform: translateY(-1px);

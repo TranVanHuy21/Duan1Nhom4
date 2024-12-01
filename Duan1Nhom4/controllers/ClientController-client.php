@@ -298,6 +298,20 @@ class ClientController
             exit();
         }
     }
+    public function deleteCart() {
+        if(isset($_POST['id'])) {
+            $id = $_POST['id'];
+            
+            // Sử dụng clientModel thay vì truy cập trực tiếp PDO
+            $success = $this->clientModel->deleteCartItem($id);
+            
+            // Chuyển về trang giỏ hàng
+            header("Location: index.php?act=viewCart");
+            exit();
+        }
+        header("Location: index.php?act=viewCart");
+        exit();
+    }
 
     public function BuyNow($productId) {
         try {

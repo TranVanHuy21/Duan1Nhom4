@@ -102,15 +102,22 @@ switch ($act) {
     case 'paymen':
         $clientController->paymen();
         break;
+     case 'buyNow':
+        $id = $_GET['id'] ?? null;
+        $clientController->BuyNow($id);
+        break;
+    
 
-    case 'payment_qr':
-        if(isset($_GET['method']) && isset($_GET['amount'])) {
-            $paymentMethod = $_GET['method'];
-            $totalAmount = $_GET['amount'];
-            include "views/payment_qr.php";
-        } else {
-            header("Location: index.php?act=viewCart");
-        }
+        case 'payment_qr':
+            if(isset($_GET['method']) && isset($_GET['amount'])) {
+                $paymentMethod = $_GET['method'];
+                $totalAmount = $_GET['amount'];
+                include "views/payment_qr.php";
+            } else {
+                header("Location: index.php?act=viewCart");
+            }
+            break;
+        
     case 'account':
         $clientController->account();
         break;
@@ -121,11 +128,11 @@ switch ($act) {
         $clientController->lichSuMuaHang();
         break;
     // case 'huy-don-hang':
-    //     $ClientProductCateController->huyDonHang();
+    //     $clientController->huyDonHang();
     //     break;
-    // case 'chi-tiet-mua-hang':
-    //     $ClientProductCateController->chiTietMuaHang();
-    //     break;
+    case 'chi-tiet-mua-hang':
+        $clientController->chiTietMuaHang();
+        break;
     case 'update_quantity':
         $clientController->updateCartQuantity();
         break;

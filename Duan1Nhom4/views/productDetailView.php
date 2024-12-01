@@ -201,7 +201,7 @@
                 </div>
                 <div class="box-product-promotion">
                     <div class="pay-left">
-                        <a href="?act=checkout&id=<?= $product['id'] ?>">
+                        <a href="?act=buyNow&id=<?= $product['id'] ?>">
                             <div class="p1">
                                 <strong>MUA NGAY</strong>
                             </div>

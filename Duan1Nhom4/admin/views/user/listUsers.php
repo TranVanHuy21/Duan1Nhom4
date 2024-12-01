@@ -58,9 +58,9 @@
                                                 <td><?= htmlspecialchars($user['phone_number']) ?></td>
                                                 <td><?= htmlspecialchars($user['email']) ?></td>
                                                 <td>
-                                                    <a href="index.php?act=editUser&user_id=<?= $user['User_id'] ?>"
+                                                    <a href="index.php?act=editUser&id=<?= $user['User_id'] ?>"
                                                         class="btn btn-warning">Sửa</a>
-                                                    <a href="index.php?act=deleteUser&user_id=<?= $user['User_id'] ?>"
+                                                    <a href="index.php?act=deleteUser&id=<?= $user['User_id'] ?>"
                                                         class="btn btn-danger"
                                                         onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');">Xóa</a>
                                                 </td>

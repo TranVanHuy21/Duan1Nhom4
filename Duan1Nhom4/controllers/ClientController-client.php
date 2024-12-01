@@ -256,6 +256,7 @@ class ClientController
     }
 
     // thêm sản phẩm vào giỏ hàng
+
     public function addToCart() {
         try {
             // Kiểm tra phương thức request
@@ -298,21 +299,45 @@ class ClientController
         }
     }
 
+    public function BuyNow($productId) {
+        try {
 
-    public function deleteCart() {
-        if(isset($_POST['id'])) {
-            $id = $_POST['id'];
-            
-            // Sử dụng clientModel thay vì truy cập trực tiếp PDO
-            $success = $this->clientModel->deleteCartItem($id);
-            
-            // Chuyển về trang giỏ hàng
-            header("Location: index.php?act=viewCart");
+            // Kiểm tra đăng nhập
+            if (!isset($_SESSION['user'])) {
+                $_SESSION['flash_message'] = "Vui lòng đăng nhập để thêm vào giỏ hàng!";
+                header("Location: index.php?act=login-client");
+                exit();
+            }
+    
+            // Lấy dữ liệu từ POST
+            $userId = $_SESSION['user']['User_id'];
+            $quantity = 1;
+    
+            // Validate dữ liệu
+            if ($productId <= 0) {
+                throw new Exception("Invalid product ID");
+            }
+    
+            // Gọi phương thức từ model để thêm vào giỏ hàng
+            $success = $this->clientModel->addToCart($userId, $productId, $quantity);
+    
+            $cartId = $this->clientModel->getCartIdByProductId($userId, $productId);
+            if ($success) {
+                header("Location: index.php?act=checkout&cart_ids=" . $cartId);
+            } else {
+                header("Location: index.php?act=showProductDetail&id=" . $productId . "&success=0");
+            }
+            exit();
+    
+        } catch (Exception $e) {
+            error_log("Error adding to cart: " . $e->getMessage());
+            throw new Exception("Error adding to cart: " . $e->getMessage());
             exit();
         }
-        header("Location: index.php?act=viewCart");
-        exit();
     }
+    
+    
+
     public function updateCartQuantity() {
         try {
             
@@ -391,8 +416,10 @@ class ClientController
                 $selectedProduct = $this->clientModel->getCartItemByUserIdAndCartId($userId, $cartId);
                 if ($selectedProduct) {
                     $selectedProducts[] = $selectedProduct; // Thêm sản phẩm vào mảng
+                }else {
+                echo "Không tìm thấy sản phẩm với cartId: $cartId"; // Debug nếu không có sản phẩm
                 }
-            }
+         }
         }
     
         // Nếu không tìm thấy sản phẩm nào, thông báo lỗi
@@ -615,6 +642,12 @@ class ClientController
 
             $userInfo = $this->clientModel->getUserInfoForOrder($userId);
 
+            // $arrTrangThaiDonHang = $this->clientModel->getTrangThaiDonHang();
+            // $trangThaiDonHang = array_column($arrTrangThaiDonHang, 'status_name', 'id');
+            // echo "<pre>";
+            // print_r($trangThaiDonHang);
+            // die;
+
             $donHangs = $this->clientModel->getDonHangFromUser($userId);
 
             include './views/lichSuMuaHang.php';
@@ -625,6 +658,54 @@ class ClientController
         }
     }
 
+    public function chiTietMuaHang() {
+        if (isset($_SESSION['user'])) {
+            $userId = $_SESSION['user']['User_id'];
+    
+            // Kiểm tra sự tồn tại của 'Order_id'
+            if (!isset($_GET['Order_id']) || empty($_GET['Order_id'])) {
+                echo "Mã đơn hàng không được cung cấp hoặc không hợp lệ.";
+                header('Location: index.php?act=chi-tiet-mua-hang');
+                exit();
+            }
+    
+            // Chuyển đổi Order_id từ chuỗi sang kiểu int
+            $orderId = (int) $_GET['Order_id'];
+    
+            // Kiểm tra lại giá trị của orderId nếu cần
+            if ($orderId <= 0) {
+                echo "Mã đơn hàng không hợp lệ.";
+                header('Location: index.php?act=chi-tiet-mua-hang');
+                exit();
+            }
+    
+            $userInfo = $this->clientModel->getUserInfoForOrder($userId);
+    
+            // Lấy thông tin đơn hàng
+            $muaHang = $this->clientModel->getDonHangById($orderId);
+            
+            $chiTietMuaHang = $this->clientModel->getChiTietDonHangByDonHangId($orderId);
+
+    
+            if ($muaHang) {
+                include './views/chiTietMuaHang.php';
+            } else {
+                echo "Không tìm thấy thông tin đơn hàng.";
+                exit();
+            }
+        } else {
+            header('Location: index.php?act=login-client');
+            exit();
+        }
+    }
+    
+    
+    
+    
+
+
+    
+    
     public function showStoreMap() {
         // Có thể thêm logic để lấy danh sách cửa hàng từ database
         $stores = [

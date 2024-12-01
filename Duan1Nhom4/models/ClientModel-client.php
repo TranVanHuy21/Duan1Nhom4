@@ -395,6 +395,24 @@ public function addToCart($userId, $productId, $quantity) {
         return false;
     }
 }
+public function getCartIdByProductId($userId, $productId) {
+    try {
+        // Lấy ID của cart dựa trên product_id và user_id
+        $stmt = $this->pdo->prepare("SELECT id FROM cart WHERE user_id = ? AND product_id = ?");
+        $stmt->execute([$userId, $productId]);
+        $cart = $stmt->fetch();
+
+        if ($cart) {
+            return $cart['id']; // Trả về ID nếu tìm thấy
+        } else {
+            return null; // Trả về null nếu không có cart tương ứng
+        }
+    } catch (PDOException $e) {
+        error_log("Error in getCartIdByProductId: " . $e->getMessage());
+        return null;
+    }
+}
+
 
 public function getCartItems() {
     try {
@@ -1096,6 +1114,31 @@ public function getDonHangFromUser($userId) {
         echo "Error: " . $e->getMessage();
     }
 }
+public function getDonHangById($orderId) {
+    $sql = "SELECT * FROM order_pro WHERE order_id = :order_id";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['order_id' => $orderId]);
+    return $stmt->fetch();
+}
+public function getChiTietDonHangByDonHangId($orderId) {
+    $sql = "SELECT 
+                order_detail.*, 
+                products.Name_product, 
+                products.Image
+            FROM 
+                order_detail
+            JOIN 
+                products ON order_detail.product_id = products.id
+            WHERE 
+                order_detail.order_id = :order_id";
+    
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute(['order_id' => $orderId]);
+    return $stmt->fetch();
+}
+
+
+
 public function getStores() {
     $stmt = $this->pdo->prepare("SELECT * FROM stores");
     $stmt->execute();

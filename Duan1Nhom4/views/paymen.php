@@ -239,16 +239,16 @@
                 <div class="payment-option" data-method="momo">
                     <img src="https://th.bing.com/th/id/OIP.1GNvjAZu4hlbE0bWflshGwHaHa?rs=1&pid=ImgDetMain" alt="Momo">
                     <div class="text">Thanh toán qua Momo</div>
-                    <div class="arrow">
+                    <!-- <div class="arrow">
                         <i class="fas fa-chevron-right"></i>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="payment-option" data-method="bank">
                     <img src="https://th.bing.com/th/id/OIP.yVztzr5ke-D_hI472kIWzQHaHa?rs=1&pid=ImgDetMain" alt="Bank">
                     <div class="text">Thanh toán qua ngân hàng</div>
-                    <div class="arrow">
+                    <!-- <div class="arrow">
                         <i class="fas fa-chevron-right"></i>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

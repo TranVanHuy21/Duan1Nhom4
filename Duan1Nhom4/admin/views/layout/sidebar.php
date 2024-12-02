@@ -81,6 +81,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?= '?act=listOrders' ?>" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Quản trị Đơn hàng
+                        </p>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="<?= '?act=listUsers' ?>" class="nav-link">

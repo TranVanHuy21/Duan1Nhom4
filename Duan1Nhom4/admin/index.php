@@ -18,6 +18,9 @@ require_once 'models/SlideModel.php';
 require_once 'controllers/SlideController.php';
 require_once 'controllers/commentController.php';
 require_once 'models/commentModel.php';
+require_once './models/OrderModel.php';
+require_once './controllers/OrderController.php';
+
 
 // Khởi tạo các controller
 $productController = new ProductController();
@@ -30,7 +33,7 @@ $dashboardController = new DashboardController();
 $slideModel = new SlideModel();
 $slideController = new SlideController();
 $commentController = new CommentController();
-
+$orderController = new OrderController();
 // Kiểm tra xem người dùng đã đăng nhập chưa
 if (!isset($_SESSION['user_admin']) && (!isset($_GET['act']) || $_GET['act'] != 'login')) {
     header("Location: ../admin/index.php?act=login");
@@ -163,7 +166,31 @@ switch ($act) {
     case 'deleteComment':
         $commentController->deleteComment($_GET['id'] ?? 0);
         break;
-
+    case 'listOrders':
+        $orderController->listOrders();
+        break;
+    case 'formInsertOrder':
+        $orderController->formInsertOrder();
+        break;
+    case 'insertOrder':
+        $orderController->insertOrder();
+        break;
+    case 'editOrder':
+        $orderId = $_GET['id'] ?? null;
+        if ($orderId) {
+            $orderController->editOrder($orderId);
+        } else {
+            echo "Order ID is required for editing.";
+        }
+        break;
+    case 'deleteOrder':
+        $orderId = $_GET['id'] ?? null;
+        if ($orderId) {
+            $orderController->deleteOrder($orderId);
+        } else {
+            echo "Order ID is required for deletion.";
+        }
+        break;
     case 'header':
         $productController->header();
         break;

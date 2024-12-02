@@ -6,226 +6,213 @@
     <title>Kết quả Tìm kiếm Sản phẩm</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-  /* Cập nhật chung cho toàn bộ trang */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-}
+    /* Cập nhật chung cho toàn bộ trang */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
 
-/* Sửa menu mega-menu */
-.mega-menu {
-    /* background-color: #333; */
-    padding: 10px 0;
-}
+    /* Sửa menu mega-menu */
+    .mega-menu {
+        /* background-color: #333; */
+        padding: 10px 0;
+    }
 
-.mega-menu a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: block;
-    font-size: 16px;
-}
+    .mega-menu a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        display: block;
+        font-size: 16px;
+    }
 
-.mega-menu ul ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #444;
-    border-radius: 5px;
-}
+    .mega-menu ul ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #444;
+        border-radius: 5px;
+    }
 
-.mega-menu > ul > li:hover > ul {
-    display: block;
-}
+    .mega-menu>ul>li:hover>ul {
+        display: block;
+    }
 
-.mega-menu ul ul li {
-    width: 200px;
-}
+    .mega-menu ul ul li {
+        width: 200px;
+    }
 
-.mega-menu ul ul a {
-    padding: 10px;
-    font-size: 14px;
-}
+    .mega-menu ul ul a {
+        padding: 10px;
+        font-size: 14px;
+    }
 
-/* Tạo một kiểu dáng đẹp cho các sản phẩm */
-.products_byParentCategory {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 130rem;
-    margin: 0 auto;
-    padding: 20px;
-}
+    /* Tạo một kiểu dáng đẹp cho các sản phẩm */
+    .products_byParentCategory {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        max-width: 130rem;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-.product {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: transform 0.3s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .product {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        transition: transform 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.product:hover {
-    transform: translateY(-10px);
-}
+    .product:hover {
+        transform: translateY(-10px);
+    }
 
-/* Hình ảnh sản phẩm */
-.product__image img {
-    width: 100%;
-    max-width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
+    /* Hình ảnh sản phẩm */
+    .product__image img {
+        width: 100%;
+        max-width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
 
-/* Tên sản phẩm */
-.product__name h3 {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    margin: 10px 0;
-}
+    /* Tên sản phẩm */
+    .product__name h3 {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin: 10px 0;
+    }
 
-/* Giá sản phẩm */
-.block-box-price {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
+    /* Giá sản phẩm */
+    .block-box-price {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
 
-.product__price--show {
-    font-size: 18px;
-    color: #e74c3c;
-    font-weight: bold;
-}
+    .product__price--show {
+        font-size: 18px;
+        color: #e74c3c;
+        font-weight: bold;
+    }
 
-.product__price--through {
-    font-size: 14px;
-    color: #999;
-    text-decoration: line-through;
-}
+    .product__price--through {
+        font-size: 14px;
+        color: #999;
+        text-decoration: line-through;
+    }
 
-/* Hiệu ứng giảm giá */
-.product__price--percent {
-    background-color: red; /* Màu nền để nổi bật */;
-    color: white;
-    border-radius: 20px;
-    font-size: 11px;
-    padding: 10px 10px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    
-}
+    /* Hiệu ứng giảm giá */
+    .product__price--percent {
+        background-color: red;
+        /* Màu nền để nổi bật */
+        ;
+        color: white;
+        border-radius: 20px;
+        font-size: 11px;
+        padding: 10px 10px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
 
-/* Phần slide */
-/* Phần slide */
-.box_slides_bottom {
-    max-width: 130rem;
-    margin: 40px auto;
-    overflow: hidden; /* Ẩn thanh cuộn ngang */
-}
+    }
 
-.slides_bottom {
-    display: flex;
-    gap: 10px;
-    overflow-x: hidden; /* Ẩn thanh cuộn ngang */
-    overflow-y: hidden; /* Ẩn thanh cuộn dọc */
-    padding-bottom: 10px;
-    width: 100%; /* Đảm bảo chiều rộng không tràn */
-    scroll-snap-type: x mandatory; /* Dùng để tạo hiệu ứng cuộn ngang nếu cần */
-}
+    /* Phần slide */
+    /* Phần slide */
+    .box_slides_bottom {
+        max-width: 130rem;
+        margin: 40px auto;
+        overflow: hidden;
+        /* Ẩn thanh cuộn ngang */
+    }
 
-
-
-.slide_image {
-    flex: 0 0 calc(25% - 10px);
-    position: relative;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+    .slides_bottom {
+        display: flex;
+        gap: 10px;
+        overflow-x: hidden;
+        /* Ẩn thanh cuộn ngang */
+        overflow-y: hidden;
+        /* Ẩn thanh cuộn dọc */
+        padding-bottom: 10px;
+        width: 100%;
+        /* Đảm bảo chiều rộng không tràn */
+        scroll-snap-type: x mandatory;
+        /* Dùng để tạo hiệu ứng cuộn ngang nếu cần */
+    }
 
 
- .news_title {
-    height: 80px;
-    /* position: absolute; */
-    bottom: 10px;
-    left: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    /* color: white; */
-    /* background-color: rgba(0, 0, 0, 0.6);   */
-    padding: 5px;
-    border-radius: 5px;
-} 
 
-/* Trang kết quả tìm kiếm */
-.box-searchProduct {
-    padding: 20px;
-    text-align: center;
-}
+    .slide_image {
+        flex: 0 0 calc(25% - 10px);
+        position: relative;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
 
-h1 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 30px;
-}
 
-/* Phân trang */
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
+    .news_title {
+        height: 80px;
+        /* position: absolute; */
+        bottom: 10px;
+        left: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        /* color: white; */
+        /* background-color: rgba(0, 0, 0, 0.6);   */
+        padding: 5px;
+        border-radius: 5px;
+    }
 
-.pagination a {
-    text-decoration: none;
-    background-color: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
+    /* Trang kết quả tìm kiếm */
+    .box-searchProduct {
+        padding: 20px;
+        text-align: center;
+    }
 
-.pagination a:hover {
-    background-color: #2980b9;
-}
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
 
+    /* Phân trang */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        text-decoration: none;
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    .pagination a:hover {
+        background-color: #2980b9;
+    }
     </style>
 </head>
 
 <body>
-    <div class="body-menu-tree">
-        <nav class="mega-menu">
-            <ul>
-                <?php foreach ($parentCategories as $parentCategory): ?>
-                <li><a href="?act=productByParent&id">
-                        <?= htmlspecialchars($parentCategory['parent_name']) ?>
-                    </a>
-                    <ul>
-                        <?php foreach ($categories[$parentCategory['id']] as $category): ?>
-                        <li><a href="?act=productByCategory&id=<?= $category['id'] ?>">
-                                <!-- Added category ID to the link -->
-                                <?= htmlspecialchars($category['Category_name']) ?>
-                            </a></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        </nav>
-    </div>
+
     <div class="box-searchProduct">
         <h1>Kết quả Tìm kiếm cho từ khóa "<?= htmlspecialchars($query) ?>":</h1>
         <div class="search-results">

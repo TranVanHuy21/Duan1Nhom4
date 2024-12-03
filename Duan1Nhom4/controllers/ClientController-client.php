@@ -174,16 +174,16 @@ class ClientController
             // var_dump($user);
             // die;
             if ($user) {
-                if ($password == $user['password']) {
+                if ($password != $user['password']) {
+                    // Mật khẩu sai
+                    echo '<script>alert("Sai mật khẩu!");</script>';
+                } else {
                     $_SESSION['user'] = $user;
-                    echo '<script type="text/javascript">
-                         window.location.href = "index.php?act=home";
-                        </script>';
+                    header("Location: index.php?act=home");
                     exit();
                 }
             } else {
                 echo '<script>alert("Sai tên đăng nhập hoặc mật khẩu!");</script>';
-                header("location:?act=login-client");
                 exit();
             }
         }
@@ -462,7 +462,7 @@ class ClientController
     
             // Lấy trạng thái đơn hàng (linh hoạt)
             $status_id = isset($_POST['status_id']) ? intval($_POST['status_id']) : 1;
-    
+            $cart_ids = isset($_POST['cart_ids']) ? intval($_POST['cart_ids']) : "";
             // Lấy và kiểm tra dữ liệu
             $totalPrice = isset($_POST['total_price']) ? floatval($_POST['total_price']) : 0;
             if ($totalPrice <= 0) {
@@ -528,6 +528,10 @@ class ClientController
     
             // Lưu chi tiết đơn hàng
             foreach ($cartItems as $item) {
+                if (!str_contains($cart_ids, $item['id'])){
+                    break;
+                }
+
                 $saveResult = $this->clientModel->saveOrderDetail(
                     $orderId,
                     $item['product_id'],
@@ -542,6 +546,9 @@ class ClientController
     
             // Xóa giỏ hàng
             foreach ($cartItems as $item) {
+                if (!str_contains($cart_ids, $item['id'])){
+                    break;
+                }
                 $this->clientModel->deleteCartItem($item['id']);
             }
     

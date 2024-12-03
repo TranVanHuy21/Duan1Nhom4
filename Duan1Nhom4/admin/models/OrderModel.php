@@ -1,67 +1,54 @@
 <?php
-// models/OrderModel.php
-
 class OrderModel
 {
-    private $pdo;
+    public $pdo;
 
     public function __construct()
     {
         $this->pdo = new PDO('mysql:host=localhost;dbname=duanmau1', 'root', '');
-    }
-    public function getOrders()
-    {
-        $query = "SELECT * FROM order_pro";
-        return $this->pdo->query($query);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function getOrderById($id)
+    public function createOrder($userId, $delivererId, $totalPrice, $deliveryAddress, $note, $statusId)
     {
-        $query = "SELECT * FROM order_pro WHERE Order_id = :id";
-        $stmt = $this->pdo->prepare($query); // Prepare the statement
-        $stmt->bindParam(':id', $id); // Bind the parameter
-        $stmt->execute(); // Execute the statement
-        return $stmt->fetch(); // Fetch the single result
+        $stmt = $this->pdo->prepare("INSERT INTO order_pro (user_id, deliverer, total_price, delivery_address, note, status_id) VALUES (?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$userId, $delivererId, $totalPrice, $deliveryAddress, $note, $statusId]);
     }
 
-    public function insertOrder($data)
+    public function getOrderById($orderId)
     {
-        $query = "INSERT INTO order_pro (user_id, Deliverer, Create_date, Total_Price, Delivery_address, Note, status_id) 
-                  VALUES (:user_id, :Deliverer, :Create_date, :Total_Price, :Delivery_address, :Note, :status_id)";
-        $stmt = $this->pdo->prepare($query); // Prepare the statement
-        $stmt->bindParam(':user_id', $data['user_id']);
-        $stmt->bindParam(':Deliverer', $data['Deliverer']);
-        $stmt->bindParam(':Create_date', $data['Create_date']);
-        $stmt->bindParam(':Total_Price', $data['Total_Price']);
-        $stmt->bindParam(':Delivery_address', $data['Delivery_address']);
-        $stmt->bindParam(':Note', $data['Note']);
-        $stmt->bindParam(':status_id', $data['status_id']);
-        return $stmt->execute(); // Execute the statement
+        $stmt = $this->pdo->prepare("SELECT * FROM order_pro WHERE order_id = ?");
+        $stmt->execute([$orderId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updateOrder($id, $data)
+    public function getOrdersByUserId($userId)
     {
-        $query = "UPDATE order_pro SET user_id = :user_id, Deliverer = :Deliverer, Create_date = :Create_date, 
-                  Total_Price = :Total_Price, Delivery_address = :Delivery_address, Note = :Note, status_id = :status_id 
-                  WHERE Order_id = :id";
-        $stmt = $this->pdo->prepare($query); // Prepare the statement
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':user_id', $data['user_id']);
-        $stmt->bindParam(':Deliverer', $data['Deliverer']);
-        $stmt->bindParam(':Create_date', $data['Create_date']);
-        $stmt->bindParam(':Total_Price', $data['Total_Price']);
-        $stmt->bindParam(':Delivery_address', $data['Delivery_address']);
-        $stmt->bindParam(':Note', $data['Note']);
-        $stmt->bindParam(':status_id', $data['status_id']);
-        return $stmt->execute(); // Execute the statement
+        if ($userId === null) {
+            return [];
+        }
+
+        $stmt = $this->pdo->prepare("SELECT * FROM order_pro WHERE user_id = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function deleteOrder($id)
+    public function updateOrderStatus($orderId, $statusId)
     {
-        $query = "DELETE FROM order_pro WHERE Order_id = :id";
-        $stmt = $this->pdo->prepare($query); // Prepare the statement
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute(); // Execute the statement
+        $stmt = $this->pdo->prepare("UPDATE order_pro SET status_id = ? WHERE order_id = ?");
+        return $stmt->execute([$statusId, $orderId]);
+    }
+
+    public function deleteOrder($orderId)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM order_pro WHERE order_id = ?");
+        return $stmt->execute([$orderId]);
+    }
+
+    public function editOrder($orderId, $totalPrice, $deliveryAddress, $note, $statusId)
+    {
+        $stmt = $this->pdo->prepare("UPDATE order_pro SET total_price = ?, delivery_address = ?, note = ?, status_id = ? WHERE order_id = ?");
+        return $stmt->execute([$totalPrice, $deliveryAddress, $note, $statusId, $orderId]);
     }
 }
 ?>

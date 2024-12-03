@@ -6,7 +6,7 @@ class CommentModel
     public function __construct()
     {
         $this->pdo = new PDO('mysql:host=localhost;dbname=duanmau1', 'root', '');
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Thiết lập chế độ báo lỗi
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     public function getAllUsers()
     {

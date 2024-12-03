@@ -18,9 +18,10 @@ require_once 'models/SlideModel.php';
 require_once 'controllers/SlideController.php';
 require_once 'controllers/commentController.php';
 require_once 'models/commentModel.php';
-require_once './models/OrderModel.php';
-require_once './controllers/OrderController.php';
-
+require_once 'models/CartModel.php';
+require_once 'models/OrderModel.php';
+require_once 'controllers/AdminController.php';
+require_once 'models/UserOrderModel.php';
 
 // Khởi tạo các controller
 $productController = new ProductController();
@@ -33,15 +34,19 @@ $dashboardController = new DashboardController();
 $slideModel = new SlideModel();
 $slideController = new SlideController();
 $commentController = new CommentController();
-$orderController = new OrderController();
+$cartModel = new CartModel();
+$orderModel = new OrderModel();
+$userOrderModel = new UserOrderModel();
+$adminController = new AdminController($cartModel, $orderModel, $userOrderModel);
 // Kiểm tra xem người dùng đã đăng nhập chưa
 if (!isset($_SESSION['user_admin']) && (!isset($_GET['act']) || $_GET['act'] != 'login')) {
     header("Location: ../admin/index.php?act=login");
     exit();
 }
 
-$act = $_GET['act'] ?? 'dashboard'; // Sử dụng toán tử null coalescing
-
+$act = $_GET['act'] ?? 'dashboard';
+$userId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
+$orderId = isset($_GET['order_id']) ? $_GET['order_id'] : null;
 switch ($act) {
     case 'login':
         $accController->login();
@@ -166,30 +171,78 @@ switch ($act) {
     case 'deleteComment':
         $commentController->deleteComment($_GET['id'] ?? 0);
         break;
-    case 'listOrders':
-        $orderController->listOrders();
+    // case 'listOrders':
+    //     $orderController->listOrders();
+    //     break;
+    // case 'formInsertOrder':
+    //     $orderController->formInsertOrder();
+    //     break;
+    // case 'insertOrder':
+    //     $orderController->insertOrder();
+    //     break;
+    // case 'editOrder':
+    //     $orderId = $_GET['id'] ?? null;
+    //     if ($orderId) {
+    //         $orderController->editOrder($orderId);
+    //     } else {
+    //         echo "Order ID is required for editing.";
+    //     }
+    //     break;
+    // case 'deleteOrder':
+    //     $orderId = $_GET['id'] ?? null;
+    //     if ($orderId) {
+    //         $orderController->deleteOrder($orderId);
+    //     } else {
+    //         echo "Order ID is required for deletion.";
+    //     }
+    //     break;
+    case 'viewUsersWithOrders':
+        $adminController->viewUsersWithOrders();
         break;
-    case 'formInsertOrder':
-        $orderController->formInsertOrder();
+    case 'viewCart':
+        $adminController->viewCart($userId);
         break;
-    case 'insertOrder':
-        $orderController->insertOrder();
+    case 'addToCart':
+        $productId = $_POST['product_id'];
+        $quantity = $_POST['quantity'];
+        $adminController->addToCart($userId, $productId, $quantity);
         break;
-    case 'editOrder':
-        $orderId = $_GET['id'] ?? null;
-        if ($orderId) {
-            $orderController->editOrder($orderId);
-        } else {
-            echo "Order ID is required for editing.";
-        }
+    case 'updateCart':
+        $cartId = $_POST['cart_id'];
+        $quantity = $_POST['quantity'];
+        $adminController->updateCart($cartId, $quantity);
+        break;
+    case 'deleteFromCart':
+        $cartId = $_POST['cart_id'];
+        $adminController->deleteFromCart($cartId);
+        break;
+    case 'createOrder':
+        $delivererId = $_POST['deliverer_id'];
+        $totalPrice = $_POST['total_price'];
+        $deliveryAddress = $_POST['delivery_address'];
+        $note = $_POST['note'];
+        $statusId = $_POST['status_id'];
+        $adminController->createOrder($userId, $delivererId, $totalPrice, $deliveryAddress, $note, $statusId);
+        break;
+    case 'viewOrder':
+        $adminController->viewOrder($orderId);
+        break;
+    case 'viewOrders':
+        $adminController->viewOrdersByUser($userId);
+        break;
+    case 'updateOrderStatus':
+        $statusId = $_POST['status_id'];
+        $adminController->updateOrderStatus($orderId, $statusId);
         break;
     case 'deleteOrder':
-        $orderId = $_GET['id'] ?? null;
-        if ($orderId) {
-            $orderController->deleteOrder($orderId);
-        } else {
-            echo "Order ID is required for deletion.";
-        }
+        $adminController->deleteOrder($orderId);
+        break;
+    case 'editOrder':
+        $totalPrice = $_POST['total_price'];
+        $deliveryAddress = $_POST['delivery_address'];
+        $note = $_POST['note'];
+        $statusId = $_POST['status_id'];
+        $adminController->editOrder($orderId, $totalPrice, $deliveryAddress, $note, $statusId);
         break;
     case 'header':
         $productController->header();

@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= '?act=listOrders' ?>" class="nav-link">
+                    <a href="<?= '?act=viewUsersWithOrders' ?>" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>
                             Quản trị Đơn hàng

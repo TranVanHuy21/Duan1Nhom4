@@ -40,22 +40,24 @@ if (!isset($_SESSION['user'])) {
                 </div>
             <?php endforeach; ?>
         </div>
-
+        <form action="index.php?act=processOrder" method="POST">
         <!-- Thông tin người mua -->
         <h2 class="section-title">Thông tin khách hàng</h2>
         <div class="section">
             <div class="user-info">
                 <div class="info-item">
                     <label class="info-label">Họ tên</label>
-                    <input type="text" class="form-control" name="recipient_name" value="<?= htmlspecialchars($user['name']) ?>" required>
+                    <input type="text" class="form-control" name="recipient_name" value="<?= htmlspecialchars($user['name']) ?>" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')"
+                     required>
                 </div>
                 <div class="info-item">
                     <label class="info-label">Số điện thoại</label>
-                    <input type="tel" class="form-control" name="recipient_phone" value="<?= htmlspecialchars($user['phone_number']) ?>" required>
+                    <input type="tel" class="form-control" name="recipient_phone" value="<?= htmlspecialchars($user['phone_number']) ?>" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                 </div>
                 <div class="info-item">
                     <label class="info-label">Email</label>
-                    <input type="email" class="form-control" name="recipient_email" value="<?= htmlspecialchars($user['email']) ?>" required>
+                    <input type="email" class="form-control" name="recipient_email" value="<?= htmlspecialchars($user['email']) ?>" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')"
+                     required>
                 </div>
             </div>
         </div>
@@ -103,7 +105,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="form-group-row">
                     <div class="form-group">
                         <label for="store_city">Thành phố</label>
-                        <select class="form-control" name="store_city" id="store_city" aria-label=".form-select-sm"required>
+                        <select class="form-control" name="store_city" id="store_city" aria-label=".form-select-sm" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                             <option value="" selected>Chọn tỉnh/thành phố</option>
                             <!-- <option>Hà Nội</option>
                             <option>TP HCM</option> -->
@@ -111,7 +113,7 @@ if (!isset($_SESSION['user'])) {
                     </div>
                     <div class="form-group">
                         <label for="store_district">Quận/Huyện</label>
-                        <select class="form-control" name="store_district" id="store_district" aria-label=".form-select-sm" required>
+                        <select class="form-control" name="store_district" id="store_district" aria-label=".form-select-sm" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                             <option value="" selected>Chọn quận/huyện</option>
                             <!-- <option>Cầu Giấy</option>
                             <option>Nam Từ Liêm</option> -->
@@ -120,7 +122,7 @@ if (!isset($_SESSION['user'])) {
                 </div>
                 <div class="form-group">
                     <label for="store_location">Cửa hàng</label>
-                    <select class="form-control" name="store_location" id="store_location" required>
+                    <select class="form-control" name="store_location" id="store_location" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                         <option value="">Chọn cửa hàng</option>
                         <option>CellphoneS 123 Xuân Thủy, Cầu Giấy</option>
                         <option>CellphoneS 456 Trần Duy Hưng, Cầu Giấy</option>
@@ -134,17 +136,17 @@ if (!isset($_SESSION['user'])) {
                 <div class="form-group-row">
                     <div class="form-group">
                         <label class="info-label">Họ tên người nhận</label>
-                        <input type="text" class="form-control" name="delivery_recipient_name" value="<?= htmlspecialchars($user['name']) ?>" required>
+                        <input type="text" class="form-control" name="delivery_recipient_name" value="<?= htmlspecialchars($user['name']) ?>" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                     </div>
                     <div class="form-group">
                         <label class="info-label">Số điện thoại</label>
-                        <input type="tel" class="form-control" name="delivery_recipient_phone" value="<?= htmlspecialchars($user['phone_number']) ?>" required>
+                        <input type="tel" class="form-control" name="delivery_recipient_phone" value="<?= htmlspecialchars($user['phone_number']) ?>" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                     </div>
                 </div>
                 <div class="form-group-row">
                     <div class="form-group">
                         <label for="delivery_city">Thành phố</label>
-                        <select class="form-control" name="delivery_city" id="delivery_city" aria-label=".form-select-sm" required>
+                        <select class="form-control" name="delivery_city" id="delivery_city" aria-label=".form-select-sm" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                             <option value="" selected>Chọn tỉnh/thành phố</option>
                             <!-- <option>Hà Nội</option>
                             <option>TP HCM</option> -->
@@ -152,7 +154,7 @@ if (!isset($_SESSION['user'])) {
                     </div>
                     <div class="form-group">
                         <label for="delivery_district">Quận/Huyện</label>
-                        <select class="form-control" name="delivery_district" id="delivery_district" aria-label=".form-select-sm" required>
+                        <select class="form-control" name="delivery_district" id="delivery_district" aria-label=".form-select-sm" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                             <option value="" selected>Chọn quận/huyện</option>
                             <!-- <option>Cầu Giấy</option>
                             <option>Nam Từ Liêm</option> -->
@@ -162,7 +164,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="form-group-row">
                     <div class="form-group">
                         <label for="delivery_ward">Xã/Phường</label>
-                        <select class="form-control" name="delivery_ward" id="delivery_ward" aria-label=".form-select-sm" required>
+                        <select class="form-control" name="delivery_ward" id="delivery_ward" aria-label=".form-select-sm" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                             <option value="" selected>Chọn phường/xã</option>
                             <!-- <option>Dịch Vọng</option>
                             <option>Dịch Vọng Hậu</option> -->
@@ -170,7 +172,7 @@ if (!isset($_SESSION['user'])) {
                     </div>
                     <div class="form-group">
                         <label for="delivery_address">Địa chỉ cụ thể</label>
-                        <input type="text" class="form-control" name="delivery_address" id="delivery_address" placeholder="Số nhà, tên đường" required>
+                        <input type="text" class="form-control" name="delivery_address" id="delivery_address" placeholder="Số nhà, tên đường" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                     </div>
                 </div>
                 <textarea class="form-control" name="delivery_notes" placeholder="Ghi chú (không bắt buộc)"></textarea>
@@ -186,8 +188,9 @@ if (!isset($_SESSION['user'])) {
                 </div>
             </div>
         </div>
-        <form action="index.php?act=processOrder" method="POST">
+        
         <!-- Form để gửi địa chỉ và tổng tiền -->
+        <input type="hidden" name="cart_ids" value="<?= htmlspecialchars($_GET['cart_ids'] ?? '') ?>">
         <input type="hidden" name="total_price" value="<?= $totalPrice ?>">
         <input type="hidden" name="recipient_name" value="<?= htmlspecialchars($user['name']) ?>">
         <input type="hidden" name="recipient_phone" value="<?= htmlspecialchars($user['phone_number']) ?>">
@@ -355,12 +358,34 @@ function selectDelivery(type) {
 
     if (type === 'store') {
         storeForm.style.display = 'block';
+        toggleRequired('store-form',true);
         deliveryForm.style.display = 'none';
+        toggleRequired('delivery-form',false);
     } else {
         storeForm.style.display = 'none';
+        toggleRequired('store-form',false);
         deliveryForm.style.display = 'block';
+        toggleRequired('delivery-form',true);
     }
 }
+
+function toggleRequired(inputId, isRequired) {
+    // Lấy phần tử input dựa trên ID
+    var inputElement = document.getElementById(inputId);
+
+    // Lấy tất cả các input và select trong phần tử inputElement
+    var inputs = inputElement.querySelectorAll('input, select');
+    
+    // Duyệt qua tất cả các input và select
+    inputs.forEach(function(input) {
+        if (isRequired) {
+            input.setAttribute('required', 'required'); // Thêm thuộc tính required
+        } else {
+            input.removeAttribute('required'); // Loại bỏ thuộc tính required
+        }
+    });
+}
+
 
 // Khởi tạo khi trang load xong
 document.addEventListener('DOMContentLoaded', function() {

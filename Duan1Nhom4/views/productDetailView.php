@@ -483,7 +483,7 @@
                 <span id="rating-error" class="error-message"></span>
             </div>
             <div>
-                <textarea name="comment_content" id="comment_content" placeholder="Nhập đánh giá của bạn..." required></textarea>
+                <textarea name="comment_content" id="comment_content" placeholder="Nhập đánh giá của bạn..." oninvalid="this.setCustomValidity('Nhập bình luận trước khi submit.')" oninput="this.setCustomValidity('')" required></textarea>
                 <span id="comment-error" class="error-message"></span>
             </div>
             <button class="button2" type="submit">Gửi bình luận</button>

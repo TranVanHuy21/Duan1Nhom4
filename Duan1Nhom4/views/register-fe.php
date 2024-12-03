@@ -130,15 +130,15 @@
             <form id="registerForm" method="post" action="?act=register-client">
                 <div class="form-group">
                     <label for="fullname">Nhập họ và tên</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name"  oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                 </div>
                 <div class="form-group">
                     <label for="username">Nhập Username muốn đăng ký</label>
-                    <input type="text" id="username" name="username" required>
+                    <input type="text" id="username" name="username" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                 </div>
                 <div class="form-group">
                     <label for="phone">Nhập số điện thoại</label>
-                    <input type="text" id="phone" name="phone_number" required>
+                    <input type="text" id="phone" name="phone_number" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Nhập email (không bắt buộc)</label>
@@ -159,23 +159,23 @@
                 </div>
                 <div class="form-group">
                     <label for="dob">Ngày sinh</label>
-                    <input type="date" id="birthday" name="birthday" required>
+                    <input type="date" id="birthday" name="birthday" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Nhập mật khẩu</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                     <small>(*) Mật khẩu tối thiểu 6 ký tự, có ít nhất 1 chữ và 1 số. (VD: 72345a)</small>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Nhập lại mật khẩu</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <input type="password" id="confirmPassword" name="confirmPassword" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
                 </div>
                 <div class="form-group">
                     <input type="checkbox" id="newsletter" name="newsletter">
                     <label for="newsletter">Đăng ký nhận bản tin khuyến mãi từ CellphoneS</label>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="terms" name="terms" required>
+                    <input type="checkbox" id="terms" name="terms" required oninvalid="this.setCustomValidity('Checkbox này là bắt buộc.')" oninput="this.setCustomValidity('')">
                     <label for="terms">Tôi đồng ý với các điều khoản bảo mật cá nhân</label>
                 </div>
                 <div class="form-group">

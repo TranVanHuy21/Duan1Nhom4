@@ -239,7 +239,7 @@
 }
 
 .title-box {
-    height: 12rem;
+    height: 7rem;
     bottom: 100%;
     border: 1px solid #ddd;
     padding: 1rem;
@@ -252,6 +252,7 @@
     text-align: center;
     transition: background-color 0.3s ease;
     font-size: 1.2rem;
+    padding: 25px 0px;
 }
 
 .title-box:hover {

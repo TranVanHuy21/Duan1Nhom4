@@ -73,18 +73,21 @@
             for (i = 0; i < dots.length; i++) {
                 dots[i].className = dots[i].className.replace(" active", "");
             }
-            slides[slideIndex -
-                1].style.display = "flex";
+            slides[slideIndex - 1].style.display = "flex";
             dots[slideIndex - 1].className += " active";
-            slidePosition.textContent = slideIndex +
-                " / " + slides.length;
-        }
 
+            // Kiểm tra xem slidePosition có tồn tại không
+            if (slidePosition) {
+                slidePosition.textContent = slideIndex + " / " + slides.length;
+            } else {
+                console.error("Element with class 'slide-position' not found.");
+            }
+        }
         function autoSlide() {
             autoSlideInterval = setInterval(function () {
                 plusSlides(1);
             },
-                3000);
+                2000);
         }
         var slideContents = document.getElementsByClassName("slide-content");
         for (var i = 0; i <
@@ -101,6 +104,16 @@
         };
     </script>
     <style>
+        .slide {
+            display: flex; /* Đảm bảo nội dung bên trong được căn giữa */
+            justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+            align-items: center; /* Căn giữa nội dung theo chiều dọc */
+        }
+
+        .slide img {
+            height: 330px;
+             /* Đảm bảo hình ảnh không vượt quá chiều cao của slide */
+        }
         .product__price--percent {
             background-color: red;
             /* Màu nền để nổi bật */
@@ -147,26 +160,26 @@
                 </nav>
             </div>
             <div class="slide-swiper-pre">
-                <div class="slideshow-swiper-container">
-                    <div class="slides">
-                        <?php foreach (array_slice($slides1, 0, 5) as $slide): ?>
-                            <div class="slide">
-                                <div class="slide-image"><a href="page-product.html"><img class="slide-img"
-                                            src="./admin/assets/images/uploads/<?= htmlspecialchars($slide['image']) ?>"
-                                            alt="<?= htmlspecialchars($slide['title']) ?>"></a></div>
+            <div class="slideshow-swiper-container">
+                <div class="slides">
+                    <?php foreach (array_slice($slides1, 0, 5) as $slide): ?>
+                        <div class="slide">
+                            <div class="slide-image">
+                                <a href="page-product.html">
+                                    <img class="slide-img" src="./admin/assets/images/uploads/<?= htmlspecialchars($slide['image']) ?>" alt="<?= htmlspecialchars($slide['title']) ?>">
+                                </a>
                             </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <!-- < !-- <div class="slide-position">
-            </div>-->
-
-                    <a class="prev" onclick="plusSlides(-1)">❮</a><a class="next" onclick="plusSlides(1)">❯</a>
-                    <div class="dots">
-                        <?php for ($i = 1; $i <= count($slides1); $i++): ?><span class="dot"
-                                onclick="currentSlide(<?= $i ?>)"></span>
-                        <?php endfor; ?>
-                    </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+                <div class="dots">
+                    <?php for ($i = 1; $i <= count($slides1); $i++): ?>
+                        <span class="dot" onclick="currentSlide(<?= $i ?>)"></span>
+                    <?php endfor; ?>
+                </div>
+            </div>
                 <div class="title-boxes">
                     <?php foreach (array_slice($slides1, 0, 5) as $index => $slide): ?>
                         <div class="title-box" onclick="currentSlide(<?= $index + 1 ?>)">

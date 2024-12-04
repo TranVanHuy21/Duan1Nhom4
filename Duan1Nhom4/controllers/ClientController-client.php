@@ -462,7 +462,7 @@ class ClientController
     
             // Lấy trạng thái đơn hàng (linh hoạt)
             $status_id = isset($_POST['status_id']) ? intval($_POST['status_id']) : 1;
-            $cart_ids = isset($_POST['cart_ids']) ? intval($_POST['cart_ids']) : "";
+            $cart_ids = isset($_POST['cart_ids']) ? $_POST['cart_ids'] : "";
             // Lấy và kiểm tra dữ liệu
             $totalPrice = isset($_POST['total_price']) ? floatval($_POST['total_price']) : 0;
             if ($totalPrice <= 0) {
@@ -526,30 +526,29 @@ class ClientController
                 throw new Exception("Giỏ hàng trống");
             }
     
+            
             // Lưu chi tiết đơn hàng
             foreach ($cartItems as $item) {
-                if (!str_contains($cart_ids, $item['id'])){
-                    break;
-                }
-
-                $saveResult = $this->clientModel->saveOrderDetail(
-                    $orderId,
-                    $item['product_id'],
-                    $item['quantity'],
-                    $item['price']
-                );
-    
-                if (!$saveResult) {
-                    throw new Exception("Lỗi khi lưu chi tiết đơn hàng");
+                if (str_contains($cart_ids, $item['id'])){
+                    $saveResult = $this->clientModel->saveOrderDetail(
+                        $orderId,
+                        $item['product_id'],
+                        $item['quantity'],
+                        $item['price']
+                    );
+        
+                    if (!$saveResult) {
+                        throw new Exception("Lỗi khi lưu chi tiết đơn hàng");
+                    }
                 }
             }
     
             // Xóa giỏ hàng
             foreach ($cartItems as $item) {
-                if (!str_contains($cart_ids, $item['id'])){
-                    break;
+                if (str_contains($cart_ids, $item['id'])){
+                    $this->clientModel->deleteCartItem($item['id']);
                 }
-                $this->clientModel->deleteCartItem($item['id']);
+                
             }
     
             header("Location: index.php?act=paymen");

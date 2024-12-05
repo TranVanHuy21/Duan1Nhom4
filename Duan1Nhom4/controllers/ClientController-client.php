@@ -191,27 +191,42 @@ class ClientController
 
     public function register_client()
     {
+        $MESSAGE = ""; // Biến chứa thông báo
+    
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $password = $_POST['password'];
+            $confirm_password = $_POST['confirmPassword']; // Lấy mật khẩu xác nhận
             $name = $_POST['name'];
             $phone_number = trim($_POST['phone_number']);
             $email = $_POST['email'];
-            $birthday = !empty($_POST['birthday']) ? $_POST['birthday'] : null; // Thêm xử lý birthday
+            $birthday = !empty($_POST['birthday']) ? $_POST['birthday'] : null;
             $gender = !empty($_POST['gender']) ? $_POST['gender'] : null;
-
-            if ($this->clientModel->register_client($username, $password, $name, $phone_number, $email, $birthday, $gender)) {
-                // header('Location: index.php?action=login-client');
-                include 'views/login-fe.php';
-                exit();
+    
+            // Kiểm tra dữ liệu đầu vào
+            if (empty($username) || empty($password) || empty($confirm_password) || empty($name) || empty($phone_number)) {
+                $MESSAGE = "Vui lòng nhập đầy đủ thông tin bắt buộc.";
+            } elseif ($password !== $confirm_password) {
+                $MESSAGE = "Mật khẩu và mật khẩu xác nhận không trùng khớp."; // Kiểm tra mật khẩu
+            } elseif (strlen($password) < 6) {
+                $MESSAGE = "Mật khẩu phải có ít nhất 6 ký tự.";
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)) {
+                $MESSAGE = "Email không đúng định dạng.";
             } else {
-                $error = "Đăng ký không thành công.";
-                include 'views/register-fe.php';
+                if ($this->clientModel->register_client($username, $password, $name, $phone_number, $email, $birthday, $gender)) {
+                    $MESSAGE = "Đăng ký thành công! Vui lòng đăng nhập.";
+                    include 'views/login-fe.php';
+                    exit();
+                } else {
+                    $MESSAGE = "Đăng ký không thành công. Vui lòng thử lại.";
+                }
             }
-        } else {
-            include 'views/register-fe.php';
         }
+    
+        // Hiển thị lại form với thông báo lỗi (nếu có)
+        include 'views/register-fe.php';
     }
+    
 
     public function logout_client()
     {

@@ -100,6 +100,12 @@
     p a:hover {
         text-decoration: underline;
     }
+    .message-box {
+    color: red; /* Màu chữ đỏ */
+    font-size: 14px; /* Kích thước chữ */
+    font-weight: bold; /* Chữ đậm */
+    margin-top: 10px; /* Khoảng cách trên */
+}
     </style>
     <script>
     document.getElementById('registerForm').addEventListener('submit', function(event) {
@@ -116,6 +122,7 @@
         alert('Đăng ký thành công!');
     });
     </script>
+  
 </head>
 
 <body>
@@ -127,18 +134,19 @@
                 <button class="zalo">Zalo</button>
             </div>
             <p>hoặc</p>
+           
             <form id="registerForm" method="post" action="?act=register-client">
                 <div class="form-group">
                     <label for="fullname">Nhập họ và tên</label>
-                    <input type="text" id="name" name="name"  oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
+                    <input type="text" id="name" name="name"  >
                 </div>
                 <div class="form-group">
                     <label for="username">Nhập Username muốn đăng ký</label>
-                    <input type="text" id="username" name="username" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
+                    <input type="text" id="username" name="username" >
                 </div>
                 <div class="form-group">
                     <label for="phone">Nhập số điện thoại</label>
-                    <input type="text" id="phone" name="phone_number" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
+                    <input type="text" id="phone" name="phone_number"  >
                 </div>
                 <div class="form-group">
                     <label for="email">Nhập email (không bắt buộc)</label>
@@ -159,29 +167,36 @@
                 </div>
                 <div class="form-group">
                     <label for="dob">Ngày sinh</label>
-                    <input type="date" id="birthday" name="birthday" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
+                    <input type="date" id="birthday" name="birthday" >
                 </div>
                 <div class="form-group">
                     <label for="password">Nhập mật khẩu</label>
-                    <input type="password" id="password" name="password" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
+                    <input type="password" id="password" name="password"  >
                     <small>(*) Mật khẩu tối thiểu 6 ký tự, có ít nhất 1 chữ và 1 số. (VD: 72345a)</small>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Nhập lại mật khẩu</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" oninvalid="this.setCustomValidity('Trường này là bắt buộc.')" oninput="this.setCustomValidity('')" required>
+                    <input type="password" id="confirmPassword" name="confirmPassword"  >
                 </div>
                 <div class="form-group">
                     <input type="checkbox" id="newsletter" name="newsletter">
                     <label for="newsletter">Đăng ký nhận bản tin khuyến mãi từ CellphoneS</label>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="terms" name="terms" required oninvalid="this.setCustomValidity('Checkbox này là bắt buộc.')" oninput="this.setCustomValidity('')">
+                    <input type="checkbox" id="terms" name="terms"  >
                     <label for="terms">Tôi đồng ý với các điều khoản bảo mật cá nhân</label>
                 </div>
                 <div class="form-group">
                     <input type="checkbox" id="student" name="student">
                     <label for="student">Tôi là Học sinh - sinh viên (nhận thêm ưu đãi tới 500k/sản phẩm)</label>
                 </div>
+                <br>
+                <?php if (isset($MESSAGE) && strlen($MESSAGE)): ?>
+                <div class="message-box">
+                    <?php echo htmlspecialchars($MESSAGE, ENT_QUOTES, 'UTF-8'); ?>
+                </div>
+                <?php endif; ?>
+               
                 <button type="submit" >Đăng ký</button>
             </form>
             <p>Bạn đã có tài khoản? <a href="?act=login-client">Đăng nhập ngay</a></p>

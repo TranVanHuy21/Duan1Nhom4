@@ -1106,9 +1106,9 @@ public function getDonHangFromUser($userId) {
         $stmt->execute([':user_id' => $userId]);
         
         $data = $stmt->fetchAll();
-        if (!$data) {
-            echo "No data returned. SQL: $sql";
-        }
+        // if (!$data) {
+        //     echo "No data returned. SQL: $sql";
+        // }
         return $data;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

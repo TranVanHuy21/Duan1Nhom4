@@ -6,25 +6,25 @@
   </nav> -->
 
 <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
 
-    th {
-        background-color: #f2f2f2;
-    }
+th {
+    background-color: #f2f2f2;
+}
 
-    tr:hover {
-        background-color: #f5f5f5;
-    }
+tr:hover {
+    background-color: #f5f5f5;
+}
 </style>
 
 <!-- Main Sidebar Container -->
@@ -51,7 +51,7 @@
                 <div class="col-12">
 
                     <p>User ID: <?= $order['user_id']; ?></p>
-                    <p>Tổng giá trị đơn hàng: <?= $order['Total_Price']; ?> đ</p>
+                    <p>giá trị sản phẩm: <?= $order['Total_Price']; ?> đ</p>
                     <p>Địa chỉ giao hàng: <?= $order['Delivery_address']; ?></p>
                     <p>Ghi chú: <?= $order['Note']; ?></p>
                     <p>Trạng thái: <?= $statusList[$order['status_id']] ?? 'Unknown'; ?></p>
@@ -59,9 +59,9 @@
                         <label for="status">Chọn trạng thái mới:</label>
                         <select name="status" id="status">
                             <?php foreach ($statusList as $id => $status): ?>
-                                <option value="<?= $id; ?>" <?= $id == $order['status_id'] ? 'selected' : ''; ?>>
-                                    <?= $status; ?>
-                                </option>
+                            <option value="<?= $id; ?>" <?= $id == $order['status_id'] ? 'selected' : ''; ?>>
+                                <?= $status; ?>
+                            </option>
                             <?php endforeach; ?>
                         </select>
                         <button type="submit">Cập nhật trạng thái</button>
@@ -78,11 +78,11 @@
                         </thead>
                         <tbody>
                             <?php foreach ($orderDetails as $detail): ?>
-                                <tr>
-                                    <td><?= $detail['Product_id']; ?></td>
-                                    <td><?= $detail['Price']; ?> đ</td>
-                                    <td><?= $detail['Sale_quantity']; ?></td>
-                                </tr>
+                            <tr>
+                                <td><?= $detail['Product_id']; ?></td>
+                                <td><?= $detail['Price']; ?> đ</td>
+                                <td><?= $detail['Sale_quantity']; ?></td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

@@ -1,30 +1,111 @@
-<!DOCTYPE html>
-<html>
+<!-- header -->
+<?php include './views/layout/header.php'; ?>
+<!-- header -->
+<!-- <nav>
+    <?php include './views/layout/navbar.php'; ?>
+  </nav> -->
+<style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
 
-<head>
-    <title>Orders</title>
-</head>
+th,
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
 
-<body>
-    <h1>Your Orders</h1>
-    <ul>
-        <?php foreach ($orders as $order): ?>
-            <li>
-                <strong>Order ID:</strong> <?php echo $order['order_id']; ?> (Hóa đơn)<br>
-                <strong>Total Price:</strong> <?php echo $order['total_price']; ?> (Tổng giá trị)<br>
-                <form action="/admin/order/update/<?php echo $order['order_id']; ?>" method="post">
-                    <input type="number" name="status_id" value="<?php echo $order['status_id']; ?>">
-                    <button type="submit">Update Status</button>
-                </form>
-                <form action="/admin/order/delete/<?php echo $order['order_id']; ?>" method="post">
-                    <button type="submit">Delete</button>
-                </form>
-                <form action="/admin/order/view/<?php echo $order['order_id']; ?>" method="get">
-                    <button type="submit">View Details</button>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-</body>
+th {
+    background-color: #f2f2f2;
+}
 
-</html>
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+</style>
+
+
+<!-- Main Sidebar Container -->
+<?php include './views/layout/sidebar.php'; ?>
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Quản lý các đơn hàng của user</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Order ID (id hóa đơn)</th>
+                                <th>User ID (id khách hàng)</th>
+
+                                <th>Create Date (Ngày lập đơn hàng)</th>
+                                <th>Total Price (Tổng giá trị đơn hàng)</th>
+                                <th>Delivery Address (địa điểm nhận đơn hàng)</th>
+                                <th>Note (ghi chú)</th>
+                                <th>Status( trạng thái đơn hàng)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($orders as $order): ?>
+                            <tr>
+                                <td><?php echo $order['Order_id']; ?></td>
+                                <td><?php echo $order['user_id']; ?></td>
+
+                                <td><?php echo $order['Create_date']; ?></td>
+                                <td><?php echo $order['Total_Price']; ?></td>
+                                <td><?php echo $order['Delivery_address']; ?></td>
+                                <td><?php echo $order['Note']; ?></td>
+                                <td>
+                                    <?php
+                                        // Hiển thị tên trạng thái thay vì ID
+                                        echo isset($statusList[$order['status_id']]) ? $statusList[$order['status_id']] : 'Unknown';
+                                        ?>
+
+                                </td>
+                                <td>
+
+                                    <!-- Form để xem chi tiết đơn hàng -->
+                                    <form action="?act=viewOrder&id=<?= $order['Order_id']; ?>" method="post"
+                                        style="display:inline;">
+                                        <button type="submit">View Details</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<?php include './views/layout/footer.php'; ?>

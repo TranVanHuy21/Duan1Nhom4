@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Quản Lý Danh Mục</h1>
+                    <h1>Quản lý các đơn hàng của user</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -29,37 +29,28 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary" style="padding: 10px;">
-                        <div class="card-header">
-                            <h3 class="card-title">Thêm bình luận cho sản phẩm ID:
-                                <?php echo htmlspecialchars($productId); ?>
-                            </h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <?php if (!empty($this->errorMessage)): ?>
-                        <div class="error-message" style="color: red;">
-                            <?php echo $this->errorMessage; ?>
-                        </div>
+
+                    <h1>Users with Orders</h1>
+                    <ul>
+                        <?php if (!empty($users)): ?>
+                        <?php foreach ($users as $user): ?>
+                        <li>
+                            User ID: <?php echo $user['user_id']; ?><br>
+                            Name: <?php echo $user['name']; ?><br>
+                            Phone: <?php echo $user['phone_number']; ?><br>
+                            Email: <?php echo $user['email']; ?><br>
+                            <a href="?act=viewOrders&id=<?= $user['user_id'] ?>">View Orders</a>
+                        </li>
+                        <?php endforeach; ?>
+                        <?php else: ?>
+                        <li>No users found with orders.</li>
                         <?php endif; ?>
-
-                        <form action="index.php?act=addComment" method="post">
-                            <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
-                            <label for="comment_content">Nội dung bình luận:</label>
-                            <textarea name="comment_content" required></textarea>
-
-                            <label for="rating">Đánh giá:</label>
-                            <input type="number" name="rating" min="1" max="5" required>
-
-                            <button type="submit">Gửi bình luận</button>
-                        </form>
-                    </div>
+                    </ul>
+                    <!-- /.col -->
                 </div>
-                <!-- /.col -->
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>
@@ -220,13 +211,13 @@
                         {{ edit_1 }}
                         <!-- Hiển thị đánh giá -->
                         <?php
-                                // Lấy đánh giá từ bảng comments
-                                $productId = $product['id'];
-                                $query = "SELECT AVG(rating) as average_rating FROM comments WHERE product_id = ?";
-                                $stmt = $pdo->prepare($query);
-                                $stmt->execute([$productId]);
-                                $averageRating = $stmt->fetchColumn();
-                                ?>
+                            // Lấy đánh giá từ bảng comments
+                            $productId = $product['id'];
+                            $query = "SELECT AVG(rating) as average_rating FROM comments WHERE product_id = ?";
+                            $stmt = $pdo->prepare($query);
+                            $stmt->execute([$productId]);
+                            $averageRating = $stmt->fetchColumn();
+                            ?>
                         <div class="product__rating">
                             <p>Đánh giá trung bình: <?= htmlspecialchars(number_format($averageRating, 1)) ?>
                             </p>
@@ -258,3 +249,23 @@
 </body>
 
 </html>
+
+
+<!-- Form để cập nhật trạng thái -->
+<form action="?act=updateOrderStatus&order_id=<?= $order['order_id']; ?>" method="post" style="display:inline;"
+    onsubmit="return confirm('Bạn có chắc chắn muốn cập nhật trạng thái đơn hàng này không?');">
+    <input type="hidden" name="order_id" value="<?= $order['order_id']; ?>">
+    <select name="status_id" required>
+        <?php foreach ($statuses as $status): ?>
+        <option value="<?= $status['id']; ?>" <?= $status['id'] == $order['status_id'] ? 'selected' : ''; ?>>
+            <?= $status['status_name']; ?>
+        </option>
+        <?php endforeach; ?>
+    </select>
+    <button type="submit">Update Status</button>
+</form>
+
+<!-- Form để xóa đơn hàng -->
+<form action="?act=deleteOrder&order_id=<?= $order['order_id']; ?>" method="post" style="display:inline;">
+    <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này không?');">Delete</button>
+</form>

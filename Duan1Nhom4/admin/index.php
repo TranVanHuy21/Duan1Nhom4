@@ -18,7 +18,6 @@ require_once 'models/SlideModel.php';
 require_once 'controllers/SlideController.php';
 require_once 'controllers/commentController.php';
 require_once 'models/commentModel.php';
-require_once 'models/CartModel.php';
 require_once 'models/OrderModel.php';
 require_once 'controllers/AdminController.php';
 require_once 'models/UserOrderModel.php';
@@ -34,10 +33,9 @@ $dashboardController = new DashboardController();
 $slideModel = new SlideModel();
 $slideController = new SlideController();
 $commentController = new CommentController();
-$cartModel = new CartModel();
 $orderModel = new OrderModel();
 $userOrderModel = new UserOrderModel();
-$adminController = new AdminController($cartModel, $orderModel, $userOrderModel);
+$adminController = new AdminController($orderModel, $userOrderModel);
 // Kiểm tra xem người dùng đã đăng nhập chưa
 if (!isset($_SESSION['user_admin']) && (!isset($_GET['act']) || $_GET['act'] != 'login')) {
     header("Location: ../admin/index.php?act=login");
@@ -199,23 +197,7 @@ switch ($act) {
     case 'viewUsersWithOrders':
         $adminController->viewUsersWithOrders();
         break;
-    case 'viewCart':
-        $adminController->viewCart($userId);
-        break;
-    case 'addToCart':
-        $productId = $_POST['product_id'];
-        $quantity = $_POST['quantity'];
-        $adminController->addToCart($userId, $productId, $quantity);
-        break;
-    case 'updateCart':
-        $cartId = $_POST['cart_id'];
-        $quantity = $_POST['quantity'];
-        $adminController->updateCart($cartId, $quantity);
-        break;
-    case 'deleteFromCart':
-        $cartId = $_POST['cart_id'];
-        $adminController->deleteFromCart($cartId);
-        break;
+
     case 'createOrder':
         $delivererId = $_POST['deliverer_id'];
         $totalPrice = $_POST['total_price'];
@@ -225,14 +207,28 @@ switch ($act) {
         $adminController->createOrder($userId, $delivererId, $totalPrice, $deliveryAddress, $note, $statusId);
         break;
     case 'viewOrder':
-        $adminController->viewOrder($orderId);
+        $adminController->viewOrder($_GET['id']);
         break;
+
     case 'viewOrders':
-        $adminController->viewOrdersByUser($userId);
+
+        $adminController->viewOrdersByUser($_GET['id']);
+
         break;
     case 'updateOrderStatus':
-        $statusId = $_POST['status_id'];
-        $adminController->updateOrderStatus($orderId, $statusId);
+        // Kiểm tra xem Order ID có tồn tại không
+        if (isset($orderId) && !empty($orderId)) {
+            $statusId = $_POST['status_id'] ?? null;
+
+            // Kiểm tra xem Status ID có tồn tại không
+            if (isset($statusId) && !empty($statusId)) {
+                $adminController->updateOrderStatus($orderId, $statusId);
+            } else {
+                echo "Status ID is required."; // Thông báo nếu Status ID không được cung cấp
+            }
+        } else {
+            echo "Order ID is required."; // Thông báo nếu Order ID không được cung cấp
+        }
         break;
     case 'deleteOrder':
         $adminController->deleteOrder($orderId);

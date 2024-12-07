@@ -67,7 +67,7 @@ tr:hover {
                                 <th>Delivery Address (địa điểm nhận đơn hàng)</th>
                                 <th>Note (ghi chú)</th>
                                 <th>Status( trạng thái đơn hàng)</th>
-                                <td>Chinh sửa trạng thái</td>
+                                <th>Chinh sửa trạng thái</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

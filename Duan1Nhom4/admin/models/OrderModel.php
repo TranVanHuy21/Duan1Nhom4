@@ -58,7 +58,9 @@ class OrderModel
 
     public function deleteOrder($orderId)
     {
-        $stmt = $this->pdo->prepare("DELETE FROM order_pro WHERE order_id = ?");
+        $stmt = $this->pdo->prepare("DELETE FROM order_detail WHERE Order_id = ?");
+        $stmt->execute([$orderId]);
+        $stmt = $this->pdo->prepare("DELETE FROM order_pro WHERE Order_id = ?");
         return $stmt->execute([$orderId]);
     }
 

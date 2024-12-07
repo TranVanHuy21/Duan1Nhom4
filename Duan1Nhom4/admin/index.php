@@ -233,7 +233,12 @@ switch ($act) {
         }
         break;
     case 'deleteOrder':
-        $adminController->deleteOrder($orderId);
+        $orderId = $_GET['id'] ?? null;
+        if ($orderId) {
+            $adminController->deleteOrder($orderId);
+        } else {
+            echo "Order ID is required.";
+        }
         break;
     case 'editOrder':
         $totalPrice = $_POST['total_price'];

@@ -63,13 +63,14 @@ class AdminController
     public function deleteOrder($orderId)
     {
         $this->orderModel->deleteOrder($orderId);
-        header("Location: /admin/order/view");
+        header("Location: ?act=dashboard");
+        exit();
     }
     public function updateOrderStatus($orderId, $statusId)
     {
         if ($this->orderModel->updateOrderStatus($orderId, $statusId)) {
 
-            header("location:?act=viewUsersWithOrders ");
+            header("Location: ?act=dashboard");
 
             exit();
         } else {

@@ -1,5 +1,12 @@
 <!-- header -->
-<?php include './views/layout/header.php'; ?>
+<?php
+// if (session_status() == PHP_SESSION_NONE) {
+//     session_start();
+// }
+// session_start();
+// $_SESSION['user_id'] = $user_id;
+
+include './views/layout/header.php'; ?>
 <!-- header -->
 <!-- <nav>
     <?php include './views/layout/navbar.php'; ?>

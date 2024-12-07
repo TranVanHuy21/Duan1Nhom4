@@ -68,12 +68,24 @@ class AdminController
     public function updateOrderStatus($orderId, $statusId)
     {
         if ($this->orderModel->updateOrderStatus($orderId, $statusId)) {
-            header("Location: /admin/order/view/$orderId");
+
+            header("location:?act=viewUsersWithOrders ");
+
             exit();
         } else {
             echo "Cập nhật trạng thái không thành công.";
         }
     }
+    // public function updateOrderStatus($orderId, $statusId)
+// {
+// if ($this->orderModel->updateOrderStatus($orderId, $statusId)) {
+// $previousPage = $_POST['previous_page'] ?? '/admin/order/view/' . $orderId;
+// header("Location: $previousPage");
+// exit();
+// } else {
+// echo "Cập nhật trạng thái không thành công.";
+// }
+// }
     public function editOrder($orderId, $totalPrice, $deliveryAddress, $note, $statusId)
     {
         $this->orderModel->editOrder($orderId, $totalPrice, $deliveryAddress, $note, $statusId);

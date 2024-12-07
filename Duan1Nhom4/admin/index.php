@@ -219,10 +219,12 @@ switch ($act) {
         // Kiểm tra xem Order ID có tồn tại không
         if (isset($orderId) && !empty($orderId)) {
             $statusId = $_POST['status_id'] ?? null;
-
+            // $userId = $_SESSION['user_id'] ?? null;
             // Kiểm tra xem Status ID có tồn tại không
             if (isset($statusId) && !empty($statusId)) {
                 $adminController->updateOrderStatus($orderId, $statusId);
+                // unset($_SESSION['user_id']);
+                // session_destroy();
             } else {
                 echo "Status ID is required."; // Thông báo nếu Status ID không được cung cấp
             }

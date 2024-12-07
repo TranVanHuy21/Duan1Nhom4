@@ -16,6 +16,7 @@ td {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+
 }
 
 th {
@@ -66,6 +67,7 @@ tr:hover {
                                 <th>Delivery Address (địa điểm nhận đơn hàng)</th>
                                 <th>Note (ghi chú)</th>
                                 <th>Status( trạng thái đơn hàng)</th>
+                                <td>Chinh sửa trạng thái</td>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -88,12 +90,32 @@ tr:hover {
                                 </td>
                                 <td>
 
+                                    <form action="?act=updateOrderStatus&order_id=<?php echo $order['Order_id']; ?>"
+                                        method="POST">
+                                        <select name="status_id" id="status">
+                                            <?php foreach ($statusList as $id => $status): ?>
+                                            <option value="<?php echo $id; ?>"
+                                                <?php echo $id == $order['status_id'] ? 'selected' : ''; ?>>
+                                                <?php echo $status; ?>
+                                            </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <button type="submit">Cập nhật trạng thái</button>
+                                    </form>
+
+                                </td>
+                                <td>
+
+
                                     <!-- Form để xem chi tiết đơn hàng -->
                                     <form action="?act=viewOrder&id=<?= $order['Order_id']; ?>" method="post"
                                         style="display:inline;">
-                                        <button type="submit">View Details</button>
+                                        <button type="submit">Xem chi tiết</button>
                                     </form>
-
+                                    <form action="?act=deleteOrder&id=<?= $order['Order_id']; ?>" method="post"
+                                        style="display:inline;">
+                                        <button type="submit">Xóa đơn hàng</button>
+                                    </form>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

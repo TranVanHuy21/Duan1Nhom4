@@ -328,6 +328,53 @@ class ClientController
         exit();
     }
 
+    public function cancelOrder() {
+        try {
+            
+            // Kiểm tra phương thức request
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new Exception("Invalid request method");
+            }
+            
+            // Kiểm tra đăng nhập
+            if (!isset($_SESSION['user'])) {
+                $_SESSION['flash_message'] = "Vui lòng đăng nhập để hủy đơn hàng!";
+                header("Location: index.php?act=login-client");
+                exit();
+            }
+    
+            // Lấy dữ liệu từ POST
+            $order_id = isset($_POST['order_id']) ? (int)$_POST['order_id'] : 0;
+    
+            // Validate dữ liệu
+            if ($order_id <= 0) {
+                throw new Exception("Invalid product ID");
+            }
+    
+            // Gọi phương thức CancelOrder trong model
+            $success = $this->clientModel->CancelOrder($order_id);
+    
+            
+            // Kiểm tra kết quả và chuyển hướng
+            if ($success && $success['success']) {
+                $_SESSION['flash_message'] = "Hủy đơn hàng thành công!";
+                header("Location: index.php?act=lich-su-mua-hang");
+            } else {
+                $_SESSION['flash_message'] = "Không thể hủy đơn hàng. Vui lòng thử lại!";
+                header("Location: index.php?act=lich-su-mua-hang");
+            }
+            exit();
+    
+        } catch (Exception $e) {
+            throw new Exception( $e->getMessage());
+            // Log lỗi và xử lý ngoại lệ
+            error_log("Error canceling order: " . $e->getMessage());
+            $_SESSION['flash_message'] = "Có lỗi xảy ra khi hủy đơn hàng!";
+            header("Location: index.php?act=lich-su-mua-hang");
+            exit();
+        }
+    }
+    
     public function BuyNow($productId) {
         try {
 

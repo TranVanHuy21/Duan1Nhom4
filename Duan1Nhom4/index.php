@@ -139,6 +139,9 @@ switch ($act) {
     case 'store-map':
         $clientController->showStoreMap();
         break;
+    case 'cancel_order':
+        $clientController->cancelOrder();
+        break;
 
     default:
         // Hành động mặc định là hiển thị trang chủ

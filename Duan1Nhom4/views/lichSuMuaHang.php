@@ -79,6 +79,26 @@ $filteredDonHangs = array_filter($donHangs, function($donHang) use ($statusFilte
             </div>
             <div class="col-md-2 text-end doc">
                 <p class='date'><?= htmlspecialchars($donHang['create_date']) ?></p>
+
+                <?php 
+                  if ($donHang['status_name'] == "Chờ xác nhận") { 
+                  ?>
+                  <form method="POST" action="index.php?act=cancel_order" onsubmit="return confirmCancel()">
+                    <input type="hidden" name="order_id" value="<?= htmlspecialchars($donHang['order_id']) ?>">
+                    <button type="submit" style="border: 1px solid red;border-radius:5px ;">Hủy đơn hàng</button>
+                </form>
+
+                <script>
+                    function confirmCancel() {
+                        return confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
+                    }
+                </script>
+                <?php 
+                } 
+                ?>
+                
+                
+
             </div>
         </div>
     </div>

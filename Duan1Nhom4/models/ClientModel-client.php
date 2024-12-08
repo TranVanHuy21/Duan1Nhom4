@@ -603,6 +603,60 @@ public function createOrder($userId, $totalPrice, $fullAddress, $notes, $status_
     }
 }
 
+public function CancelOrder($order_id) {
+    try {
+        // Debug input value
+        error_log("updateOrderStatus input value: productId: $order_id");
+
+        // Kiểm tra giá trị đầu vào
+        if (!$order_id) {
+            error_log("Missing productId for updating order status");
+            throw new Exception("Missing productId");
+            return false;
+        }
+
+        // SQL query để cập nhật status_id thành 1
+        $sql = "UPDATE order_pro SET status_id = 5 WHERE order_id = :order_id";
+
+        // Chuẩn bị câu lệnh SQL
+        $stmt = $this->pdo->prepare($sql);
+
+        // Gán giá trị tham số
+        $params = [
+            ':order_id' => $order_id
+        ];
+
+        // Debug SQL và parameters
+        error_log("SQL Query: " . $sql);
+        error_log("Parameters: " . print_r($params, true));
+
+        // Thực thi câu lệnh SQL
+        $result = $stmt->execute($params);
+
+        // Debug kết quả thực thi
+        if (!$result) {
+            error_log("SQL Error: " . print_r($stmt->errorInfo(), true));
+            throw new Exception("Failed to update order status");
+            return false;
+        }
+
+        error_log("Order status updated successfully for productId: " . $order_id);
+        return [
+            'success' => true,
+            'Order_id' => $order_id
+        ];
+
+    } catch (PDOException $e) {
+        // Log lỗi cơ sở dữ liệu
+        error_log("Database Error in updateOrderStatus: " . $e->getMessage());
+        error_log("SQL State: " . $e->getCode());
+        return false;
+    } catch (Exception $e) {
+        // Log các lỗi khác
+        error_log("Error in updateOrderStatus: " . $e->getMessage());
+        return false;
+    }
+}
 
 public function getLatestOrderWithoutUser() {
     try {

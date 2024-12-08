@@ -101,7 +101,7 @@
                     <div>
                         <a href="index.php">
                             <div class="box-logo">
-                                <img src="assets/image/logo.png" alt="">
+                                <img src="assets/image/logo3.png" alt="">
                             </div>
                         </a>
                     </div>
